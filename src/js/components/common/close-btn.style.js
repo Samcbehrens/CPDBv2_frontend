@@ -23,6 +23,7 @@ export const closeButtonIconStyle = {
   pseudo: {
     height: '1px',
     transform: 'rotate(45deg)',
+    transformOrigin: 'center',
     position: 'absolute',
     width: '100%',
     top: '50%',
