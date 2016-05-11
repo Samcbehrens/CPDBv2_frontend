@@ -4,7 +4,7 @@ import Radium from 'radium';
 import NavLink from 'components/common/nav-link';
 import {
   navWrapperStyle, navStyle, fixedWrapperStyle, logoWrapperStyle, logoStyle,
-  navWrapperFixedStyle, logoWrapperFixedStyle
+  navWrapperFixedStyle, logoWrapperFixedStyle, spaceHolderStyle
 } from './header.style';
 
 
@@ -33,17 +33,41 @@ class Header extends React.Component {
     }
   }
 
+  wrapperStyle() {
+    return this.state.fixed ? fixedWrapperStyle : null;
+  }
+
+  navWrapperStyle() {
+    return [navWrapperStyle, this.state.fixed ? navWrapperFixedStyle : null];
+  }
+
+  logoWrapperStyle() {
+    return [logoWrapperStyle, this.state.fixed ? logoWrapperFixedStyle : null];
+  }
+
+  renderSpaceHolder() {
+    if (this.state.fixed) {
+      return (
+        <div style={ spaceHolderStyle }/>
+      );
+    }
+    return null;
+  }
+
   render() {
     let links = ['Database', 'Stories', 'FAQ', 'Collaboration'];
     return (
-      <div style={ this.state.fixed ? fixedWrapperStyle : null }>
-        <div style={ [navWrapperStyle, this.state.fixed ? navWrapperFixedStyle : null] }>
-          { links.map((txt, ind) => (
-            <NavLink key={ ind } style={ navStyle }>{ txt }</NavLink>
-          )) }
-        </div>
-        <div style={ [logoWrapperStyle, this.state.fixed ? logoWrapperFixedStyle : null] }>
-          <span style={ logoStyle }/>
+      <div>
+        { this.renderSpaceHolder() }
+        <div style={ this.wrapperStyle() }>
+          <div style={ this.navWrapperStyle() }>
+            { links.map((txt, ind) => (
+              <NavLink key={ ind } style={ navStyle }>{ txt }</NavLink>
+            )) }
+          </div>
+          <div style={ this.logoWrapperStyle() }>
+            <span style={ logoStyle }/>
+          </div>
         </div>
       </div>
     );
