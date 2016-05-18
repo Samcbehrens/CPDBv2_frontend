@@ -1,4 +1,3 @@
-import 'should';
 import React from 'react';
 import { findDOMNode, render } from 'react-dom';
 import { unmountComponentSuppressError } from 'utils/test';
@@ -48,7 +47,7 @@ describe('ExpandTransition component', function () {
         setTimeout(() => {
           rootEl.children[0].nodeName.should.equal('NOSCRIPT');
           cb();
-        }, 500);
+        }, 300);
       });
   });
 });
