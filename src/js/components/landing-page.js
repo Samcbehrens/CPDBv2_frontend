@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 
 import StoriesContainer from 'containers/stories-container';
-import FAQSection from 'components/faq/faq-section';
+import FAQContainer from 'containers/faq-container';
 import TwitterEmbeddedTimeline from 'components/twitter-embedded-timeline';
 import AboutSection from 'components/about-section';
 import HeroSection from 'components/hero-section';
@@ -15,17 +15,17 @@ export default class LandingPage extends Component {
       <div>
         <HeroSection />
         <ResponsiveFixedWidthComponent>
-          <StoriesContainer store={ this.props.store }/>
-          <div className='pure-g' style={ borderTop }>
-            <div className='pure-u-de-3-5 pure-u-ta-1-2 pure-u-mo-1-2'>
-              <div style={ leftColumnStyle }>
-                <FAQSection/>
-                <AboutSection style={ borderTop }/>
-              </div>
+        <StoriesContainer store={ this.props.store }/>
+        <div className='pure-g' style={ borderTop }>
+          <div className='pure-u-de-3-5 pure-u-ta-1-2 pure-u-mo-1-2'>
+            <div style={ leftColumnStyle }>
+              <FAQContainer store={ this.props.store }/>
+              <AboutSection style={ borderTop }/>
             </div>
-            <div className='pure-u-de-2-5 pure-u-ta-1-2 pure-u-mo-1-2'>
-              <TwitterEmbeddedTimeline/>
-            </div>
+          </div>
+          <div className='pure-u-de-2-5 pure-u-ta-1-2 pure-u-mo-1-2'>
+            <TwitterEmbeddedTimeline/>
+          </div>
         </div>
         </ResponsiveFixedWidthComponent>
       </div>
