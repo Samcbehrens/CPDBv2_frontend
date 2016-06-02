@@ -16,3 +16,9 @@ export const firstSmallStoryStyleDesktop = {
 export const wrapperStyle = {
   overflow: 'hidden'
 };
+
+export const secondSmallStoryStyle = {
+  wrapper: {
+    paddingTop: '16px'
+  }
+};

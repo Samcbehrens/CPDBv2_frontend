@@ -1,6 +1,7 @@
 import { createSelector } from 'reselect';
 
 import { DEFAULT_IMAGE_DIMENSION } from 'utils/constants';
+import { mediaUrl } from 'utils/static-assets';
 
 
 const getIsRequesting = state => state.storyApp.isRequesting;
@@ -13,11 +14,12 @@ export function rawStoryTransform(story) {
   return {
     id: story.id,
     title: story.title,
+    canonicalUrl: story['canonical_url'],
     newspaperName: story.newspaper && story.newspaper.name,
     newspaperShortName: story.newspaper && story.newspaper['short_name'],
     date: story['post_date'],
     paragraphs: story.body && story.body.map(p => p.value),
-    imageUrl: story['image_url'] && story['image_url'][DEFAULT_IMAGE_DIMENSION]
+    imageUrl: story['image_url'] && mediaUrl(story['image_url'][DEFAULT_IMAGE_DIMENSION])
   };
 }
 
