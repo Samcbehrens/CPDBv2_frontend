@@ -1,5 +1,6 @@
 import React from 'react';
 import Radium from 'radium';
+import classnames from 'classnames';
 
 import NavLink from 'components/common/nav-link';
 import ResponsiveFixedWidthComponent from 'components/responsive/responsive-fixed-width-component';
@@ -59,10 +60,14 @@ class Header extends React.Component {
 
   render() {
     let links = ['Database', 'Stories', 'FAQ', 'Collaboration'];
+    let headerWrapperClass = classnames({
+      'header-wrapper-fixed': this.state.fixed
+    });
+
     return (
       <div>
         { this.renderSpaceHolder() }
-        <div style={ this.wrapperStyle() }>
+        <div style={ this.wrapperStyle() } className={ headerWrapperClass }>
           <ResponsiveFixedWidthComponent>
             <div style={ this.navWrapperStyle() }>
               { links.map((txt, ind) => (
