@@ -7,6 +7,11 @@ export const DESKTOP_BREAK_POINT = 1200;
 
 export const DEFAULT_IMAGE_DIMENSION = '480_320';
 
+export const COLLAB_PATH = '/collaboration';
+export const DATA_PATH = '/data';
+export const FAQ_PATH = '/faq';
+export const STORIES_PATH = '/stories';
+
 export const EXTRA_WIDE = 'extra_wide';
 export const DESKTOP = 'desktop';
 export const MOBILE = 'mobile';
