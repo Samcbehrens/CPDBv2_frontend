@@ -16,3 +16,6 @@ export const EXTRA_WIDE = 'extra_wide';
 export const DESKTOP = 'desktop';
 export const MOBILE = 'mobile';
 export const TABLET = 'tablet';
+
+// Reducer defaults
+export const PAGINATION_DEFAULT = { results: [], count: 0, next: null, previous: null };
