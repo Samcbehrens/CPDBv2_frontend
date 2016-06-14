@@ -11,6 +11,7 @@ import {
   tabletBorderBottomStyle, tabletStyle, wrapperStyle,
   extraWideBorderRightStyle, extraWideStyle, accentColorStyle
 } from './faq-section.style';
+import { FAQ_PATH } from 'utils/constants';
 
 
 export default class FAQSection extends ResponsiveComponent {
@@ -51,7 +52,7 @@ export default class FAQSection extends ResponsiveComponent {
           )) }
         </div>
         <div className='pure-u-1-1'>
-          <ArticleFooter>More FAQ</ArticleFooter>
+          <ArticleFooter href={ FAQ_PATH }>More FAQ</ArticleFooter>
         </div>
       </div>
     );
@@ -69,7 +70,7 @@ export default class FAQSection extends ResponsiveComponent {
           </div>
         )) }
         <div className='pure-u-1-1'>
-          <ArticleFooter>More FAQ</ArticleFooter>
+          <ArticleFooter href={ FAQ_PATH }>More FAQ</ArticleFooter>
         </div>
       </div>
     );

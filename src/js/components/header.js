@@ -1,3 +1,4 @@
+import { includes } from 'lodash';
 import React from 'react';
 import Radium from 'radium';
 import { browserHistory } from 'react-router';
@@ -25,10 +26,6 @@ class Header extends React.Component {
     this.handleScroll = this.handleScroll.bind(this);
   }
 
-  isCompact() {
-    return this.state.fixed || COMPACT_STYLE_PATHNAMES.indexOf(getCurrentPathname()) !== -1;
-  }
-
   componentDidMount() {
     window.addEventListener('scroll', this.handleScroll);
     window.addEventListener('gesturechange', this.handleScroll);
@@ -37,6 +34,10 @@ class Header extends React.Component {
   componentWillUnmount() {
     window.removeEventListener('scroll', this.handleScroll);
     window.removeEventListener('gesturechange', this.handleScroll);
+  }
+
+  isCompact() {
+    return this.state.fixed || includes(COMPACT_STYLE_PATHNAMES, getCurrentPathname());
   }
 
   handleScroll() {
