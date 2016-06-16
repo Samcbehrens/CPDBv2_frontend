@@ -24,7 +24,8 @@ ArticleFooter.propTypes = {
   href: PropTypes.string,
   className: PropTypes.string,
   style: PropTypes.shape({
-    wrapper: PropTypes.object
+    wrapper: PropTypes.object,
+    link: PropTypes.object
   })
 };
 

@@ -88,7 +88,7 @@ export default class FAQSection extends ResponsiveComponent {
           </div>
         )) }
         <div className='pure-u-1-1'>
-          <ArticleFooter>More FAQ</ArticleFooter>
+          <ArticleFooter href={ FAQ_PATH }>More FAQ</ArticleFooter>
         </div>
       </div>
     );
