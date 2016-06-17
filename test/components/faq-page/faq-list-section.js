@@ -6,7 +6,7 @@ import {
 
 import FAQListSection from 'components/faq-page/faq-list-section';
 import FAQListItem from 'components/faq-page/faq-list-item';
-import FAQFactory from 'utils/test/factories/faq';
+import RawFAQFactory from 'utils/test/factories/raw-faq';
 import { unmountComponentSuppressError } from 'utils/test';
 import FAQItemContent from 'components/faq-page/faq-item-content';
 
@@ -23,7 +23,7 @@ describe('FAQListSection', function () {
   });
 
   it('should render faq-list-item', function () {
-    const faqs = FAQFactory.buildList(3);
+    const faqs = RawFAQFactory.buildList(3);
 
     instance = renderIntoDocument(
       <FAQListSection faqs={ faqs }/>
@@ -33,7 +33,7 @@ describe('FAQListSection', function () {
   });
 
   it('should expand children correctly', function (done) {
-    const faqs = FAQFactory.buildList(3);
+    const faqs = RawFAQFactory.buildList(3);
 
     instance = renderIntoDocument(
       <FAQListSection faqs={ faqs }/>
