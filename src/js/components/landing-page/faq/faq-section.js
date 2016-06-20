@@ -48,7 +48,7 @@ export default class FAQSection extends ResponsiveComponent {
           )) }
         </div>
         <div className='pure-u-1-1'>
-          <ArticleFooter href={ FAQ_PATH }>More FAQ</ArticleFooter>
+          <ArticleFooter to={ FAQ_PATH }>More FAQ</ArticleFooter>
         </div>
       </div>
     );
@@ -66,7 +66,7 @@ export default class FAQSection extends ResponsiveComponent {
           </div>
         )) }
         <div className='pure-u-1-1'>
-          <ArticleFooter href={ FAQ_PATH }>More FAQ</ArticleFooter>
+          <ArticleFooter to={ FAQ_PATH }>More FAQ</ArticleFooter>
         </div>
       </div>
     );
@@ -84,7 +84,7 @@ export default class FAQSection extends ResponsiveComponent {
           </div>
         )) }
         <div className='pure-u-1-1'>
-          <ArticleFooter href={ FAQ_PATH }>More FAQ</ArticleFooter>
+          <ArticleFooter to={ FAQ_PATH }>More FAQ</ArticleFooter>
         </div>
       </div>
     );

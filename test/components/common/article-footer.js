@@ -1,15 +1,18 @@
 import React from 'react';
-import Link from 'components/common/react-router-link';
+import {
+  renderIntoDocument, findRenderedComponentWithType, scryRenderedComponentsWithType, findRenderedDOMComponentWithTag
+ } from 'react-addons-test-utils';
 
-import ArticleFooter from 'components/common/article-footer';
 import { unmountComponentSuppressError } from 'utils/test';
+import Link from 'components/common/react-router-link';
+import ArticleFooter from 'components/common/article-footer';
 
 
 describe('ArticleFooter component', function () {
-  let element;
+  let instance;
 
   afterEach(function () {
-    unmountComponentSuppressError(element);
+    unmountComponentSuppressError(instance);
   });
 
   it('should render', function () {
@@ -17,6 +20,17 @@ describe('ArticleFooter component', function () {
   });
 
   it('should call onClick callback if defined', function () {
-    ArticleFooter.should.triggerCallbackWhenClick('onClick', Link);
+    ArticleFooter.should.triggerCallbackWhenClick('onClick', 'link--transition');
+  });
+
+  it('should render Link if property `to` exists', function () {
+    let instance = renderIntoDocument(<ArticleFooter to='/path/to'/>);
+    findRenderedComponentWithType(instance, Link).should.be.ok();
+  });
+
+  it('should render anchor if property `to` not exists', function () {
+    let instance = renderIntoDocument(<ArticleFooter/>);
+    findRenderedDOMComponentWithTag(instance, 'a').should.be.ok();
+    scryRenderedComponentsWithType(instance, Link).length.should.eql(0);
   });
 });

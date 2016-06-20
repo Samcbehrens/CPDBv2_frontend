@@ -29,7 +29,7 @@ export default class FAQFull extends React.Component {
           </div>
         </div>
         <ArticleFooter device={ DESKTOP } className='pure-u-1-1'
-          style={ { wrapper: footerStyle } } href={ FAQ_PATH }
+          style={ { wrapper: footerStyle } } to={ FAQ_PATH }
           onClick={ closeBottomSheet }>
           More FAQ
         </ArticleFooter>
