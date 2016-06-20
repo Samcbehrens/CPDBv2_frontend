@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
-import Radium from 'radium';
 
+import ConfiguredRadium from 'utils/configured-radium';
 import ExpandTransition from 'components/animation/expand-transition';
 import FAQItemContent from './faq-item-content';
 import { faqItemStyle, faqItemTitleStyle } from './faq-list-item.style';
@@ -57,4 +57,4 @@ FAQListItem.propTypes = {
   expandedId: PropTypes.number
 };
 
-export default Radium(FAQListItem);
+export default ConfiguredRadium(FAQListItem);
