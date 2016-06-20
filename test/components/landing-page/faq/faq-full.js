@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router';
+import Link from 'components/common/react-router-link';
 
 import FAQFull from 'components/landing-page/faq/faq-full';
 import { unmountComponentSuppressError } from 'utils/test';

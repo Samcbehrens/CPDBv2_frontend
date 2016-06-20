@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, findDOMNode } from 'react-dom';
 import { renderIntoDocument } from 'react-addons-test-utils';
-import { Link } from 'react-router';
+import Link from 'components/common/react-router-link';
 
 import BottomSheet from 'components/landing-page/bottom-sheet/bottom-sheet';
 import { unmountComponentSuppressError } from 'utils/test';
