@@ -4,8 +4,8 @@ import ConfiguredRadium from 'utils/configured-radium';
 import ArticleHeader from 'components/common/article-header';
 import ResponsiveStyleComponent, { DESKTOP, TABLET } from 'components/responsive/responsive-style-component';
 import {
-  articleHeaderStyle, sectionStyle, sectionTabletStyle, articleContentStyle, underlinedLinkStyle,
-  contentFontSizeTablet, wrapperStyle
+  articleHeaderStyle, sectionStyle, articleContentStyle, underlinedLinkStyle, contentFontSizeTablet, wrapperStyle,
+  sectionTabletStyle
 } from './collaborate-section.style';
 
 
