@@ -4,9 +4,10 @@ import {
   findRenderedComponentWithType
 } from 'react-addons-test-utils';
 
+import { withAnimationDisabled } from 'utils/test';
 import FAQListSection from 'components/faq-page/faq-list-section';
 import FAQListItem from 'components/faq-page/faq-list-item';
-import RawFAQFactory from 'utils/test/factories/raw-faq';
+import FAQFactory from 'utils/test/factories/raw-faq';
 import { unmountComponentSuppressError } from 'utils/test';
 import FAQItemContent from 'components/faq-page/faq-item-content';
 
@@ -23,7 +24,7 @@ describe('FAQListSection', function () {
   });
 
   it('should render faq-list-item', function () {
-    const faqs = RawFAQFactory.buildList(3);
+    const faqs = FAQFactory.buildList(3);
 
     instance = renderIntoDocument(
       <FAQListSection faqs={ faqs }/>
@@ -32,28 +33,28 @@ describe('FAQListSection', function () {
     scryRenderedComponentsWithType(instance, FAQListItem).length.should.equal(3);
   });
 
-  it('should expand children correctly', function (done) {
-    const faqs = RawFAQFactory.buildList(3);
+  it('should expand children correctly', function () {
+    const faqs = FAQFactory.buildList(3);
 
     instance = renderIntoDocument(
       <FAQListSection faqs={ faqs }/>
     );
 
-    const [title1, title2] = scryRenderedDOMComponentsWithClass(instance, 'faq-title');
-    let itemContents = scryRenderedComponentsWithType(instance, FAQListItem);
+    withAnimationDisabled(function () {
+      const [title1, title2] = scryRenderedDOMComponentsWithClass(instance, 'faq-title');
+      let itemContents = scryRenderedComponentsWithType(instance, FAQListItem);
 
-    Simulate.click(title2);
+      Simulate.click(title2);
 
-    scryRenderedComponentsWithType(itemContents[0], FAQItemContent).length.should.equal(0);
-    findRenderedComponentWithType(itemContents[1], FAQItemContent).should.be.ok();
-    scryRenderedComponentsWithType(itemContents[2], FAQItemContent).length.should.equal(0);
+      scryRenderedComponentsWithType(itemContents[0], FAQItemContent).length.should.equal(0);
+      findRenderedComponentWithType(itemContents[1], FAQItemContent).should.be.ok();
+      scryRenderedComponentsWithType(itemContents[2], FAQItemContent).length.should.equal(0);
 
-    Simulate.click(title1);
-    setTimeout(function () {
+      Simulate.click(title1);
+
       findRenderedComponentWithType(itemContents[0], FAQItemContent).should.be.ok();
       scryRenderedComponentsWithType(itemContents[1], FAQItemContent).length.should.equal(0);
       scryRenderedComponentsWithType(itemContents[2], FAQItemContent).length.should.equal(0);
-      done();
-    }, 300);
+    });
   });
 });
