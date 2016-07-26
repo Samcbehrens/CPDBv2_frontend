@@ -1,4 +1,4 @@
-import { softBlackColor, accentColor, lightGreyColor } from 'utils/styles';
+import { softBlackColor, accentColor, lightGreyColor, sanFranciscoTextFamily, minionProFamily } from 'utils/styles';
 
 
 export const wrapperStyle = {
@@ -17,7 +17,7 @@ export const wrapperStyle = {
 
 export const headLineStyle = {
   marginBottom: '79px',
-  fontFamily: '"Minion Pro Regular",sans-serif',
+  fontFamily: minionProFamily,
   fontWeight: 'normal',
   fontSize: '30px',
   color: softBlackColor
@@ -40,8 +40,8 @@ export const columnHeadLineStyle = {
   margin: '0',
   padding: '0 0 35px 0',
   color: softBlackColor,
-  fontSize: '13px',
-  fontFamily: '"San Francisco Text Web", sans-serif',
+  fontSize: '16px',
+  fontFamily: sanFranciscoTextFamily,
   fontWeight: '600',
   boxSizing: 'border-box'
 };
@@ -54,8 +54,8 @@ export const emailLinkWrapperStyle = {
 
 export const emailLinkStyle = {
   color: accentColor,
-  fontSize: '14px',
-  fontFamily: '"San Francisco Text Web", sans-serif',
+  fontSize: '16px',
+  fontFamily: sanFranciscoTextFamily,
   fontWeight: '600',
   textDecoration: 'none',
   verticalAlign: 'middle'
@@ -68,20 +68,19 @@ export const copyLinkStyle = {
 
 export const listElementStyle = {
   color: softBlackColor,
-  fontSize: '11px',
-  fontFamily: '"San Francisco Text Web", sans-serif',
-  fontWeight: '600',
-  marginBottom: '10px'
+  fontSize: '13px',
+  fontFamily: sanFranciscoTextFamily,
+  fontWeight: '600'
 };
 
 export const smallTextStyle = {
   color: softBlackColor,
-  fontSize: '11px',
-  fontFamily: '"San Francisco Text Web", sans-serif'
+  fontSize: '13px',
+  fontFamily: sanFranciscoTextFamily
 };
 
 export const paragraphStyle = {
-  fontFamily: '"Minion Pro Regular",sans-serif',
+  fontFamily: minionProFamily,
   fontWeight: 'normal',
   fontSize: '15px',
   margin: '0 0 9px 0',

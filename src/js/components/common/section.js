@@ -1,6 +1,7 @@
 import React, { PropTypes, Component } from 'react';
 import ConfiguredRadium from 'utils/configured-radium';
 
+import { BASE_TEMPLATE } from 'utils/constants';
 import { sectionWrapperStyle, headerStyle, contentStyle } from './section.style';
 
 
@@ -28,14 +29,14 @@ class Section extends Component {
     const { template } = this.props;
 
     return (
-      <div ref='wrapper' style={ this.getWrapperStyle() }>
+      <div className='section-wrapper' style={ this.getWrapperStyle() }>
         { this.state.noHeader ?
           null :
-          <div ref='header' style={ headerStyle[template] }>
+          <div className='section-header' style={ headerStyle[template] }>
             { this.renderHeader() }
           </div>
         }
-        <div ref='content' style={ contentStyle[template] }>
+        <div className='section-content' style={ contentStyle[template] }>
           { this.renderContent() }
         </div>
       </div>
@@ -50,7 +51,7 @@ Section.propTypes = {
 
 Section.defaultProps = {
   wrapperStyle: {},
-  template: 'base'
+  template: BASE_TEMPLATE
 };
 
 export default ConfiguredRadium(Section);
