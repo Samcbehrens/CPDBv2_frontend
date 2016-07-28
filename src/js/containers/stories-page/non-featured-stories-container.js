@@ -19,7 +19,7 @@ export class UnconnectedNonFeaturedStoriesContainer extends Component {
   componentDidMount() {
     window.addEventListener('scroll', this.handleScroll);
 
-    this.props.requestStories({ 'ordering': '-is_featured,path', offset: '6' });
+    this.props.requestStories({ offset: 15, 'ordering': '-is_featured,path' });
   }
 
   componentWillUnmount() {
@@ -40,7 +40,7 @@ export class UnconnectedNonFeaturedStoriesContainer extends Component {
 
     if (dataAvailable) {
       return (
-        <NonFeaturedStories stories={ nonFeaturedStories } handleStoryClick={ openBottomSheetWithStory }
+        <NonFeaturedStories stories={ nonFeaturedStories } onStoryClick={ openBottomSheetWithStory }
           moreDataAvailable={ moreDataAvailable }/>
       );
     } else {
