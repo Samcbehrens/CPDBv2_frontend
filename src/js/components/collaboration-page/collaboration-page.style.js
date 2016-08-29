@@ -19,7 +19,7 @@ export const headLineStyle = {
   marginBottom: '79px',
   fontFamily: minionProFamily,
   fontWeight: 'normal',
-  fontSize: '30px',
+  fontSize: '36px',
   color: softBlackColor
 };
 
@@ -82,7 +82,7 @@ export const smallTextStyle = {
 export const paragraphStyle = {
   fontFamily: minionProFamily,
   fontWeight: 'normal',
-  fontSize: '15px',
+  fontSize: '19px',
   margin: '0 0 9px 0',
   color: softBlackColor
 };
