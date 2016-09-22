@@ -7,13 +7,14 @@ import { assign } from 'lodash';
 import ConfiguredRadium from 'utils/configured-radium';
 import ClosableNavLink from 'components/closable-nav-link';
 import ResponsiveFixedWidthComponent from 'components/responsive/responsive-fixed-width-component';
-import { COLLAB_PATH, DATA_PATH, FAQ_PATH, STORIES_PATH } from 'utils/constants';
+import { ROOT_PATH, COLLAB_PATH, DATA_PATH, FAQ_PATH, STORIES_PATH } from 'utils/constants';
 import {
   navWrapperStyle, navStyle, logoWrapperStyle, logoStyle, spacerStyle,
   navWrapperCompactStyle, logoWrapperCompactStyle, wrapperCompactStyle
 } from './header.style';
 import { getCurrentPathname } from 'utils/dom';
 import { faster } from 'utils/spring-presets';
+import Link from 'components/common/react-router-link';
 
 
 const COMPACT_STYLE_PATHNAMES = [COLLAB_PATH, DATA_PATH, FAQ_PATH, STORIES_PATH];
@@ -69,7 +70,7 @@ class Header extends React.Component {
   }
 
   goToBasePath() {
-    browserHistory.push('/');
+    browserHistory.push(ROOT_PATH);
   }
 
   renderHeader(compact=false, style={}) {
@@ -77,7 +78,7 @@ class Header extends React.Component {
     let wrapperStyle = compact ? wrapperCompactStyle : null;
     wrapperStyle = assign({}, wrapperStyle, style);
 
-    if (!compact && currentPath !== '/') {
+    if (!compact && currentPath !== ROOT_PATH) {
       return (
         <div style={ spacerStyle }/>
       );
@@ -95,9 +96,9 @@ class Header extends React.Component {
               </ClosableNavLink>
             )) }
           </div>
-          <div style={ compact ? logoWrapperCompactStyle : logoWrapperStyle }>
+          <Link to={ ROOT_PATH } style={ compact ? logoWrapperCompactStyle : logoWrapperStyle }>
             <span style={ logoStyle }>CPDP</span>
-          </div>
+          </Link>
         </ResponsiveFixedWidthComponent>
       </div>
     );
