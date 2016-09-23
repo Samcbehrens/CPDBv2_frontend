@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import { isEqual } from 'lodash';
 
 import ConfiguredRadium from 'utils/configured-radium';
 import { FAQ_PATH } from 'utils/constants';
@@ -14,6 +15,10 @@ import ResponsiveStyleComponent, {
 
 
 class FAQSection extends ResponsiveStyleComponent {
+  shouldComponentUpdate(nextProps) {
+    return !isEqual(this.props, nextProps);
+  }
+
   responsiveStyle() {
     return {
       [EXTRA_WIDE]: {
