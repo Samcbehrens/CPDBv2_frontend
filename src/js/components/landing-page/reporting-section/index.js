@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react';
-import { isEqual } from 'lodash';
 
 import ConfiguredRadium from 'utils/configured-radium';
 import { STORIES_PATH } from 'utils/constants';
@@ -12,13 +11,10 @@ import MoreLink from 'components/common/more-link';
 import ResponsiveStyleComponent, {
   EXTRA_WIDE, DESKTOP, TABLET
 } from 'components/responsive/responsive-style-component';
+import PropsRerender from 'components/common/higher-order/props-rerender';
 
 
 class ReportingSection extends ResponsiveStyleComponent {
-  shouldComponentUpdate(nextProps) {
-    return !isEqual(this.props, nextProps);
-  }
-
   responsiveStyle() {
     return {
       [EXTRA_WIDE]: {
@@ -70,4 +66,4 @@ ReportingSection.propTypes = {
   stories: PropTypes.array
 };
 
-export default ConfiguredRadium(ReportingSection);
+export default PropsRerender(ConfiguredRadium(ReportingSection));
