@@ -34,7 +34,7 @@ class LandingPage extends ResponsiveStyleComponent {
   }
 
   renderWithResponsiveStyle(style) {
-    const { store, vftgSection, heroSection, collaborateSection, aboutSection } = this.props;
+    const { store, vftgSection, heroSection, collaborateSection, aboutSection, updateLandingPage } = this.props;
 
     return (
       <div>
@@ -63,7 +63,7 @@ class LandingPage extends ResponsiveStyleComponent {
               </div>
               <div style={ divideLineStyle }/>
               <div className='pure-u-1-1'>
-                <CollaborateSection { ...collaborateSection }/>
+                <CollaborateSection { ...collaborateSection } handleUpdate={ updateLandingPage }/>
               </div>
             </div>
           </ResponsiveFixedWidthComponent>
