@@ -1,80 +1,18 @@
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 
 import {
-  paragraphStyle, underlinedLinkStyle, contentStyle, paragraphWrapperStyle, wrapperStyle, headerStyle,
-  editLinkBaseStyle, editLinkHoverStyle, editLinkUnderlineBaseStyle, editLinkUnderlineHoverStyle,
-  moreLinkWrapperStyle, editModeWrapperStyle, buttonStyle
+  paragraphStyle, underlinedLinkStyle, contentStyle, paragraphWrapperStyle,
+  wrapperStyle, headerStyle, editBoxStyle
 } from './collaborate-section.style';
 import ResponsiveStyleComponent, {
   DESKTOP, TABLET, EXTRA_WIDE
 } from 'components/responsive/responsive-style-component';
-import ConfiguredRadium from 'utils/configured-radium';
-import MoreLink from 'components/common/more-link';
-import PropsRerender from 'components/common/higher-order/props-rerender';
-import { convertToRaw } from 'draft-js';
-import CollaborateContent from './collaborate-content';
-import CollaborateHeader from './collaborate-header';
+import PlainTextEditable from 'components/inline-editable/editable-section/plain-text-editable';
+import MultilineTextEditable from 'components/inline-editable/editable-section/multiline-text-editable';
+import EditToggle from 'components/inline-editable/editable-section/edit-toggle';
+import EditableSection from 'components/inline-editable/editable-section';
 
-
-class CollaborateSection extends ResponsiveStyleComponent {
-  constructor(props) {
-    super(props);
-    const { bodyEditorState, headerEditorState } = props;
-    this.state = {
-      editModeOn: false,
-      bodyEditorState,
-      headerEditorState
-    };
-
-    this.handleBodyChange = this.handleBodyChange.bind(this);
-    this.handleHeaderChange = this.handleHeaderChange.bind(this);
-    this.handleToggleEditable = this.handleToggleEditable.bind(this);
-    this.handleUpdateClick = this.handleUpdateClick.bind(this);
-  }
-
-  handleBodyChange(editorState) {
-    this.setState({ bodyEditorState: editorState });
-  }
-
-  handleHeaderChange(editorState) {
-    this.setState({ headerEditorState: editorState });
-  }
-
-  handleToggleEditable() {
-    const { editModeOn } = this.state;
-
-    this.setState({
-      editModeOn: !editModeOn
-    });
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const { bodyEditorState, headerEditorState } = nextProps;
-    this.setState({
-      bodyEditorState,
-      headerEditorState
-    });
-  }
-
-  handleUpdateClick() {
-    const { handleUpdate } = this.props;
-    const { bodyEditorState, editModeOn, headerEditorState } = this.state;
-    const collaborateContent = convertToRaw(bodyEditorState.getCurrentContent());
-    const collaborateHeader = headerEditorState
-      .getCurrentContent()
-      .getFirstBlock()
-      .getText();
-
-    handleUpdate({
-      'collaborate_header': collaborateHeader,
-      'collaborate_content': collaborateContent
-    }).then(() => {
-      this.setState({
-        editModeOn: !editModeOn
-      });
-    });
-  }
-
+class CollaborateSection extends Component {
   responsiveStyle() {
     return {
       [EXTRA_WIDE]: {
@@ -98,75 +36,40 @@ class CollaborateSection extends ResponsiveStyleComponent {
     };
   }
 
-  renderEditToggle() {
-    const { editModeOn } = this.context;
-
-    if (!editModeOn) {
-      return null;
-    }
+  renderWithResponsiveStyle(style) {
+    const { editToggleProps, fieldProps } = this.props;
 
     return (
-      <div style={ moreLinkWrapperStyle }>
-        {
-          !this.state.editModeOn ?
-            <MoreLink
-              style={ {
-                base: { base: editLinkBaseStyle, hover: editLinkHoverStyle },
-                underline: { base: editLinkUnderlineBaseStyle, hover: editLinkUnderlineHoverStyle }
-              } }
-              onClick={ this.handleToggleEditable }>
-              Edit
-            </MoreLink> :
-            <div>
-              <a onClick={ this.handleToggleEditable } style={ buttonStyle }>Cancel</a>
-              <a style={ buttonStyle } onClick={ this.handleUpdateClick }>Update</a>
-            </div>
-        }
+      <div style={ wrapperStyle }>
+        <div style={ style.header }>
+          <div style={ editBoxStyle }>
+            <PlainTextEditable { ...fieldProps['collaborate_header'] }/>
+          </div>
+          <EditToggle { ...editToggleProps }/>
+        </div>
+        <div style={ contentStyle }>
+          <MultilineTextEditable { ...fieldProps['collaborate_content'] } style={ {
+            wrapper: style.wrapper,
+            paragraph: style.paragraph
+          } }/>
+        </div>
       </div>
     );
   }
 
-  renderWithResponsiveStyle(style) {
-    const { headerText, body } = this.props;
-    const { editModeOn, bodyEditorState, headerEditorState } = this.state;
-
+  render() {
     return (
-      <div style={ [wrapperStyle, editModeOn && editModeWrapperStyle] }>
-        <div style={ style.header }>
-          <CollaborateHeader
-            headerText={ headerText }
-            onChange={ this.handleHeaderChange }
-            editModeOn={ editModeOn }
-            editorState={ headerEditorState }/>
-          { this.renderEditToggle() }
-        </div>
-        <div style={ contentStyle }>
-          <CollaborateContent
-            style={ style }
-            onChange={ this.handleBodyChange }
-            editModeOn={ editModeOn }
-            editorState={ bodyEditorState }
-            presenterContent={ body }/>
-        </div>
-      </div>
+      <ResponsiveStyleComponent
+        responsiveStyle={ this.responsiveStyle() }>
+        { this.renderWithResponsiveStyle.bind(this) }
+      </ResponsiveStyleComponent>
     );
   }
 }
 
 CollaborateSection.propTypes = {
-  headerText: PropTypes.string,
-  body: PropTypes.array,
-  bodyEditorState: PropTypes.object,
-  headerEditorState: PropTypes.object
+  editToggleProps: PropTypes.object,
+  fieldProps: PropTypes.object
 };
 
-CollaborateSection.defaultProps = {
-  body: ['We are collecting and publishing information that sheds light on police misconduct.',
-        'If you have documents or datasets you would like to publish, please email us, or learn more.']
-};
-
-CollaborateSection.contextTypes = {
-  editModeOn: PropTypes.bool
-};
-
-export default PropsRerender(ConfiguredRadium(CollaborateSection));
+export default EditableSection(CollaborateSection);

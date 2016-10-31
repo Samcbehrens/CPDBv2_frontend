@@ -1,0 +1,6 @@
+.public-DraftEditorPlaceholder-root {
+  opacity: .5;
+  position: absolute;
+  pointer-events: none;
+  color: #D002CD;
+}
