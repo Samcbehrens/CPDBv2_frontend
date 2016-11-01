@@ -1,8 +1,9 @@
 import {
-  pinkishGreyColor, altoColor, mediumGrayColor, fashionPinkColor
+  pinkishGreyColor, altoColor, mediumGrayColor
 } from 'utils/styles';
+import { DESKTOP, TABLET, EXTRA_WIDE } from 'utils/constants';
 
-export const leftBarStyle = {
+const _leftBarStyle = {
   display: 'inline-block',
   boxSizing: 'border-box',
   paddingLeft: '32px',
@@ -12,7 +13,15 @@ export const leftBarStyle = {
   minHeight: '663px'
 };
 
-export const rightBarStyle = {
+export const leftBarStyle = {
+  [EXTRA_WIDE]: _leftBarStyle,
+  [DESKTOP]: {
+    ..._leftBarStyle,
+    width: '400px'
+  }
+};
+
+const _rightBarStyle = {
   display: 'inline-block',
   boxSizing: 'border-box',
   padding: '77px 32px 0',
@@ -22,6 +31,14 @@ export const rightBarStyle = {
   marginLeft: '-1px',
   fontSize: '18px',
   minHeight: '663px'
+};
+
+export const rightBarStyle = {
+  [EXTRA_WIDE]: _rightBarStyle,
+  [DESKTOP]: {
+    ..._rightBarStyle,
+    width: '590px'
+  }
 };
 
 export const wrapperStyle = {
@@ -36,7 +53,7 @@ export const excerptStyle = {
   },
   paragraph: {
     marginTop: 0,
-    marginBottom: '20px'
+    marginBottom: '31px'
   }
 };
 
@@ -44,35 +61,56 @@ export const infoRowStyle = {
   boxSizing: 'border-box',
   borderTop: `1px solid ${altoColor}`,
   height: '40px',
+  fontSize: '14px',
+  fontWeight: 400,
   padding: '11px 0'
 };
 
-export const labelStyle = {
+const _labelStyle = {
   color: mediumGrayColor,
   width: '218px',
   display: 'inline-block'
 };
 
-export const inputStyle = {
-  border: 'none',
-  outline: 'none',
-  backgroundColor: 'transparent',
-  display: 'inline-block'
+export const labelStyle = {
+  [EXTRA_WIDE]: _labelStyle,
+  [DESKTOP]: {
+    ..._labelStyle,
+    width: '160px'
+  },
+  [TABLET]: {
+    ..._labelStyle,
+    width: '114px'
+  }
 };
 
-export const inputEditStyle = {
-  ...inputStyle,
-  color: fashionPinkColor
+const _headerTitleStyle = {
+  fontSize: '32px',
+  fontWeight: '600',
+  paddingRight: '32px'
 };
 
 export const headerTitleStyle = {
-  fontSize: '32px',
-  fontWeight: '600',
+  [EXTRA_WIDE]: _headerTitleStyle,
+  [DESKTOP]: {
+    ..._headerTitleStyle,
+    fontSize: '26px'
+  },
+  [TABLET]: _headerTitleStyle
+};
+
+export const infoRowsStyle = {
   marginBottom: '32px',
-  paddingRight: '32px'
+  marginTop: '32px',
+  borderBottom: `1px solid ${altoColor}`
 };
 
 export const contentWrapperStyle = {
   overflowY: 'auto',
   height: '663px'
+};
+
+export const oneColumnStyle = {
+  padding: '74px 32px 0 32px',
+  boxSizing: 'border-box'
 };
