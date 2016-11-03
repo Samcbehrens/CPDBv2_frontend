@@ -24,6 +24,9 @@ export const burntOrangeColor = '#BC5800';
 export const trueGreenColor = '#13AA00';
 export const pinkishGreyColor = '#CCCCCC';
 export const black32Color = 'rgba(0, 0, 0, 0.32)';
+export const lightBlackColor = 'rgba(0, 0, 0, 0.15)';
+export const whiteTwoColor = '#DBDBDB';
+export const warmGreyColor = '#9B9B9B';
 
 export const sanFranciscoTextFamily = '"San Francisco Text", sans-serif';
 export const minionProFamily = '"Minion Pro Regular",sans-serif';
