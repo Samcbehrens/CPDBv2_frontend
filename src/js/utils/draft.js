@@ -1,5 +1,7 @@
-import { convertFromRaw, EditorState, genKey } from 'draft-js';
+import { convertFromRaw, EditorState, genKey, Entity, RichUtils } from 'draft-js';
 import { isEmpty, map, find } from 'lodash';
+
+import defaultDecorator from 'decorators';
 
 
 export const contentStateToTextArray = contentState => (
@@ -10,8 +12,8 @@ export const contentStateToTextArray = contentState => (
 
 export const convertContentStateToEditorState = contentState => (
   isEmpty(contentState) ?
-    EditorState.createEmpty() :
-    EditorState.createWithContent(convertFromRaw(contentState))
+    EditorState.createEmpty(defaultDecorator) :
+    EditorState.createWithContent(convertFromRaw(contentState), defaultDecorator)
 );
 
 export const getField = (fields, name) => find(fields, (field) => (field.name===name));
@@ -67,3 +69,32 @@ export const createEmptyDateField = (name) => ({
 export const getFieldOrCreateEmptyWithEditorState = (fields, name, type) => (
   getField(fields, name)
   || createFieldWithEmptyEditorState(name, type));
+
+export const linkEntitySelected = (editorState) => {
+  const selectionState = editorState.getSelection();
+  const blockKey = selectionState.getAnchorKey();
+  const contentBlock = editorState.getCurrentContent().getBlockForKey(blockKey);
+
+  const entityKey = contentBlock.getEntityAt(selectionState.getAnchorOffset());
+
+  if (entityKey != null) {
+    const entity = Entity.get(entityKey);
+
+    return entity.getType() === 'LINK';
+  }
+
+  return false;
+};
+
+export const createLinkEntity = (editorState, data) => {
+  const entityKey = Entity.create('LINK', 'MUTABLE', data);
+  return RichUtils.toggleLink(editorState, editorState.getSelection(), entityKey);
+};
+
+export const removeLinkEntity = (editorState) =>
+  RichUtils.toggleLink(editorState, editorState.getSelection(), null);
+
+export const getSelectionStartBlockKey = editorState => {
+  const selectionState = editorState.getSelection();
+  return selectionState.getStartKey();
+};

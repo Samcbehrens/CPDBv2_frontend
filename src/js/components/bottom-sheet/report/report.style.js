@@ -28,6 +28,7 @@ const _rightBarStyle = () => ({
   width: '704px',
   verticalAlign: 'top',
   borderLeft: `1px solid ${pinkishGreyColor}`,
+  fontFamily: sanFranciscoTextFamily,
   marginLeft: '-1px',
   fontSize: '18px',
   minHeight: `${window.innerHeight - 88}px`
@@ -112,6 +113,13 @@ export const contentWrapperStyle = () => ({
   overflowY: 'auto',
   height: `${window.innerHeight - 88}px`
 });
+
+export const articleLinkStyle = {
+  paragraph: {
+    fontSize: '14px',
+    textAlign: 'right'
+  }
+};
 
 export const oneColumnStyle = {
   padding: '74px 32px 0 32px',
