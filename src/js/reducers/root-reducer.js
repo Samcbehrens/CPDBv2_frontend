@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import { routerReducer } from 'react-router-redux';
 
 import faqPage from './faq-page';
 import landingPage from './landing-page';
@@ -7,7 +8,6 @@ import bottomSheet from './bottom-sheet';
 import reportingPage from './reporting-page';
 import reports from './reports';
 import faqs from './faqs';
-import { routerReducer } from 'react-router-redux';
 
 
 export default combineReducers({
