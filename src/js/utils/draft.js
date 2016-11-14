@@ -1,5 +1,6 @@
 import { convertFromRaw, EditorState, genKey, Entity, RichUtils } from 'draft-js';
 import { isEmpty, map, find } from 'lodash';
+import moment from 'moment';
 
 import defaultDecorator from 'decorators';
 
@@ -10,10 +11,10 @@ export const contentStateToTextArray = contentState => (
     map(contentState.getBlocksAsArray(), block => block.getText())
 );
 
-export const convertContentStateToEditorState = contentState => (
-  isEmpty(contentState) ?
+export const convertContentStateToEditorState = rawContentState => (
+  isEmpty(rawContentState) ?
     EditorState.createEmpty(defaultDecorator) :
-    EditorState.createWithContent(convertFromRaw(contentState), defaultDecorator)
+    EditorState.createWithContent(convertFromRaw(rawContentState), defaultDecorator)
 );
 
 export const getField = (fields, name) => find(fields, (field) => (field.name===name));
@@ -63,7 +64,7 @@ export const createEmptyStringField = (name, type='string') => ({
 export const createEmptyDateField = (name) => ({
   name,
   type: 'date',
-  value: '1900-01-01'
+  value: moment().format('YYYY-MM-DD')
 });
 
 export const getFieldOrCreateEmptyWithEditorState = (fields, name, type) => (

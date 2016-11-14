@@ -1,7 +1,6 @@
 import { createSelector } from 'reselect';
-import { map } from 'lodash';
+import { map, values } from 'lodash';
 
-import { getPaginationInfo } from 'selectors/common/pagination-selector';
 import { getField, plainTextValueToString, multilineTextValueToArray } from 'utils/draft';
 
 
@@ -18,12 +17,10 @@ export const faqTransform = faq => {
 
 export const faqsSelector = createSelector(getFAQs, faqs => map(faqs, faq => faqTransform(faq)));
 
-export const paginationSelector = createSelector(getFAQs, getPaginationInfo);
-
 export const dataAvailableSelector = createSelector(
   getIsRequesting,
   getFAQs,
   (isRequesting, faqs) => {
-    return !isRequesting && faqs.length > 0;
+    return !isRequesting && values(faqs).length > 0;
   }
 );

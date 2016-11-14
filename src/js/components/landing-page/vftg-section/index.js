@@ -10,7 +10,6 @@ import {
 import ResponsiveStyleComponent from 'components/responsive/responsive-style-component';
 import { TABLET, DESKTOP, EXTRA_WIDE } from 'utils/constants';
 import SubscribeForm from 'containers/landing-page/vftg-section/subscribe-form-container';
-import createFunctionWithTimeout from 'utils/create-function-with-timeout';
 import PlainTextEditable from 'components/inline-editable/editable-section/plain-text-editable';
 import LinkPicker from 'components/inline-editable/link-picker';
 import EditableSection from 'components/inline-editable/editable-section';
@@ -18,10 +17,9 @@ import EditToggle from 'components/inline-editable/editable-section/edit-toggle'
 import DatePicker from 'components/inline-editable/date-picker';
 
 
-class VFTGSection extends Component {
+export class VFTGSection extends Component {
   constructor(props) {
     super(props);
-    this.handleClickVftgLink = this.handleClickVftgLink.bind(this);
   }
 
   responsiveStyle() {
@@ -42,14 +40,6 @@ class VFTGSection extends Component {
         header: { ...headerStyle.base, ...headerStyle.tablet }
       }
     };
-  }
-
-  handleClickVftgLink(event) {
-    event.preventDefault();
-
-    global.ga('send', 'event', 'VFTG section: news link', 'click', {
-      hitCallback: createFunctionWithTimeout(() => window.location = this.props.contentLink )
-    });
   }
 
   renderWithResponsiveStyle(style) {
