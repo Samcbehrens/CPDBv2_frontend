@@ -6,9 +6,9 @@ import AppContainer from 'containers/app-container';
 import LandingPageContainer from 'containers/landing-page';
 import CollaborationPage from 'components/collaboration-page/collaboration-page';
 import FAQPage from 'components/faq-page/faq-page';
-import ReportingPage from 'components/reporting-page';
 import AutocompletePage from 'components/landing-page/autocomplete/autocomplete-page';
-import { COLLAB_PATH, FAQ_PATH, STORIES_PATH } from 'utils/constants';
+import ReportingPage from 'components/reporting-page';
+import { COLLAB_PATH, FAQ_PATH, STORIES_PATH, SEARCH_PATH } from 'utils/constants';
 import configureStore from 'store';
 import history from 'utils/history';
 
@@ -28,13 +28,14 @@ export default class RouterRoot extends Component {
       <Route path={ FAQ_PATH } component={ FAQPage } key='4'
         onEnter={ () => global.ga('send', 'screenview', { screenName: 'FAQs' }) }/>
     ];
+
     return (
       <Provider store={ store }>
         <Router history={ history }>
           <Route path='/(edit)' component={ AppContainer }>
             { routes }
           </Route>
-          <Route path='/search' component={ AutocompletePage }/>
+          <Route path={ SEARCH_PATH } component={ AutocompletePage }/>
         </Router>
       </Provider>
     );
