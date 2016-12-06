@@ -1,4 +1,8 @@
-import { editMode } from 'utils/edit-path';
+import { stub } from 'sinon';
+import { browserHistory } from 'react-router';
+
+import * as utilsDom from 'utils/dom';
+import { editMode, pushPathPreserveEditMode } from 'utils/edit-path';
 
 
 describe('EditPath utils', function () {
@@ -13,13 +17,29 @@ describe('EditPath utils', function () {
       editMode('/aaaa').should.equal('/edit/aaaa');
       editMode('aaaa').should.equal('/edit/aaaa');
     });
+  });
 
-    // it('should return offset key from ancestor', function () {
-    //   const div = document.createElement('DIV');
-    //   div.setAttribute('data-offset-key', '123');
-    //   const div2 = document.createElement('DIV');
-    //   div.appendChild(div2);
-    //   getOffsetKey(div2).should.eql('123');
-    // });
+  describe('pushPathPreserveEditMode', function () {
+    beforeEach(function () {
+      stub(browserHistory, 'push');
+    });
+
+    afterEach(function () {
+      browserHistory.push.restore();
+    });
+
+    it('should preserve edit mode when push a new path', function () {
+      stub(utilsDom, 'getCurrentPathname', () => '/edit/reporting/13/');
+      pushPathPreserveEditMode('/');
+      browserHistory.push.args[0][0].should.eql('/edit/');
+      utilsDom.getCurrentPathname.restore();
+    });
+
+    it('should preserve non edit mode when push a new path', function () {
+      stub(utilsDom, 'getCurrentPathname', () => '/reporting/13/');
+      pushPathPreserveEditMode('/edit/');
+      browserHistory.push.args[0][0].should.eql('/');
+      utilsDom.getCurrentPathname.restore();
+    });
   });
 });
