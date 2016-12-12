@@ -1,56 +1,71 @@
-import { accentColor, softBlackColor, wildSandColor, altoColor, sanFranciscoTextFamily } from 'utils/styles';
+import { spindleColor, softBlackColor, sanFranciscoTextFamily } from 'utils/styles';
+import { imgUrl } from 'utils/static-assets';
 
+
+export const outerWrapperStyle = {
+  boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.15)',
+  position: 'relative',
+  zIndex: 1
+};
 
 export const wrapperStyle = {
-  backgroundColor: wildSandColor
+  height: '464px',
+  padding: '32px 32px 100px 32px',
+  position: 'relative'
 };
 
-export const leftColumnWrapper = {
-  paddingRight: '50px',
-  borderRight: `1px solid ${altoColor}`
+export const leftColumnWrapperStyle = {
+  width: '50%',
+  background: spindleColor,
+  display: 'inline-block'
 };
 
-export const rightColumnWrapper = {
-  paddingLeft: '50px'
+export const sunburstGraphicStyle = {
+  background: `url("${imgUrl('sunburst-graphic.svg')}") no-repeat scroll 0 0 transparent`,
+  width: '242px',
+  height: '260px',
+  margin: '86px auto'
 };
 
-export const innerWrapperStyle = {
-  backgroundColor: 'white',
-  margin: '5px 32px 60px',
-  padding: '50px',
-  boxShadow: '0 1px 4px 0 rgba(0, 0, 0, 0.17)'
+export const rightColumnWrapperStyle = {
+  width: '50%',
+  display: 'inline-block',
+  verticalAlign: 'top',
+  paddingLeft: '32px',
+  paddingRight: '25px',
+  boxSizing: 'border-box'
 };
 
-export const linkStyle = {
+export const heroTitleStyle = {
+  fontFamily: sanFranciscoTextFamily,
+  fontSize: '36px',
+  fontWeight: 600,
   color: softBlackColor,
+  marginBottom: '23px'
+};
+
+const heroTextStyle = {
+  fontFamily: sanFranciscoTextFamily,
+  fontSize: '16px',
+  fontWeight: 400,
+  color: softBlackColor
+};
+
+export const heroComplaintTextStyle = {
+  ...heroTextStyle,
+  padding: '25px 0'
+};
+
+export const heroUseOfForceStyle = {
+  ...heroTextStyle,
+  borderTop: `1px solid ${softBlackColor}`,
+  paddingTop: '25px'
+};
+
+export const editToggleStyle = {
+  position: 'absolute',
+  top: '16px',
+  right: '16px',
   fontSize: '13px',
-  fontFamily: sanFranciscoTextFamily,
-  fontWeight: '600',
-  textDecoration: 'none',
-  cursor: 'pointer',
-  ':hover': {
-    color: accentColor
-  }
-};
-
-export const paragraphStyle = {
-  fontFamily: sanFranciscoTextFamily,
-  marginTop: '18px',
-  marginBottom: '5px',
-  fontSize: '15px'
-};
-
-export const previewImageStyle = {
-  base: {
-    height: '278px',
-    cursor: 'pointer'
-  },
-
-  extraWide: {
-    height: '358px'
-  },
-
-  tablet: {
-    height: '192px'
-  }
+  fontWeight: 300
 };
