@@ -4,7 +4,8 @@ import { FAQ_PATH } from 'utils/constants';
 import FAQItem from 'components/common/faq/faq-item';
 import FAQSectionPlaceHolder from 'components/landing-page/faq-section/faq-section-place-holder';
 import {
-  headerStyle, underlineFAQStyle, wrapperStyle, editBoxStyle, loadMoreStyle, contentStyle
+  headerStyle, underlineFAQStyle, wrapperStyle, editBoxStyle,
+  loadMoreStyle, loadMoreHoverStyle, contentStyle
 } from './faq-section.style';
 import ResponsiveStyleComponent, {
   EXTRA_WIDE, DESKTOP, TABLET
@@ -13,20 +14,23 @@ import EditableSection from 'components/inline-editable/editable-section';
 import EditToggle from 'components/inline-editable/editable-section/edit-toggle';
 import StrategyForm from 'components/inline-editable/editable-section/strategy-form';
 import RichTextEditable from 'components/inline-editable/editable-section/rich-text-editable';
-import Link from 'components/common/react-router-link';
+import HoverableLink from 'components/common/hoverable-link';
 
 
 export class FAQSection extends Component {
   responsiveStyle() {
     return {
       [EXTRA_WIDE]: {
-        header: { ...headerStyle.base, ...headerStyle.extraWide }
+        header: { ...headerStyle.base, ...headerStyle.extraWide },
+        wrapper: { ...wrapperStyle.base, ...wrapperStyle.extraWide }
       },
       [DESKTOP]: {
-        header: { ...headerStyle.base, ...headerStyle.desktop }
+        header: { ...headerStyle.base, ...headerStyle.desktop },
+        wrapper: { ...wrapperStyle.base, ...wrapperStyle.desktop }
       },
       [TABLET]: {
-        header: { ...headerStyle.base, ...headerStyle.tablet }
+        header: { ...headerStyle.base, ...headerStyle.tablet },
+        wrapper: { ...wrapperStyle.base, ...wrapperStyle.tablet }
       }
     };
   }
@@ -46,7 +50,14 @@ export class FAQSection extends Component {
                 wrapperStyle={ [ind < faqs.length - 1 && underlineFAQStyle] }/>
             );
           }) }
-          <Link to={ `/${FAQ_PATH}` } style={ loadMoreStyle }>More</Link>
+          <HoverableLink
+            to={ `/${FAQ_PATH}` }
+            style={ {
+              base: loadMoreStyle,
+              hover: loadMoreHoverStyle
+            } }>
+            More
+          </HoverableLink>
         </div>
       );
     } else {
@@ -78,7 +89,7 @@ export class FAQSection extends Component {
 
   renderWithResponsiveStyle(style) {
     return (
-      <div style={ wrapperStyle }>
+      <div style={ style.wrapper }>
         <div style={ contentStyle }>
           { this.renderHeader(style) }
           { this.renderContent() }

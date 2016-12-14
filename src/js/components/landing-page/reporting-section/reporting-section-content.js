@@ -2,11 +2,11 @@ import React, { PropTypes, Component } from 'react';
 
 import MasonryLayout from 'components/common/masonry-layout';
 import PropsRerender from 'components/common/higher-order/props-rerender';
-import Link from 'components/common/react-router-link';
-import { wrapperStyle, borderSleeveStyle, loadMoreStyle } from './reporting-section-content.style';
+import { wrapperStyle, borderSleeveStyle } from './reporting-section-content.style';
 import ReportGroup from 'components/reporting-page/report-group';
-import { STORIES_PATH } from 'utils/constants';
 import { masonrySizes } from 'components/reporting-page/group-types';
+import MoreLink from './more-link';
+import { STORIES_PATH } from 'utils/constants';
 
 class ReportingSectionContent extends Component {
   render() {
@@ -26,7 +26,7 @@ class ReportingSectionContent extends Component {
             )
           }
         </MasonryLayout>
-        <Link to={ `/${STORIES_PATH}` } style={ loadMoreStyle }>More</Link>
+        <MoreLink to={ `/${STORIES_PATH}` }>More</MoreLink>
       </div>
     );
   }
