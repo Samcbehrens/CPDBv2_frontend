@@ -19,6 +19,21 @@ FAQListSectionContextWrapper.childContextTypes = {
   editModeOn: PropTypes.bool
 };
 
+function createEditorStateStub(plainText) {
+  return {
+    value: {
+      getCurrentContent: () => {
+        return {
+          getPlainText: () => {
+            return plainText;
+          }
+        }
+      }
+    }
+  };
+}
+
+
 describe('FAQListSection', function () {
   let instance, stubTrackClickedFaqItem;
   const faqs = [
@@ -49,6 +64,8 @@ describe('FAQListSection', function () {
   });
 
   it('should expand children correctly without editModeOn', function () {
+    const stubTrackEvent = stub(FAQListSection.prototype, 'trackEvent');
+
     instance = renderIntoDocument(
       <FAQListSection faqs={ faqs }/>
     );
@@ -69,6 +86,46 @@ describe('FAQListSection', function () {
       scryRenderedComponentsWithType(itemContents[1], FAQItemContent).length.should.equal(0);
       scryRenderedComponentsWithType(itemContents[2], FAQItemContent).length.should.equal(0);
     });
+
+    stubTrackEvent.restore();
+  });
+
+  it('should send event to Intercom when expanding children without editModeOn', function () {
+    const stubTrackEvent = stub(FAQListSection.prototype, 'trackEvent');
+
+    const faqs = [{
+      id: 1,
+      fieldProps: {
+        question: {}
+      }
+    }, {
+      id: 2,
+      fieldProps: {
+        question: {}
+      }
+    }, {
+      id: 3,
+      fieldProps: {
+        question: {}
+      }
+    }];
+
+    instance = renderIntoDocument(
+      <FAQListSection faqs={ faqs }/>
+    );
+
+    withAnimationDisabled(function () {
+      const [title1, title2] = scryRenderedDOMComponentsWithClass(instance, 'faq-title');
+      scryRenderedComponentsWithType(instance, FAQListItem);
+
+      Simulate.click(title2);
+      stubTrackEvent.calledWith(faqs[1]).should.equal(true);
+
+      Simulate.click(title1);
+      stubTrackEvent.calledWith(faqs[0]).should.equal(true);
+    });
+
+    stubTrackEvent.restore();
   });
 
   it('should send event to Intercom when expanding children without editModeOn', function () {
@@ -157,6 +214,30 @@ describe('FAQListSection', function () {
       Simulate.click(addFAQBtn);
 
       openBottom.called.should.be.true();
+    });
+  });
+
+  describe('trackEvent', function() {
+    let stubTrackClickedFaqItem;
+
+    beforeEach(function() {
+      stubTrackClickedFaqItem = stub(IntercomUtil, 'trackClickedFaqItem');
+    });
+
+    afterEach(function() {
+      stubTrackClickedFaqItem.restore();
+    });
+
+    it('should call Intercom tracking util', function() {
+      FAQListSection.prototype.trackEvent({
+        id: 9,
+        fieldProps: {
+          question: createEditorStateStub('q'),
+          answer: createEditorStateStub('a')
+        }
+      });
+
+      stubTrackClickedFaqItem.calledWith(9, 'q', 'a').should.equal(true);
     });
   });
 });
