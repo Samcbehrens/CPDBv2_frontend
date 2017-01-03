@@ -27,7 +27,7 @@ function createEditorStateStub(plainText) {
           getPlainText: () => {
             return plainText;
           }
-        }
+        };
       }
     }
   };
@@ -128,37 +128,6 @@ describe('FAQListSection', function () {
     stubTrackEvent.restore();
   });
 
-  it('should send event to Intercom when expanding children without editModeOn', function () {
-    const faqs = [{
-      id: 1,
-      question: 'a',
-      answer: ['b']
-    }, {
-      id: 2,
-      question: 'c',
-      answer: ['d']
-    }, {
-      id: 3,
-      question: 'e',
-      answer: ['f']
-    }];
-
-    instance = renderIntoDocument(
-      <FAQListSection faqs={ faqs }/>
-    );
-
-    withAnimationDisabled(function () {
-      const [title1, title2] = scryRenderedDOMComponentsWithClass(instance, 'faq-title');
-      let itemContents = scryRenderedComponentsWithType(instance, FAQListItem);
-
-      Simulate.click(title2);
-      stubTrackClickedFaqItem.calledWith(2, 'c', ['d']).should.equal(true);
-
-      Simulate.click(title1);
-      stubTrackClickedFaqItem.calledWith(1, 'a', ['b']).should.equal(true);
-    });
-  });
-
   it('should openBottomSheetWithFAQ when click on faq-item with editModeOn', function () {
     const openBottom = spy();
 
@@ -216,28 +185,29 @@ describe('FAQListSection', function () {
       openBottom.called.should.be.true();
     });
   });
+});
 
-  describe('trackEvent', function() {
-    let stubTrackClickedFaqItem;
 
-    beforeEach(function() {
-      stubTrackClickedFaqItem = stub(IntercomUtil, 'trackClickedFaqItem');
+describe('trackEvent', function () {
+  let stubTrackClickedFaqItem;
+
+  beforeEach(function () {
+    stubTrackClickedFaqItem = stub(IntercomUtil, 'trackClickedFaqItem');
+  });
+
+  afterEach(function () {
+    stubTrackClickedFaqItem.restore();
+  });
+
+  it('should call Intercom tracking util', function () {
+    FAQListSection.prototype.trackEvent({
+      id: 9,
+      fieldProps: {
+        question: createEditorStateStub('q'),
+        answer: createEditorStateStub('a')
+      }
     });
 
-    afterEach(function() {
-      stubTrackClickedFaqItem.restore();
-    });
-
-    it('should call Intercom tracking util', function() {
-      FAQListSection.prototype.trackEvent({
-        id: 9,
-        fieldProps: {
-          question: createEditorStateStub('q'),
-          answer: createEditorStateStub('a')
-        }
-      });
-
-      stubTrackClickedFaqItem.calledWith(9, 'q', 'a').should.equal(true);
-    });
+    stubTrackClickedFaqItem.calledWith(9, 'q', 'a').should.equal(true);
   });
 });
