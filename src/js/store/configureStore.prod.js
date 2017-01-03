@@ -17,7 +17,7 @@ export default function configureStore(initialState) {
     initialState,
     compose(
       applyMiddleware(
-        thunk, configuredAxiosMiddleware, bodyScrollMiddleware, bottomSheetPath, intercomLogging
+        thunk, configuredAxiosMiddleware, bodyScrollMiddleware, bottomSheetPath, intercomLogging,
         routerMiddleware(browserHistory)
       ),
       persistState(()=>{}, localStorageConfig)
