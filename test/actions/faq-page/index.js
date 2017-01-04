@@ -47,12 +47,12 @@ describe('faqPage actions', function () {
         payload: {
           request: {
             url: FAQS_API_URL,
-            method: 'POST',
+            method: 'post',
             headers: {
               Authorization: null
             },
             data: data,
-            adapter: undefined
+            adapter: null
           }
         }
       });
@@ -69,12 +69,12 @@ describe('faqPage actions', function () {
         payload: {
           request: {
             url: `${FAQS_API_URL}${id}/`,
-            method: 'PATCH',
+            method: 'patch',
             headers: {
               Authorization: null
             },
             data: data,
-            adapter: undefined
+            adapter: null
           }
         }
       });
