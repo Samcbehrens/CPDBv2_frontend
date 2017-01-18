@@ -1,5 +1,0 @@
----
-- name: Install Budo
-  command: yarn global add budo@8.2.1
-  become: yes
-  become_user: root

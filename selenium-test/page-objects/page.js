@@ -1,12 +1,19 @@
 'use strict';
 
-import Section from './section';
+import Section from './sections/section';
+import LoginScreen from './sections/login-screen';
 
 
 export default class Page extends Section {
+  constructor() {
+    super();
+
+    this.loginScreen = new LoginScreen();
+  }
+
   open(path) {
     browser.deleteCookie();
-    browser.url('/' + path);
+    browser.url(path);
   }
 
   get currentBasePath() {
@@ -14,16 +21,27 @@ export default class Page extends Section {
     return url.replace(/https?:\/\/[^/]+/, '');
   }
 
+  openEditMode() {
+    browser.keys('Escape');
+    this.loginScreen.login();
+  }
+
+  isRichTextEditorEmpty(element) {
+    return element.element('.public-DraftEditorPlaceholder-root').state === 'success';
+  }
+
   selectText(selector) {
     browser.execute(function (selector) {
-      let element;
 
-      if (selector.startsWith('/')) {
-        element = document.evaluate(
-          selector, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
-      } else {
-        element = document.querySelector(selector);
+      function getElementBySelector(selector) {
+        if (selector.startsWith('/')) {
+          return document.evaluate(selector, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+        } else {
+          return document.querySelector(selector);
+        }
       }
+
+      const element = getElementBySelector(selector);
 
       const startInd = 0;
       const endInd = element.children.length;
