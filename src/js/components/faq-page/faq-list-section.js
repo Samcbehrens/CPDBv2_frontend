@@ -2,7 +2,6 @@ import React, { Component, PropTypes } from 'react';
 
 import DraggableFAQListItem from './draggable-faq-list-item';
 import { wrapperStyle, addFaqButtonStyle } from './faq-list-section.style';
-import { trackClickedFaqItem } from 'utils/intercom';
 
 export default class FAQListSection extends Component {
   constructor(props) {
@@ -14,17 +13,17 @@ export default class FAQListSection extends Component {
     props.requestFAQs();
   }
 
-  trackEvent(faq) {
+  dispatchExpandFAQAction(expandFAQ, faq) {
     const { id, fieldProps } = faq;
     const answer = fieldProps.answer.value.getCurrentContent().getPlainText();
     const question = fieldProps.question.value.getCurrentContent().getPlainText();
-    trackClickedFaqItem(id, question, answer);
+    expandFAQ({ id, question, answer });
   }
 
   handleClick(faq) {
     const { editModeOn } = this.context;
     const { expandedId } = this.state;
-    const { openBottomSheetWithFAQ } = this.props;
+    const { openBottomSheetWithFAQ, expandFAQ } = this.props;
     const { id } = faq;
 
     if (editModeOn) {
@@ -38,7 +37,7 @@ export default class FAQListSection extends Component {
         });
 
         if (nextId !== null) {
-          this.trackEvent(faq);
+          this.dispatchExpandFAQAction(expandFAQ, faq);
         }
       }
     }
@@ -86,6 +85,7 @@ FAQListSection.propTypes = {
   faqs: PropTypes.array.isRequired,
   openBottomSheetWithFAQ: PropTypes.func,
   openBottomSheetToCreateFAQ: PropTypes.func,
+  expandFAQ: PropTypes.func,
   requestFAQs: PropTypes.func,
   findItem: PropTypes.func,
   moveItem: PropTypes.func,
