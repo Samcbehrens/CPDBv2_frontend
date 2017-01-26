@@ -41,13 +41,6 @@ export const FORM_FAILURE = 'FORM_FAILURE';
 
 export const ENTITY_LINK = 'LINK';
 
-export const V1_URL = 'https://beta.cpdb.co';
-
-export const ALPHA_NUMBERIC = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q',
-                               'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h',
-                               'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y',
-                               'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
-
 
 let API_ROOT = `${global.location.origin}/api/v1/`;
 let API_ROOT_V2 = `${global.location.origin}/api/v2/`;
@@ -68,6 +61,14 @@ export const RESET_PASSWORD_URL = `${V2_ROOT_PATH}users/forgot-password/`;
 export const REPORTS_API_URL = `${V2_ROOT_PATH}reports/`;
 export const FAQS_API_URL = `${V2_ROOT_PATH}faqs/`;
 export const MAIL_CHIMP_URL = '/vftg/';
+
+export const V1_URL = 'https://beta.cpdb.co';
+
+export const ALPHA_NUMBERIC = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q',
+                               'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h',
+                               'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y',
+                               'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+
 export const EVENTS_API_URL = `${V2_ROOT_PATH}events/`;
 
 export const DragTypes = {
