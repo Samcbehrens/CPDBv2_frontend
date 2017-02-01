@@ -4,8 +4,8 @@ import ResponsiveStyleComponent, {
   DESKTOP, TABLET, EXTRA_WIDE
 } from 'components/responsive/responsive-style-component';
 import RichTextEditable from 'components/inline-editable/editable-section/rich-text-editable';
-import ConfiguredRadium from 'utils/configured-radium';
-import { faqItemStyle, faqItemTitleStyle, checkboxStyle, titleReducedWidth } from './faq-item.style';
+import Hoverable from 'components/common/higher-order/hoverable';
+import { faqItemStyle, checkboxStyle, titleReducedWidth } from './faq-item.style';
 
 
 class FAQItem extends Component {
@@ -30,11 +30,18 @@ class FAQItem extends Component {
   }
 
   renderWithResponsiveStyle(style) {
-    const { faqId, onClick, wrapperStyle, fieldProps, showStar } = this.props;
+    const { faqId, onClick, wrapperStyle, fieldProps, hovering, showStar } = this.props;
     const { starred } = this.state;
 
     return (
-      <div key={ style.screen } style={ { ...faqItemStyle, ...wrapperStyle } } className='test--faq-item'>
+      <div key={ style.screen }
+        style={ {
+          ...faqItemStyle,
+          ...wrapperStyle,
+          ...wrapperStyle.base,
+          ...(hovering ? wrapperStyle.hover : {})
+        } }
+        className='test--faq-item'>
         <div
           className='faq-title link--transition'
           style={ { ...style.faqItemTitle, ...(showStar ? titleReducedWidth : {}) } }
@@ -59,13 +66,13 @@ class FAQItem extends Component {
       <ResponsiveStyleComponent
         responsiveStyle={ {
           [EXTRA_WIDE]: {
-            faqItemTitle: { ...faqItemTitleStyle.base, ...faqItemTitleStyle.extraWide }
+            faqItemTitle: { ...faqItemStyle.base, ...faqItemStyle.extraWide }
           },
           [DESKTOP]: {
-            faqItemTitle: faqItemTitleStyle.base
+            faqItemTitle: faqItemStyle.base
           },
           [TABLET]: {
-            faqItemTitle: { ...faqItemTitleStyle.base, ...faqItemTitleStyle.tablet }
+            faqItemTitle: { ...faqItemStyle.base, ...faqItemStyle.tablet }
           }
         } }>
         { this.renderWithResponsiveStyle.bind(this) }
@@ -81,7 +88,8 @@ FAQItem.propTypes = {
   wrapperStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   onStarredToggle: PropTypes.func,
   showStar: PropTypes.bool,
-  starred: PropTypes.bool
+  starred: PropTypes.bool,
+  hovering: PropTypes.bool
 };
 
 FAQItem.defaultProps = {
@@ -89,4 +97,4 @@ FAQItem.defaultProps = {
   onClick: () => {}
 };
 
-export default ConfiguredRadium(FAQItem);
+export default Hoverable(FAQItem);

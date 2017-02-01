@@ -6,10 +6,19 @@ export const faqItemWrapperStyle = {
   borderBottom: `1px solid ${lightGreyColor}`
 };
 
-export const faqItemExpandedStyle = {
-  color: accentColor,
-  ':hover': {
+export const faqItemStyle = {
+  base: {
     color: softBlackColor
+  },
+  hover: {
+    color: accentColor
+  }
+};
+
+export const faqItemExpandedStyle = {
+  base: {
+    color: softBlackColor,
+    fontWeight: '600'
   }
 };
 
