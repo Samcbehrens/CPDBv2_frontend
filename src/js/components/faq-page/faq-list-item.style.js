@@ -6,7 +6,7 @@ export const faqItemWrapperStyle = {
   borderBottom: `1px solid ${lightGreyColor}`
 };
 
-export const faqItemStyle = {
+const faqTitleStyle = {
   base: {
     color: softBlackColor
   },
@@ -15,7 +15,7 @@ export const faqItemStyle = {
   }
 };
 
-export const faqItemExpandedStyle = {
+const faqTitleExpandedStyle = {
   base: {
     color: softBlackColor,
     fontWeight: '600'
@@ -27,3 +27,9 @@ export const dropPreviewStyle = {
   backgroundColor: pinkishWhiteColor,
   marginLeft: '16px'
 };
+
+export function faqStyle(expanded) {
+  return {
+    title: expanded ? faqTitleExpandedStyle : faqTitleStyle
+  };
+}

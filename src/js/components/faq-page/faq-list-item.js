@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 
 import ExpandTransition from 'components/animation/expand-transition';
 import FAQItemContent from './faq-item-content';
-import { dropPreviewStyle, faqItemStyle, faqItemWrapperStyle, faqItemExpandedStyle } from './faq-list-item.style';
+import { faqItemWrapperStyle, faqStyle, dropPreviewStyle } from './faq-list-item.style';
 import FAQItem from 'components/common/faq/faq-item';
 
 
@@ -39,7 +39,7 @@ class FAQListItem extends Component {
         <FAQItem
           fieldProps={ fieldProps } faqId={ faqId } starred={ starred }
           showStar={ editModeOn } onStarredToggle={ this.onStarredToggle }
-          onClick={ handleClick } wrapperStyle={ expanded ? faqItemExpandedStyle : faqItemStyle }/>
+          onClick={ handleClick } style={ faqStyle(expanded) }/>
         <ExpandTransition
           childKey={ expanded ? faqId : null }
           onFullyClosed={

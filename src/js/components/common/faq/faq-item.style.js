@@ -1,7 +1,7 @@
 import { sanFranciscoTextFamily } from 'utils/styles';
 
 
-export const faqItemStyle = {
+export const titleStyle = {
   base: {
     paddingLeft: '16px',
     cursor: 'pointer',
