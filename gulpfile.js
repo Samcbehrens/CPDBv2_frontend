@@ -48,7 +48,7 @@ const buildJs = (output, produceSourceMap) => (() => {
     'NODE_ENV': 'production'
   });
   const b = browserify({
-    entries: 'src/js/index.js',
+    entries: 'src/js/index.prod.js',
     transform: [
       babelify.configure({ presets: ['es2015', 'react'] })
     ]
@@ -69,7 +69,7 @@ const buildJs = (output, produceSourceMap) => (() => {
     .pipe(gulp.dest(output));
 });
 
-const ROOT = './';
+const ROOT = '/www/static/';
 
 let globalVariableBlock = '<script type="text/javascript">'
   + 'var GA_TRACKING_ID = "UA-63671047-3";'
