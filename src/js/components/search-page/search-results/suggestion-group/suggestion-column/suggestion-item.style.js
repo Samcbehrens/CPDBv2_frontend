@@ -1,5 +1,6 @@
 import {
-  softBlackColor, whiteTwoColor, sanFranciscoTextFamily, eggPlantColor, accentColor
+  softBlackColor, whiteTwoColor, sanFranciscoTextFamily, eggPlantColor, accentColor,
+  lightMineShaftColor
 } from 'utils/styles';
 
 
@@ -26,9 +27,9 @@ export const suggestionTextStyle = (hovering) => ({
   color: hovering ? accentColor : softBlackColor
 });
 
-export const tagStyle = (hovering) => ({
+export const reasonStyle = (hovering) => ({
   fontSize: '13px',
   fontWeight: 300,
   fontFamily: sanFranciscoTextFamily,
-  color: hovering ? accentColor : softBlackColor
+  color: hovering ? accentColor : lightMineShaftColor
 });

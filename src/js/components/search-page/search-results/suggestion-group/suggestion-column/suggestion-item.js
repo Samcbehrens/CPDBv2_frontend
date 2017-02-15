@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react';
-import { join, get } from 'lodash';
+import { get } from 'lodash';
 
 import Hoverable from 'components/common/higher-order/hoverable';
-import { suggestionItemStyle, suggestionTextStyle, metaTextStyle, tagStyle } from './suggestion-item.style';
+import { suggestionItemStyle, suggestionTextStyle, metaTextStyle, reasonStyle } from './suggestion-item.style';
 
 
 class SuggestionItem extends Component {
@@ -21,7 +21,7 @@ class SuggestionItem extends Component {
     const text = get(suggestion, 'payload.result_text', '');
     const href = get(suggestion, 'payload.url', '');
     const extraText = get(suggestion, 'payload.result_extra_information', '');
-    const tags = get(suggestion, 'payload.tags', []);
+    const reason = get(suggestion, 'payload.result_reason', '');
 
     return (
       <a href={ href }
@@ -39,8 +39,8 @@ class SuggestionItem extends Component {
         </div>
         <div
           className='link--transition'
-          style={ tagStyle(hovering) }>
-          { join(tags, ', ') }
+          style={ reasonStyle(hovering) }>
+          { reason }
         </div>
       </a>
     );
