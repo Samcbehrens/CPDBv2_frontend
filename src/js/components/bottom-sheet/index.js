@@ -69,7 +69,8 @@ export default class BottomSheet extends Component {
           contentClass,
           assign({}, content.props, {
             turnOffSectionEditMode: this.props.onClose,
-            sectionEditModeOn: this.context.editModeOn
+            sectionEditModeOn: this.context.editModeOn,
+            searchOfficers: this.props.searchOfficers
           })
         );
       }
@@ -79,7 +80,7 @@ export default class BottomSheet extends Component {
 
   renderBottomSheet(style={}) {
     return (
-      <div style={ assign({}, sheetStyle, style) }>
+      <div className='test--bottom-sheet-wrapper' style={ assign({}, sheetStyle, style) }>
         { this.renderContent() }
       </div>
     );
@@ -119,7 +120,8 @@ BottomSheet.propTypes = {
     type: PropTypes.string,
     props: PropTypes.object
   }),
-  onClose: PropTypes.func
+  onClose: PropTypes.func,
+  searchOfficers: PropTypes.func
 };
 
 BottomSheet.contextTypes = {
