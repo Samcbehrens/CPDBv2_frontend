@@ -11,6 +11,7 @@ import {
   resultWrapperStyle
 } from './search-content.style.js';
 import { dataToolSearchUrl } from 'utils/v1-url';
+import { NAVIGATION_KEYS } from 'utils/constants';
 
 
 const DEFAULT_SUGGESTION_LIMIT = 9;
@@ -29,11 +30,17 @@ export default class SearchContent extends Component {
   }
 
   componentDidMount() {
+    const { move } = this.props;
     Mousetrap.bind('esc', this.handleGoBack);
+    NAVIGATION_KEYS.map((direction) => (Mousetrap.bind(
+      direction,
+      () => move(direction, this.props.suggestionColumns)
+    )));
   }
 
   componentWillUnmount() {
     Mousetrap.unbind('esc');
+    NAVIGATION_KEYS.map((direction) => (Mousetrap.unbind(direction)));
   }
 
   handleChange({ currentTarget: { value } }) {
@@ -60,7 +67,7 @@ export default class SearchContent extends Component {
   }
 
   handleGoBack(e) {
-    // Since mousetrap just send here an empty object, we might need this for the test to passed
+    // Since mousetrap just send here an empty object, we might need this for the test to be passed
     !isEmpty(e) && e.preventDefault();
     this.props.router.goBack();
   }
@@ -85,7 +92,7 @@ export default class SearchContent extends Component {
 
   renderContent() {
     const {
-      suggestionGroups, isRequesting, tags, contentType,
+      suggestionGroups, isRequesting, tags, contentType, navigation,
       isEmpty, recentSuggestions, trackRecentSuggestion
     } = this.props;
 
@@ -99,6 +106,7 @@ export default class SearchContent extends Component {
       <div style={ resultWrapperStyle }>
         <SearchTags tags={ tags } onSelect={ this.handleSelect } selected={ contentType }/>
         <SearchResults
+          navigation={ navigation }
           suggestionClick={ trackRecentSuggestion }
           isEmpty={ isEmpty }
           searchText={ this.state.value }
@@ -123,6 +131,7 @@ export default class SearchContent extends Component {
             onEscape={ this.handleGoBack }
             onChange={ this.handleChange }
             onEnter={ this.handleEnter }
+            navigate={ this.props.move }
             value={ this.state.value }/>
         </div>
         <div style={ resultWrapperStyle }>
@@ -134,6 +143,9 @@ export default class SearchContent extends Component {
 }
 
 SearchContent.propTypes = {
+  move: PropTypes.func,
+  suggestionColumns: PropTypes.array,
+  navigation: PropTypes.array,
   suggestionGroups: PropTypes.object,
   tags: PropTypes.array,
   recentSuggestions: PropTypes.array,
@@ -155,4 +167,3 @@ SearchContent.defaultProps = {
     goBack: () => {}
   }
 };
-

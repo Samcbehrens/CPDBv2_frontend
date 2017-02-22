@@ -1,9 +1,11 @@
 import React, { Component, PropTypes } from 'react';
 import { get } from 'lodash';
-import classnames from 'classnames'
+import classnames from 'classnames';
 
 import Hoverable from 'components/common/higher-order/hoverable';
-import { suggestionItemWrapperStyle, suggestionItemStyle, suggestionTextStyle, metaTextStyle } from './suggestion-item.style';
+import {
+  suggestionItemWrapperStyle, suggestionItemStyle, suggestionTextStyle, metaTextStyle
+} from './suggestion-item.style';
 
 
 class SuggestionItem extends Component {
@@ -18,18 +20,17 @@ class SuggestionItem extends Component {
   }
 
   render() {
-    const { suggestion, hovering, groupIndex, itemIndex } = this.props;
+    const { suggestion, hovering, isFocused } = this.props;
     const text = get(suggestion, 'payload.result_text', '');
     const href = get(suggestion, 'payload.url', '');
     const extraText = get(suggestion, 'payload.result_extra_information', '');
-    const isFocused = (groupIndex == 0) && (itemIndex  == 0);
-    const suggestionItemClassName = classnames('suggestion-item', {'focused' : isFocused });
+    const suggestionItemClassName = classnames('suggestion-item', { 'focused': isFocused });
 
     return (
       <div className={ suggestionItemClassName } style={ suggestionItemWrapperStyle(isFocused) }>
         <a href={ href }
-           style={ suggestionItemStyle }
-           onClick={ this.handleClick.bind(this, text, href) }>
+          style={ suggestionItemStyle }
+          onClick={ this.handleClick.bind(this, text, href) }>
           <div
             className='link--transition'
             style={ suggestionTextStyle(hovering) }>
@@ -51,6 +52,7 @@ SuggestionItem.defaultProps = {
 };
 
 SuggestionItem.propTypes = {
+  isFocused: PropTypes.bool,
   suggestion: PropTypes.object,
   suggestionClick: PropTypes.func,
   hovering: PropTypes.bool,

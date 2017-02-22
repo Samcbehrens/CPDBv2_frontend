@@ -44,9 +44,7 @@ describe('<SuggestionItem/>', function () {
 
   it('highlight the content by default if it\'s the first result', function () {
     instance = renderIntoDocument(
-      <SuggestionItem
-        groupIndex={ 0 }
-        itemIndex={ 0 } />
+      <SuggestionItem isFocused={ true }/>
     );
 
     scryRenderedDOMComponentsWithClass(instance, 'focused').should.have.length(1);

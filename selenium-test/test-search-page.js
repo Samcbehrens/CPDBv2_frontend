@@ -140,18 +140,4 @@ describe('Search Page', function () {
     searchPage.recentSuggestions.waitForVisible();
     searchPage.recentSuggestions.getText().should.containEql('Bernadette Kelly');
   });
-
-  it('highlights the first result by default', function () {
-    searchPage.open();
-    searchPage.input.waitForVisible();
-    searchPage.input.setValue('Ke');
-
-    searchPage.suggestionGroup.waitForVisible();
-    searchPage.rootElement.waitForVisible();
-    searchPage.contentWrapper.waitForVisible();
-
-    const suggestionItems = browser.elements('.suggestion-item').value;
-    suggestionItems[0].getAttribute('class').should.containEql('focused');
-    suggestionItems[1].getAttribute('class').should.not.containEql('focused');
-  });
 });

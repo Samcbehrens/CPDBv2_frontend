@@ -9,17 +9,20 @@ import LoadMoreButton from './load-more-button';
 
 export default class SuggestionGroup extends Component {
   renderColumns() {
-    const { suggestions, header, suggestionClick, groupIndex } = this.props;
+    const { suggestions, header, suggestionClick, groupIndex, navigation } = this.props;
 
-    return map(chunk(suggestions, 10), (suggestions, key) => (
-      <SuggestionColumn
-        key={ key }
-        suggestionClick={ suggestionClick }
-        contentType={ header }
-        suggestions={ suggestions }
-        index={ key }
-        groupIndex={ groupIndex } />
-    ));
+    return map(chunk(suggestions, 10), (suggestions, key) => {
+      return (
+        <SuggestionColumn
+          key={ key }
+          navigation={ navigation }
+          suggestionClick={ suggestionClick }
+          contentType={ header }
+          suggestions={ suggestions }
+          index={ key }
+          groupIndex={ groupIndex + key } />
+      );
+    });
   }
 
   renderLoadMore() {
@@ -50,6 +53,8 @@ export default class SuggestionGroup extends Component {
 }
 
 SuggestionGroup.propTypes = {
+  groupIndex: PropTypes.number,
+  navigation: PropTypes.array,
   suggestions: PropTypes.array,
   header: PropTypes.string,
   onLoadMore: PropTypes.func,
