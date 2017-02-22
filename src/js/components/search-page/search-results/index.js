@@ -19,15 +19,22 @@ export default class SuggestionResults extends Component {
         <SuggestionNoResult searchText={ searchText }/>
       );
     }
+    // FIXME: Refactor it by a more convinient way
+    let i = -1;
 
-    return map(suggestionGroups, (suggestions, key) => (
-      <SuggestionGroup
-        onLoadMore={ onLoadMore }
-        key={ 'suggestion-group-' + key }
-        suggestions={ suggestions }
-        suggestionClick={ suggestionClick }
-        header={ key }/>
-    ));
+    return map(suggestionGroups, function (suggestions, key) {
+      i = i + 1;
+
+      return (
+        <SuggestionGroup
+          onLoadMore={ onLoadMore }
+          key={ `suggestion-group-${key}` }
+          suggestions={ suggestions }
+          suggestionClick={ suggestionClick }
+          header={ key }
+          groupIndex={ i } />
+      );
+    });
   }
 
   render() {

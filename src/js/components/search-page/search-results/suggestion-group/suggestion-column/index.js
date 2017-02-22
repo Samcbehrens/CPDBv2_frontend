@@ -7,15 +7,17 @@ import SuggestionItem from './suggestion-item';
 
 export default class SuggestionColumn extends Component {
   renderSuggestions() {
-    const { contentType, suggestions, suggestionClick } = this.props;
+    const { contentType, suggestions, suggestionClick, groupIndex } = this.props;
 
-    return map(suggestions, (suggestion, key) => {
+    return map(suggestions, (suggestion, index) => {
       return (
         <SuggestionItem
-          key={ key }
+          key={ index }
           contentType={ contentType }
           suggestion={ suggestion }
-          suggestionClick={ suggestionClick }/>
+          suggestionClick={ suggestionClick }
+          itemIndex={ index }
+          groupIndex={ groupIndex } />
       );
     });
   }

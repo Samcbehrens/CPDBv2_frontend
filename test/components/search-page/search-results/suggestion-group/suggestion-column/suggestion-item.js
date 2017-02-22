@@ -1,5 +1,6 @@
 import React from 'react';
-import { renderIntoDocument, findRenderedDOMComponentWithTag, Simulate } from 'react-addons-test-utils';
+import { renderIntoDocument, scryRenderedDOMComponentsWithClass, findRenderedDOMComponentWithTag,
+         Simulate } from 'react-addons-test-utils';
 import { spy } from 'sinon';
 
 import SuggestionItem from 'components/search-page/search-results/suggestion-group/suggestion-column/suggestion-item';
@@ -40,5 +41,14 @@ describe('<SuggestionItem/>', function () {
     Simulate.click(suggestionElement);
     suggestionClick.calledWith(contentType, text, url).should.be.true();
   });
-});
 
+  it('highlight the content by default if it\'s the first result', function () {
+    instance = renderIntoDocument(
+      <SuggestionItem
+        groupIndex={ 0 }
+        itemIndex={ 0 } />
+    );
+
+    scryRenderedDOMComponentsWithClass(instance, 'focused').should.have.length(1);
+  });
+});
