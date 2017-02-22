@@ -32,12 +32,12 @@ describe('navigation reducer', function () {
     it('should move to left column keeping item index', function () {
       const suggestionColumns = [2, 2];
 
-      navigation([1, 1], {
+      navigation([1, 0], {
         type: SEARCH_NAVIGATION_LEFT,
         payload: {
           suggestionColumns
         }
-      }).should.deepEqual([0, 1]);
+      }).should.deepEqual([0, 0]);
     });
   });
 
@@ -115,12 +115,12 @@ describe('navigation reducer', function () {
     it('should move to left column keeping item index', function () {
       const suggestionColumns = [2, 2];
 
-      navigation([0, 1], {
+      navigation([0, 0], {
         type: SEARCH_NAVIGATION_RIGHT,
         payload: {
           suggestionColumns
         }
-      }).should.deepEqual([1, 1]);
+      }).should.deepEqual([1, 0]);
     });
   });
 });
