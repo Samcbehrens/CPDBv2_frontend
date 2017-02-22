@@ -7,120 +7,120 @@ import {
 
 describe('navigation reducer', function () {
   describe('SEARCH_NAVIGATION_LEFT', function () {
-    it('shouldn\'t move left if the column index is 0', function () {
+    it('stays in the same position if it\'s in the most-left column', function () {
       const suggestionColumns = [2, 2];
 
-      navigation([0, 0], {
+      navigation({ 'columnIndex': 0, 'itemIndex': 0 }, {
         type: SEARCH_NAVIGATION_LEFT,
         payload: {
           suggestionColumns
         }
-      }).should.deepEqual([0, 0]);
+      }).should.deepEqual({ 'columnIndex': 0, 'itemIndex': 0 });
     });
 
-    it('should move to last item of the column if current item index greater than the column\'s length', function () {
+    it('moves to last item of the column if current item index greater than the column\'s length', function () {
       const suggestionColumns = [2, 3];
 
-      navigation([1, 2], {
+      navigation({ 'columnIndex': 1, 'itemIndex': 2 }, {
         type: SEARCH_NAVIGATION_LEFT,
         payload: {
           suggestionColumns
         }
-      }).should.deepEqual([0, 1]);
+      }).should.deepEqual({ 'columnIndex': 0, 'itemIndex': 1 });
     });
 
-    it('should move to left column keeping item index', function () {
+    it('moves to the next column in the same row in the normal case', function () {
       const suggestionColumns = [2, 2];
 
-      navigation([1, 0], {
+      navigation({ 'columnIndex': 1, 'itemIndex': 0 }, {
         type: SEARCH_NAVIGATION_LEFT,
         payload: {
           suggestionColumns
         }
-      }).should.deepEqual([0, 0]);
+      }).should.deepEqual({ 'columnIndex': 0, 'itemIndex': 0 });
     });
   });
 
   describe('SEARCH_NAVIGATION_DOWN', function () {
-    it('shouldn\'t move down if it\'s the last one', function () {
+    it('stays in the same position if it\'s the last one', function () {
       const suggestionColumns = [2];
 
-      navigation([0, 1], {
+      navigation({ 'columnIndex': 0, 'itemIndex': 1 }, {
         type: SEARCH_NAVIGATION_DOWN,
         payload: {
           suggestionColumns
         }
-      }).should.deepEqual([0, 1]);
+      }).should.deepEqual({ 'columnIndex': 0, 'itemIndex': 1 });
     });
 
-    it('should should move down', function () {
+    it('moves down one row in the normal case', function () {
       const suggestionColumns = [2];
 
-      navigation([0, 0], {
+      navigation({ 'columnIndex': 0, 'itemIndex': 0 }, {
         type: SEARCH_NAVIGATION_DOWN,
         payload: {
           suggestionColumns
         }
-      }).should.deepEqual([0, 1]);
+      }).should.deepEqual({ 'columnIndex': 0, 'itemIndex': 1 });
     });
   });
 
   describe('SEARCH_NAVIGATION_UP', function () {
-    it('shouldn\'t move up if it\'s the first one', function () {
+    it('stays in the same position if it\'s the top row', function () {
       const suggestionColumns = [2];
 
-      navigation([0, 0], {
+      navigation({ 'columnIndex': 0, 'itemIndex': 0 }, {
         type: SEARCH_NAVIGATION_UP,
         payload: {
           suggestionColumns
         }
-      }).should.deepEqual([0, 0]);
+      }).should.deepEqual({ 'columnIndex': 0, 'itemIndex': 0 });
     });
 
-    it('should should move up', function () {
+    it('moves up one row in normal case', function () {
       const suggestionColumns = [2];
 
-      navigation([0, 1], {
+      navigation({ 'columnIndex': 0, 'itemIndex': 1 }, {
         type: SEARCH_NAVIGATION_UP,
         payload: {
           suggestionColumns
         }
-      }).should.deepEqual([0, 0]);
+      }).should.deepEqual({ 'columnIndex': 0, 'itemIndex': 0 });
     });
   });
 
   describe('SEARCH_NAVIGATION_RIGHT', function () {
-    it('shouldn\'t move left if position is at right end', function () {
+    it('stays in the same position if it is in the most right column ', function () {
       const suggestionColumns = [2, 2];
 
-      navigation([1, 0], {
+      navigation({ 'columnIndex': 1, 'itemIndex': 0 }, {
         type: SEARCH_NAVIGATION_RIGHT,
         payload: {
           suggestionColumns
         }
-      }).should.deepEqual([1, 0]);
+      }).should.deepEqual({ 'columnIndex': 1, 'itemIndex': 0 });
     });
 
-    it('should move to last item of the column if current item index greater than the column\'s length', function () {
+    it('moves to last item of the column if current item index greater than the column\'s length', function () {
       const suggestionColumns = [3, 2];
 
-      navigation([0, 2], {
+      navigation({ 'columnIndex': 0, 'itemIndex': 2 }, {
         type: SEARCH_NAVIGATION_RIGHT,
         payload: {
           suggestionColumns
         }
-      }).should.deepEqual([1, 1]);
+      }).should.deepEqual({ 'columnIndex': 1, 'itemIndex': 1 });
     });
 
-    it('should move to left column keeping item index', function () {
+    it('moves to right column and keeping item index in the normal case', function () {
       const suggestionColumns = [2, 2];
 
-      navigation([0, 0], {
+      navigation({ 'columnIndex': 0, 'itemIndex': 0 }, {
         type: SEARCH_NAVIGATION_RIGHT,
         payload: {
           suggestionColumns
         }
-      }).should.deepEqual([1, 0]);
+      }).should.deepEqual({ 'columnIndex': 1, 'itemIndex': 0 });
     });
   });
 });

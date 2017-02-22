@@ -9,7 +9,7 @@ import LoadMoreButton from './load-more-button';
 
 export default class SuggestionGroup extends Component {
   renderColumns() {
-    const { suggestions, header, suggestionClick, groupIndex, navigation } = this.props;
+    const { suggestions, header, suggestionClick, columnIndex, navigation } = this.props;
 
     return map(chunk(suggestions, 10), (suggestions, key) => {
       return (
@@ -20,7 +20,7 @@ export default class SuggestionGroup extends Component {
           contentType={ header }
           suggestions={ suggestions }
           index={ key }
-          groupIndex={ groupIndex + key } />
+          columnIndex={ columnIndex + key } />
       );
     });
   }
@@ -53,7 +53,7 @@ export default class SuggestionGroup extends Component {
 }
 
 SuggestionGroup.propTypes = {
-  groupIndex: PropTypes.number,
+  columnIndex: PropTypes.number,
   navigation: PropTypes.array,
   suggestions: PropTypes.array,
   header: PropTypes.string,

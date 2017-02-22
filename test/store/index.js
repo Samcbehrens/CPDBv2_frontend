@@ -89,7 +89,7 @@ describe('store', function () {
         locationBeforeTransitions: null
       },
       searchPage: {
-        navigation: [0, 0],
+        navigation: { 'columnIndex': 0, 'itemIndex': 0 },
         isRequesting: false,
         suggestionGroups: {},
         contentType: null,

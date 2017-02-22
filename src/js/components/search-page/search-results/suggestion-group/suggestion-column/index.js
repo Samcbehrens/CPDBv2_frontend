@@ -7,12 +7,11 @@ import SuggestionItem from './suggestion-item';
 
 export default class SuggestionColumn extends Component {
   renderSuggestions() {
-    const { contentType, suggestions, suggestionClick, groupIndex, navigation } = this.props;
-    const [currentGroupIndex, currentItemIndex] = navigation;
+    const { contentType, suggestions, suggestionClick, columnIndex, navigation } = this.props;
     let isFocused;
 
     return map(suggestions, (suggestion, index) => {
-      isFocused = (groupIndex == currentGroupIndex) && (index == currentItemIndex);
+      isFocused = (columnIndex == navigation.columnIndex) && (index == navigation.itemIndex);
 
       return (
         <SuggestionItem
@@ -37,7 +36,7 @@ export default class SuggestionColumn extends Component {
 }
 
 SuggestionColumn.propTypes = {
-  groupIndex: PropTypes.number,
+  columnIndex: PropTypes.number,
   navigation: PropTypes.array,
   index: PropTypes.number,
   suggestions: PropTypes.array,

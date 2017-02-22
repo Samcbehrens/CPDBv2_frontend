@@ -33,7 +33,7 @@ export default class SuggestionResults extends Component {
           suggestions={ suggestions }
           suggestionClick={ suggestionClick }
           header={ key }
-          groupIndex={ i } />
+          columnIndex={ i } />
       );
     });
   }

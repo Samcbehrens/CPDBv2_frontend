@@ -6,57 +6,66 @@ import { SEARCH_NAVIGATION_LEFT,
 
 
 export default handleActions({
-  [SEARCH_NAVIGATION_LEFT]: (state, action) => {
+  [SEARCH_NAVIGATION_LEFT]: ({ columnIndex, itemIndex }, action) => {
     const { suggestionColumns } = action.payload;
 
-    if (state[0] > 0) {
-      const currentColumnSize = suggestionColumns[state[0] - 1];
+    if (columnIndex > 0) {
+      const currentColumnSize = suggestionColumns[columnIndex - 1];
+      const newColumnIndex = columnIndex - 1;
+      const newItemIndex = itemIndex < currentColumnSize - 1 ? itemIndex : currentColumnSize - 1;
 
-      if (state[1] < currentColumnSize - 1) {
-        return [state[0] - 1, state[1]];
-      }
-      else {
-        return [state[0] - 1, currentColumnSize - 1];
-      }
-    } else {
-      return [state[0], state[1]];
+      return {
+        'columnIndex': newColumnIndex,
+        'itemIndex': newItemIndex
+      };
     }
+
+    return {
+      columnIndex,
+      itemIndex
+    };
   },
 
-  [SEARCH_NAVIGATION_DOWN]: (state, action) => {
+  [SEARCH_NAVIGATION_DOWN]: ({ columnIndex, itemIndex }, action) => {
     const { suggestionColumns } = action.payload;
-    const currentColumnSize = suggestionColumns[state[0]];
+    const currentColumnSize = suggestionColumns[columnIndex];
+    const newItemIndex = itemIndex < currentColumnSize - 1 ? itemIndex + 1 : itemIndex;
 
-    if (state[1] < currentColumnSize - 1) {
-      return [state[0], state[1] + 1];
-    } else {
-      return [state[0], state[1]];
-    }
+    return {
+      'columnIndex': columnIndex,
+      'itemIndex': newItemIndex
+    };
   },
 
-  [SEARCH_NAVIGATION_UP]: (state, action) => {
-    if (state[1] > 0) {
-      return [state[0], state[1] - 1];
-    } else {
-      return [state[0], 0];
-    }
+  [SEARCH_NAVIGATION_UP]: ({ columnIndex, itemIndex }, action) => {
+    const newItemIndex = itemIndex > 0 ? itemIndex - 1 : itemIndex;
+
+    return {
+      'columnIndex': columnIndex,
+      'itemIndex': newItemIndex
+    };
   },
 
-  [SEARCH_NAVIGATION_RIGHT]: (state, action) => {
+  [SEARCH_NAVIGATION_RIGHT]: ({ columnIndex, itemIndex }, action) => {
     const { suggestionColumns } = action.payload;
     const numberOfColumns = suggestionColumns.length;
 
-    if (state[0] < numberOfColumns - 1) {
-      const currentColumnSize = suggestionColumns[state[0] + 1];
+    if (columnIndex < numberOfColumns - 1) {
+      const currentColumnSize = suggestionColumns[columnIndex + 1];
+      const newItemIndex = itemIndex < currentColumnSize - 1 ? itemIndex : currentColumnSize - 1;
 
-      if (state[1] < currentColumnSize - 1) {
-        return [state[0] + 1, state[1]];
-      }
-      else {
-        return [state[0] + 1, currentColumnSize - 1];
-      }
-    } else {
-      return [state[0], state[1]];
+      return {
+        'columnIndex': columnIndex + 1,
+        'itemIndex': newItemIndex
+      };
     }
+
+    return {
+      columnIndex,
+      itemIndex
+    };
   }
-}, [0, 0]);
+}, {
+  'columnIndex': 0,
+  'itemIndex': 0
+});
