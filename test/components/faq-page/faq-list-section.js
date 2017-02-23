@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import {
   scryRenderedComponentsWithType, scryRenderedDOMComponentsWithClass, Simulate,
   findRenderedDOMComponentWithClass
@@ -6,17 +6,12 @@ import {
 import { spy, stub } from 'sinon';
 
 import { withAnimationDisabled, renderInDragDropContext, unmountComponentSuppressError } from 'utils/test';
-import ContextWrapper from 'utils/test/components/context-wrapper';
 import FAQListSection from 'components/faq-page/faq-list-section';
 import DraggableFAQListItem from 'components/faq-page/draggable-faq-list-item';
 import FAQListItem from 'components/faq-page/faq-list-item';
 import * as trackUtil from 'utils/tracking';
 
 
-class FAQListSectionContextWrapper extends ContextWrapper {}
-FAQListSectionContextWrapper.childContextTypes = {
-  editModeOn: PropTypes.bool
-};
 
 
 describe('FAQListSection', function () {
@@ -48,7 +43,6 @@ describe('FAQListSection', function () {
 
     scryRenderedComponentsWithType(instance, DraggableFAQListItem).should.have.length(3);
     scryRenderedComponentsWithType(instance, FAQListItem).should.have.length(3);
-    requestFAQs.called.should.be.true();
   });
 
   it('should openBottomSheetWithFAQ when click on faq-item with editModeOn', function () {
@@ -56,9 +50,8 @@ describe('FAQListSection', function () {
     const requestFAQs = spy();
 
     instance = renderInDragDropContext(
-      <FAQListSectionContextWrapper context={ { editModeOn: true } }>
-        <FAQListSection faqs={ faqs } openBottomSheetWithFAQ={ openBottom } requestFAQs={ requestFAQs }/>
-      </FAQListSectionContextWrapper>
+      <FAQListSection editModeOn={ true }
+        faqs={ faqs } openBottomSheetWithFAQ={ openBottom } requestFAQs={ requestFAQs }/>
     );
 
     withAnimationDisabled(function () {
@@ -85,9 +78,7 @@ describe('FAQListSection', function () {
     const requestFAQs = spy();
 
     instance = renderInDragDropContext(
-      <FAQListSectionContextWrapper context={ { editModeOn: true } }>
-        <FAQListSection faqs={ faqs } requestFAQs={ requestFAQs }/>
-      </FAQListSectionContextWrapper>
+      <FAQListSection editModeOn={ true } faqs={ faqs } requestFAQs={ requestFAQs }/>
     );
 
     scryRenderedDOMComponentsWithClass(instance, 'add-faq-btn').length.should.equal(1);
@@ -99,9 +90,8 @@ describe('FAQListSection', function () {
     const requestFAQs = spy();
 
     instance = renderInDragDropContext(
-      <FAQListSectionContextWrapper context={ { editModeOn: true } }>
-        <FAQListSection faqs={ faqs } openBottomSheetToCreateFAQ={ openBottom } requestFAQs={ requestFAQs }/>
-      </FAQListSectionContextWrapper>
+      <FAQListSection editModeOn={ true }
+        faqs={ faqs } openBottomSheetToCreateFAQ={ openBottom } requestFAQs={ requestFAQs }/>
     );
 
     withAnimationDisabled(function () {
