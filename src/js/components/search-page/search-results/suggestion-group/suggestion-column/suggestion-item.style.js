@@ -33,3 +33,7 @@ export const reasonStyle = (hovering) => ({
   fontFamily: sanFranciscoTextFamily,
   color: hovering ? accentColor : lightMineShaftColor
 });
+
+export const suggestionItemWrapperStyle = (isFocused) => ({
+  border: isFocused ? 'solid 1px #ccc': 'none'
+});

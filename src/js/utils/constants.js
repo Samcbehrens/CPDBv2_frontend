@@ -110,3 +110,4 @@ export const CLOSE_FORGOT_PASSWORD_MODAL = 'CLOSE_FORGOT_PASSWORD_MODAL';
 export const RECEIVE_TOKEN_FROM_COOKIE = 'RECEIVE_TOKEN_FROM_COOKIE';
 
 export const LOG_OUT = 'LOG_OUT';
+export const NAVIGATION_KEYS = ['up', 'down', 'right', 'left'];

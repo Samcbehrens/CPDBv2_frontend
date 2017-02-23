@@ -8,7 +8,7 @@ import SuggestionNoResult from './search-no-result';
 
 export default class SuggestionResults extends Component {
   renderGroups() {
-    const { suggestionGroups, onLoadMore, searchText, isEmpty, isRequesting, suggestionClick } = this.props;
+    const { suggestionGroups, onLoadMore, searchText, isEmpty, isRequesting, suggestionClick, navigation } = this.props;
 
     if (isRequesting) {
       return 'Loading...';
@@ -19,15 +19,23 @@ export default class SuggestionResults extends Component {
         <SuggestionNoResult searchText={ searchText }/>
       );
     }
+    // FIXME: Refactor it by a more convinient way
+    let i = -1;
 
-    return map(suggestionGroups, (suggestions, key) => (
-      <SuggestionGroup
-        onLoadMore={ onLoadMore }
-        key={ 'suggestion-group-' + key }
-        suggestions={ suggestions }
-        suggestionClick={ suggestionClick }
-        header={ key }/>
-    ));
+    return map(suggestionGroups, function (suggestions, key) {
+      i = i + 1;
+
+      return (
+        <SuggestionGroup
+          onLoadMore={ onLoadMore }
+          key={ `suggestion-group-${key}` }
+          navigation={ navigation }
+          suggestions={ suggestions }
+          suggestionClick={ suggestionClick }
+          header={ key }
+          groupIndex={ i } />
+      );
+    });
   }
 
   render() {
@@ -42,6 +50,7 @@ export default class SuggestionResults extends Component {
 }
 
 SuggestionResults.propTypes = {
+  navigation: PropTypes.array,
   searchText: PropTypes.string,
   suggestionGroups: PropTypes.object,
   isRequesting: PropTypes.bool,
