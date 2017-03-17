@@ -39,8 +39,9 @@ export const move = (direction, suggestionColumns) => {
   return createAction(DIRECTON_TO_ACTION[direction])({ suggestionColumns });
 };
 
-export const trackRecentSuggestion = (contentType, text, url) => createAction(TRACK_RECENT_SUGGESTION)({
+export const trackRecentSuggestion = (contentType, text, url, to) => createAction(TRACK_RECENT_SUGGESTION)({
   contentType,
   text,
+  to,
   url
 });

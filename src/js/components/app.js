@@ -7,7 +7,7 @@ import BottomSheetContainer from 'containers/bottom-sheet';
 import EditModeContainer from 'containers/inline-editable/edit-mode-container';
 import Header from 'components/header';
 import LoginModalContainer from 'containers/login-modal-container';
-import SearchPage from 'components/search-page';
+import SearchPageContainer from 'containers/search-page-container';
 import RouteTransition from 'components/animation/route-transition';
 import * as LayeredKeyBinding from 'utils/layered-key-binding';
 
@@ -58,7 +58,7 @@ export default class App extends React.Component {
   }
 
   showHeader(children) {
-    return (!children || [SearchPage].indexOf(children.type) === -1);
+    return (!children || [SearchPageContainer].indexOf(children.type) === -1);
   }
 
   render() {

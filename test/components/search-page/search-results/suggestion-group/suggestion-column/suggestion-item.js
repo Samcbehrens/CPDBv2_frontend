@@ -1,7 +1,10 @@
 import React from 'react';
-import { renderIntoDocument, scryRenderedDOMComponentsWithClass, findRenderedDOMComponentWithTag,
-         Simulate } from 'react-addons-test-utils';
+import {
+  renderIntoDocument, findRenderedDOMComponentWithTag, Simulate,
+  scryRenderedDOMComponentsWithClass, findRenderedComponentWithType
+} from 'react-addons-test-utils';
 import { spy } from 'sinon';
+import { Link } from 'react-router';
 
 import SuggestionItem from 'components/search-page/search-results/suggestion-group/suggestion-column/suggestion-item';
 import { unmountComponentSuppressError } from 'utils/test';
@@ -42,6 +45,13 @@ describe('<SuggestionItem/>', function () {
     suggestionClick.calledWith(contentType, text, url).should.be.true();
   });
 
+  it('should render Link component when suggestion contain to', function () {
+    instance = renderIntoDocument(
+      <SuggestionItem suggestion={ { payload: { to: 'abc' } } }/>
+    );
+    findRenderedComponentWithType(instance, Link);
+  });
+
   it('highlight the content by default if it\'s the first result', function () {
     instance = renderIntoDocument(
       <SuggestionItem isFocused={ true }/>
@@ -50,3 +60,4 @@ describe('<SuggestionItem/>', function () {
     scryRenderedDOMComponentsWithClass(instance, 'focused').should.have.length(1);
   });
 });
+
