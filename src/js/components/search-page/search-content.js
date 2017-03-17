@@ -7,11 +7,11 @@ import SearchBox from './search-box';
 import SearchTags from './search-tags';
 import SearchNoInput from './search-no-input';
 import {
-  backButtonStyle, searchContentWrapperStyle, searchBoxStyle,
-  resultWrapperStyle
+  backButtonStyle, searchContentWrapperStyle, searchBoxStyle, resultWrapperStyle
 } from './search-content.style.js';
 import { dataToolSearchUrl } from 'utils/v1-url';
 import { NAVIGATION_KEYS } from 'utils/constants';
+import * as LayeredKeyBinding from 'utils/layered-key-binding';
 
 
 const DEFAULT_SUGGESTION_LIMIT = 9;
@@ -29,9 +29,12 @@ export default class SearchContent extends Component {
     };
   }
 
+  componentWillMount() {
+    LayeredKeyBinding.bind('esc', this.handleGoBack);
+  }
+
   componentDidMount() {
     const { move } = this.props;
-    Mousetrap.bind('esc', this.handleGoBack);
     NAVIGATION_KEYS.map((direction) => (Mousetrap.bind(
       direction,
       () => move(direction, this.props.suggestionColumns)
@@ -39,7 +42,7 @@ export default class SearchContent extends Component {
   }
 
   componentWillUnmount() {
-    Mousetrap.unbind('esc');
+    LayeredKeyBinding.unbind('esc');
     NAVIGATION_KEYS.map((direction) => (Mousetrap.unbind(direction)));
   }
 
