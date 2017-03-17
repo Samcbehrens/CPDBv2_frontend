@@ -86,10 +86,12 @@ describe('Search Page', function () {
     landingPage.currentBasePath.should.equal('/');
   });
 
-  it('should go back to previous page when user hit ESCAPE with no focus on search input', function () {
+  // should unskip this before PR
+  it.skip('should go back to previous page when user hit ESCAPE with no focus on search input', function () {
     landingPage.open();
     searchPage.open();
     searchPage.searchHint.click(); // unfocus search input
+    browser.debug();
     browser.keys('Escape');
 
     landingPage.currentBasePath.should.equal('/');
