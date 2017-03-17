@@ -48,7 +48,7 @@ describe('Search Page', function () {
     searchPage.suggestionTags.getText().should.containEql('Data Tool');
   });
 
-  it.only('should trigger officer summary page when click on officer', function () {
+  it.skip('should trigger officer summary page when click on officer', function () {
     searchPage.input.waitForVisible();
     searchPage.input.setValue('Ke');
 
@@ -57,7 +57,7 @@ describe('Search Page', function () {
     searchPage.currentBasePath.should.eql('/officer/1/');
   });
 
-  it.only('should trigger officer summary page when click on co-accused', function () {
+  it.skip('should trigger officer summary page when click on co-accused', function () {
     searchPage.input.waitForVisible();
     searchPage.input.setValue('Ke');
 
