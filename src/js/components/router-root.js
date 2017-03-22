@@ -11,7 +11,11 @@ import FAQPage from 'components/faq-page/faq-page';
 import SearchPage from 'components/search-page';
 import ReportingPage from 'components/reporting-page';
 import OfficerPageContainer from 'containers/officer-page';
-import { COLLAB_PATH, FAQ_PATH, STORIES_PATH, SEARCH_PATH, OFFICER_PATH } from 'utils/constants';
+import ResolvingPage from 'components/resolving-page';
+import OfficerConflicts from 'components/resolving-page/officer-conflicts';
+import {
+  COLLAB_PATH, FAQ_PATH, STORIES_PATH, SEARCH_PATH, OFFICER_PATH, RESOLVING_PATH
+} from 'utils/constants';
 import configureStore from 'store';
 import history from 'utils/history';
 
@@ -44,6 +48,10 @@ class RouterRoot extends Component {
           </Route>
           <Route path={ SEARCH_PATH } component={ SearchPage }/>
           <Route path={ OFFICER_PATH } component={ OfficerPageContainer }/>
+          <Route path={ RESOLVING_PATH } component={ ResolvingPage }>
+            <IndexRoute component={ OfficerConflicts }/>
+            <Route path='officer' component={ OfficerConflicts }/>
+          </Route>
         </Router>
       </Provider>
     );
