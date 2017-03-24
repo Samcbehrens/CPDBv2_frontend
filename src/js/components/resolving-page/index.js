@@ -1,4 +1,5 @@
 import React, { PropTypes, Component } from 'react';
+
 import Header from 'grommet/components/Header';
 import Sidebar from 'grommet/components/Sidebar';
 import Box from 'grommet/components/Box';
@@ -7,6 +8,8 @@ import Menu from 'grommet/components/Menu';
 import Anchor from 'grommet/components/Anchor';
 import Split from 'grommet/components/Split';
 import App from 'grommet/components/App';
+import Accordion from 'grommet/components/Accordion';
+import AccordionPanel from 'grommet/components/AccordionPanel';
 
 
 class ResolvingPage extends Component {
@@ -18,22 +21,28 @@ class ResolvingPage extends Component {
             <Header pad='medium'
               justify='between'>
               <Title>
-                Title
+                CPDP
               </Title>
             </Header>
             <Box flex='grow'
               justify='start'>
               <Menu primary={ true }>
-                <Anchor href='officer'
-                  className='active'>
-                  Officer
-                </Anchor>
-                <Anchor href='#'>
-                  Second
-                </Anchor>
-                <Anchor href='#'>
-                  Third
-                </Anchor>
+                <Accordion animate={ false } active={ 0 }>
+                  <AccordionPanel heading='Matching'>
+                    <Menu primary={ true }>
+                      <Anchor href='officer-matching' className='active'>
+                        Officer
+                      </Anchor>
+                    </Menu>
+                  </AccordionPanel>
+                  <AccordionPanel heading='Resolving'>
+                    <Menu primary={ true }>
+                      <Anchor href='officer-resolving' className='active'>
+                        Officer
+                      </Anchor>
+                    </Menu>
+                  </AccordionPanel>
+                </Accordion>
               </Menu>
             </Box>
           </Sidebar>
