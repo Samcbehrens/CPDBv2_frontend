@@ -1,6 +1,6 @@
 machine:
   node:
-    version: 4.1.0
+    version: 4.4.0
   environment:
     NODE_ENV: development
     YARN_VERSION: 0.18.1
