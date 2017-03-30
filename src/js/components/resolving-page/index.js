@@ -31,14 +31,14 @@ class ResolvingPage extends Component {
                 <Accordion animate={ false } active={ 0 }>
                   <AccordionPanel heading='Matching'>
                     <Menu primary={ true }>
-                      <Anchor href={ `/${RESOLVING_PATH}/officer-matching` } className='active'>
+                      <Anchor href={ `/${RESOLVING_PATH}officer-matching` } className='active'>
                         Officer
                       </Anchor>
                     </Menu>
                   </AccordionPanel>
                   <AccordionPanel heading='Resolving'>
                     <Menu primary={ true }>
-                      <Anchor href={ `/${RESOLVING_PATH}/officer-resolving` } className='active'>
+                      <Anchor href={ `/${RESOLVING_PATH}officer-resolving` } className='active'>
                         Officer
                       </Anchor>
                     </Menu>
