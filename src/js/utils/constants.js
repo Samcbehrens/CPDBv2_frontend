@@ -19,6 +19,7 @@ export const FAQ_PATH = 'faq/';
 export const STORIES_PATH = 'reporting/';
 export const SEARCH_PATH = 'search/';
 export const OFFICER_PATH = 'officer/:officerId';
+export const RESOLVING_PATH = 'resolving/';
 
 export const ROOT_EDIT_REGEX = /^\/(?:edit\/)?$/;
 
