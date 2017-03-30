@@ -10,6 +10,7 @@ import Split from 'grommet/components/Split';
 import App from 'grommet/components/App';
 import Accordion from 'grommet/components/Accordion';
 import AccordionPanel from 'grommet/components/AccordionPanel';
+import { RESOLVING_PATH } from 'utils/constants';
 
 
 class ResolvingPage extends Component {
@@ -30,14 +31,14 @@ class ResolvingPage extends Component {
                 <Accordion animate={ false } active={ 0 }>
                   <AccordionPanel heading='Matching'>
                     <Menu primary={ true }>
-                      <Anchor href='officer-matching' className='active'>
+                      <Anchor href={ `/${RESOLVING_PATH}/officer-matching` } className='active'>
                         Officer
                       </Anchor>
                     </Menu>
                   </AccordionPanel>
                   <AccordionPanel heading='Resolving'>
                     <Menu primary={ true }>
-                      <Anchor href='officer-resolving' className='active'>
+                      <Anchor href={ `/${RESOLVING_PATH}/officer-resolving` } className='active'>
                         Officer
                       </Anchor>
                     </Menu>
