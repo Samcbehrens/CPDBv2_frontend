@@ -103,6 +103,10 @@ describe('store', function () {
         recentSuggestions: [],
         tags: []
       },
+      crPage: {
+        isRequesting: false
+      },
+      crs: {},
       officerPage: {
         complaintFacets: [],
         complaintsCount: 0,
