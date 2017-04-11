@@ -108,7 +108,8 @@ describe('store', function () {
         complaintsCount: 0,
         fullName: '',
         isRequesting: false,
-        summary: {}
+        summary: {},
+        sustainedCount: 0
       }
     });
   });
