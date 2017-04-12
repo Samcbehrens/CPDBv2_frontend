@@ -6,7 +6,10 @@ export const wrapperStyle = {
 };
 
 export const headerStyle = {
-  backgroundColor: 'white',
+  backgroundColor: 'white'
+};
+
+export const headerWrapperStyle = {
   position: 'relative',
   zIndex: 300
 };
@@ -53,7 +56,6 @@ export const leftColumnStyle = {
   width: '320px',
   display: 'inline-block',
   borderRight: `1px solid ${whiteTwoColor}`,
-  paddingLeft: '16px',
   verticalAlign: 'top'
 };
 
