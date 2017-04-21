@@ -17,6 +17,7 @@ import OfficerMatching from 'components/resolving-page/officer-matching';
 import {
   COLLAB_PATH, FAQ_PATH, STORIES_PATH, SEARCH_PATH, OFFICER_PATH, RESOLVING_PATH
 } from 'utils/constants';
+import ResolvingPageContainer from 'containers/resolving-page';
 import configureStore from 'store';
 import history from 'utils/history';
 
@@ -53,7 +54,7 @@ class RouterRoot extends Component {
           <Route path={ OFFICER_PATH } component={ OfficerPageContainer }/>
           <Route path={ RESOLVING_PATH } component={ ResolvingPage }>
             <IndexRoute component={ OfficerMatching }/>
-            <Route path='officer-matching' component={ OfficerMatching }/>
+            <Route path='officer-matching' component={ ResolvingPageContainer }/>
             <Route path='officer-resolving' component={ OfficerConflicts }/>
           </Route>
         </Router>
