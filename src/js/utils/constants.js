@@ -22,6 +22,7 @@ export const FAQ_PATH = 'faq/';
 export const STORIES_PATH = 'reporting/';
 export const SEARCH_PATH = 'search/';
 export const OFFICER_PATH = 'officer/:officerId';
+export const RESOLVING_MATCHING_PATH = 'resolving/officer-matching/';
 
 export const ROOT_EDIT_REGEX = /^\/(?:edit\/)?$/;
 
@@ -67,6 +68,7 @@ export const MAIL_CHIMP_URL = '/vftg/';
 export const EVENTS_API_URL = `${V2_ROOT_PATH}events/`;
 export const SEARCH_OFFICER_URL = `${V2_ROOT_PATH}report-bottomsheet-officer-search/`;
 export const OFFICER_URL = `${V2_ROOT_PATH}officers/`;
+export const RESOLVING_MATCHING_URL = `${API_ROOT}unmatchable/`;
 
 export const DragTypes = {
   FAQ_ITEM: 'FAQ_ITEM'
@@ -99,6 +101,10 @@ export const SEARCH_OFFICERS_REQUEST_FAILURE = 'SEARCH_OFFICERS_REQUEST_FAILURE'
 export const OFFICER_SUMMARY_REQUEST_START = 'OFFICER_SUMMARY_REQUEST_START';
 export const OFFICER_SUMMARY_REQUEST_SUCCESS = 'OFFICER_SUMMARY_REQUEST_SUCCESS';
 export const OFFICER_SUMMARY_REQUEST_FAILURE = 'OFFICER_SUMMARY_REQUEST_FAILURE';
+
+export const RESOLVING_MATCHING_START = 'RESOLVING_MATCHING_START';
+export const RESOLVING_MATCHING_SUCCESS = 'RESOLVING_MATCHING_SUCCESS';
+export const RESOLVING_MATCHING_FAILURE = 'RESOLVING_MATCHING_FAILURE';
 
 export const OPEN_BOTTOM_SHEET_WITH_REPORT = 'OPEN_BOTTOM_SHEET_WITH_REPORT';
 export const OPEN_BOTTOM_SHEET_WITH_FAQ = 'OPEN_BOTTOM_SHEET_WITH_FAQ';
