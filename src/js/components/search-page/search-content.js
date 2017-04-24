@@ -1,16 +1,16 @@
 import React, { Component, PropTypes } from 'react';
 import { isEmpty, debounce, head, values, keys } from 'lodash';
-import Mousetrap from 'mousetrap';
+import { browserHistory } from 'react-router';
 
 import SearchResults from './search-results';
 import SearchBox from './search-box';
 import SearchTags from './search-tags';
 import SearchNoInput from './search-no-input';
 import {
-  backButtonStyle, searchContentWrapperStyle, searchBoxStyle,
-  resultWrapperStyle
+  backButtonStyle, searchContentWrapperStyle, searchBoxStyle, resultWrapperStyle
 } from './search-content.style.js';
 import { dataToolSearchUrl } from 'utils/v1-url';
+import * as LayeredKeyBinding from 'utils/layered-key-binding';
 
 
 const DEFAULT_SUGGESTION_LIMIT = 9;
@@ -28,12 +28,12 @@ export default class SearchContent extends Component {
     };
   }
 
-  componentDidMount() {
-    Mousetrap.bind('esc', this.handleGoBack);
+  componentWillMount() {
+    LayeredKeyBinding.bind('esc', this.handleGoBack);
   }
 
   componentWillUnmount() {
-    Mousetrap.unbind('esc');
+    LayeredKeyBinding.unbind('esc');
   }
 
   handleChange({ currentTarget: { value } }) {
@@ -71,16 +71,22 @@ export default class SearchContent extends Component {
     const firstRecord = head(head(values(suggestionGroups)));
     const contentType = head(keys(suggestionGroups));
     let url;
+    let to;
 
     if (firstRecord) {
       const text = firstRecord.payload['result_text'];
       url = firstRecord.payload.url;
-      trackRecentSuggestion(contentType, text, url);
+      to = firstRecord.payload.to;
+      trackRecentSuggestion(contentType, text, url, to);
     } else {
       url = dataToolSearchUrl(value);
     }
 
-    window.location.assign(url);
+    if (to) {
+      browserHistory.push(to);
+    } else {
+      window.location.assign(url);
+    }
   }
 
   renderContent() {
