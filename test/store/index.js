@@ -108,6 +108,10 @@ describe('store', function () {
         fullName: '',
         isRequesting: false,
         summary: {}
+      },
+      resolvingPage: {
+        isRequesting: false,
+        unmatchable: {}
       }
     });
   });
