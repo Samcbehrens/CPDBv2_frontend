@@ -30,4 +30,5 @@
 - name: Install YARN package manager
   become: yes
   become_user: root
-  package: name=yarn state=latest
+  apt:
+    name: yarn=0.18*

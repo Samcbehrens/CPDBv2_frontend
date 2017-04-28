@@ -6,7 +6,7 @@
 
 - `sudo ansible-galaxy install Heroqu.nodejs4x`
 - `sudo ansible-galaxy install nicolai86.phantomjs`
-- Make sure your node and npm version match: (node v4.4.3, npm v3.8.7 and yarn v0.8.1)
+- Make sure your node and npm version match: (node v4.4.3, npm v3.8.7 and yarn v0.18.1)
 - `yarn install`
 
 ## Run Tests
