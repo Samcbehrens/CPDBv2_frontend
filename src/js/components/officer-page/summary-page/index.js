@@ -15,8 +15,8 @@ export default class SummaryPage extends Component {
         <div style={ wrapperStyle }>
           <SummarySection officerSummary={ officerSummary }/>
           <AggregateSection
-            title='COMPLAINT RECORDS' fadedTitle='CRs' count={ complaintsCount }
-            sustainedCount={ sustainedCount } aggregateFacets={ complaintFacets }/>
+            title='COMPLAINT RECORDS' fadedTitle='CRs' count={ complaintsCount } sustainedCount={ sustainedCount }
+            aggregateFacets={ complaintFacets }/>
         </div>
       </ResponsiveFixedWidthComponent>
     );
