@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
 
-import isRequesting from './is-requesting';
 import unmatchable from './unmatchable';
+import unmergeable from './unmergeable';
 
 
 export default combineReducers({
   unmatchable,
-  isRequesting
+  unmergeable
 });

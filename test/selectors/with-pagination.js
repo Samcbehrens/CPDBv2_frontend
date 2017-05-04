@@ -1,30 +1,20 @@
 import {
-  nextUrlSelector, prevUrlSelector, countSelector, offsetSelector, officerMatchingSelector
-} from 'selectors/resolving-page';
+  nextUrlSelector, prevUrlSelector, countSelector, offsetSelector, recordsSelector
+} from 'selectors/resolving-page/with-pagination';
 
 
-describe('resolvingPage selectors', function () {
+describe('with-pagination selectors', function () {
   const state = {
-    resolvingPage: {
-      unmatchable: {
-        next: 'next',
-        previous: 'previous',
-        count: 2,
-        offset: 1,
-        results: [
-          {
-            record: 'record',
-            candidates: 'candidates'
-          }
-        ]
-      }
-    }
+    next: 'next',
+    previous: 'previous',
+    count: 2,
+    offset: 1,
+    results: [
+      'objects'
+    ]
   };
 
   const emptyState = {
-    resolvingPage: {
-      unmatchable: {}
-    }
   };
 
   describe('nextUrlSelector', function () {
@@ -67,19 +57,13 @@ describe('resolvingPage selectors', function () {
     });
   });
 
-  describe('officerMatchingSelector', function () {
+  describe('recordsSelector', function () {
     it('should return empty record and candidates if does not exist', function () {
-      officerMatchingSelector(emptyState).should.eql({
-        record: {},
-        candidates: []
-      })
+      recordsSelector(emptyState).should.eql([]);
     });
 
     it('should return record and candidates correctly', function () {
-      officerMatchingSelector(state).should.eql({
-        record: 'record',
-        candidates: 'candidates'
-      });
+      recordsSelector(state).should.eql(['objects']);
     });
   });
 });

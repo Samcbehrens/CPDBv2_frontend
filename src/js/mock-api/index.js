@@ -10,6 +10,7 @@ import reportingPageGetData from './reporting-page/get-data';
 import FAQPageGetData from './faq-page/get-data';
 import suggestionGetData from './landing-page/suggestions';
 import getSummaryData from './officer-page/get-summary';
+import getUnmatchableData from './resolving-page/get-unmatchable';
 
 
 const SEARCH_API_URL = /^suggestion\/([^/]*)\//;
@@ -47,6 +48,20 @@ axiosMockClient.onGet(`${SEARCH_OFFICER_URL}foo/`).reply(() => [200, OfficerFact
 axiosMockClient.onGet(`${SEARCH_OFFICER_URL}notfound/`).reply(200, []);
 
 axiosMockClient.onGet(`${OFFICER_URL}1/summary/`).reply(200, getSummaryData());
+
+axiosMockClient.onGet(/unmatchable/).reply(config => {
+  if (config.url.includes('offset=0')) {
+    return [200, getUnmatchableData(0)];
+  } else if (config.url.includes('offset=1')) {
+    return [200, getUnmatchableData(1)];
+  } else {
+    return [200, getUnmatchableData(2)];
+  }
+});
+
+axiosMockClient.onPut(/unmatchable\/1/, { 'candidate_pk': 1 }).reply(
+  200, { 'code': '001', 'message': 'Merge successfully' }
+);
 
 /*istanbul ignore next*/
 export function getMockAdapter() {

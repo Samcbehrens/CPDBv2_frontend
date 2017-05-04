@@ -29,16 +29,18 @@ class ResolvingPage extends Component {
               justify='start'>
               <Menu primary={ true }>
                 <Accordion animate={ false } active={ 0 }>
-                  <AccordionPanel heading='Matching'>
+                  <AccordionPanel className='test--matching-menu-item' heading='Matching'>
                     <Menu primary={ true }>
-                      <Anchor href={ `/${RESOLVING_PATH}officer-matching` } className='active'>
+                      <Anchor href={ `/${RESOLVING_PATH}officer-matching` }
+                        className='active test--matching-officer-button'>
                         Officer
                       </Anchor>
                     </Menu>
                   </AccordionPanel>
-                  <AccordionPanel heading='Resolving'>
+                  <AccordionPanel className='test--merging-menu-item' heading='Resolving'>
                     <Menu primary={ true }>
-                      <Anchor href={ `/${RESOLVING_PATH}officer-resolving` } className='active'>
+                      <Anchor href={ `/${RESOLVING_PATH}officer-merging` }
+                        className='active test--merging-officer-button'>
                         Officer
                       </Anchor>
                     </Menu>

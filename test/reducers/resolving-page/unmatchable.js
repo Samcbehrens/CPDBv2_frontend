@@ -1,16 +1,16 @@
 import unmatchable from 'reducers/resolving-page/unmatchable';
 
-import { RESOLVING_MATCHING_SUCCESS } from 'utils/constants';
+import { UNMATCHABLE_SUCCESS } from 'utils/constants';
 
 
-describe('summary reducer', function () {
+describe('unmatchableReducer', function () {
   it('should have initial state', function () {
     unmatchable(undefined, {}).should.eql({});
   });
 
-  it('should handle RESOLVING_MATCHING_SUCCESS', function () {
+  it('should handle UNMATCHABLE_SUCCESS', function () {
     unmatchable(undefined, {
-      type: RESOLVING_MATCHING_SUCCESS,
+      type: UNMATCHABLE_SUCCESS,
       payload: { 'a': 'b' }
     }).should.eql({ 'a': 'b' });
   });

@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { map } from 'lodash';
+import { get, map } from 'lodash';
 
 import Section from 'grommet/components/Section';
 import Columns from 'grommet/components/Columns';
@@ -24,38 +24,21 @@ class OfficerMatching extends Component {
     this.renderRecord = this.renderRecord.bind(this);
     this.renderCandidate = this.renderCandidate.bind(this);
     this.handleOnCandidateSelected = this.handleOnCandidateSelected.bind(this);
-    this.handleNext = this.handleNext.bind(this);
-    this.handlePrevious = this.handlePrevious.bind(this);
-  }
-
-  componentDidMount() {
-    this.props.fetchUnmatchable();
-  }
-
-  handleNext() {
-    const { nextUrl, fetchUnmatchable } = this.props;
-    if (nextUrl) {
-      fetchUnmatchable(nextUrl);
-    }
-  }
-
-  handlePrevious() {
-    const { prevUrl, fetchUnmatchable } = this.props;
-    if (prevUrl) {
-      fetchUnmatchable(prevUrl);
-    }
   }
 
   renderRecord() {
-    const { record, count, offset } = this.props;
+    const { records, count, offset, handleNext, handlePrevious } = this.props;
+    const record = get(records, '0.record');
+
     return (
-      <Section align='center' pad='medium' margin='small' colorIndex='light-2'>
+      <Section align='center' pad='medium' margin='small' colorIndex='light-2' className='test--record'>
         <OfficerForm disabled={ true } officer={ record }>
           <Header>
-            <Value label={ `${offset + 1}/${count}` } size='large'/>
+            <Value className='test--offset' label={ `${offset + 1}/${count}` } size='large'/>
             <Box flex={ true } justify='end' direction='row' responsive={ false }>
-              <Button icon={ <CaretPrevious /> } onClick={ this.handlePrevious } href='#'/>
-              <Button icon={ <CaretNext /> } onClick={ this.handleNext } href='#'/>
+              <Button className='test--previous-button'
+                icon={ <CaretPrevious /> } onClick={ handlePrevious }/>
+              <Button className='test--next-button' icon={ <CaretNext /> } onClick={ handleNext }/>
             </Box>
           </Header>
         </OfficerForm>
@@ -65,11 +48,13 @@ class OfficerMatching extends Component {
 
   renderCandidate(candidate, index) {
     return (
-      <Section align='center' pad='medium' margin='small' colorIndex='light-2' key={ index }>
+      <Section className='test--candidate'
+        align='center' pad='medium' margin='small' colorIndex='light-2' key={ index } >
         <OfficerForm disabled={ true } officer={ candidate }>
           <Header justify='end'>
             <Button icon={ <Close /> } href='#'/>
-            <Button icon={ <Checkmark /> } onClick={ () => this.handleOnCandidateSelected(candidate) }/>
+            <Button className='test--select-candidate-button'
+              icon={ <Checkmark /> } onClick={ () => this.handleOnCandidateSelected(candidate) }/>
           </Header>
         </OfficerForm>
       </Section>
@@ -77,25 +62,23 @@ class OfficerMatching extends Component {
   }
 
   handleOnCandidateSelected(candidate) {
-    const { id, matchingAPI, fetchUnmatchable, nextUrl } = this.props;
+    const { id, matchingAPI, fetchData } = this.props;
+
     matchingAPI(id, candidate.id).then(() => {
-      if (nextUrl) {
-        fetchUnmatchable(nextUrl);
-      } else {
-        fetchUnmatchable();
-      }
+      fetchData();
     });
   }
 
   render() {
-    const { candidates } = this.props;
+    const { records } = this.props;
+    const candidates = get(records, '0.candidates');
 
     return (
       <Section>
         <Header pad='small'>
-          <Title>Matching</Title>
+          <Title className='test--matching-text'>Matching</Title>
           <Box flex={ true } justify='end' direction='row' responsive={ false }>
-            <Search
+            <Search className='test--search-box'
               inline={ true } fill={ true } size='medium' placeHolder='Search' dropAlign={ { 'right': 'right' } }/>
           </Box>
         </Header>
@@ -111,20 +94,19 @@ class OfficerMatching extends Component {
 OfficerMatching.propTypes = {
   id: PropTypes.number,
   offset: PropTypes.number,
-  fetchUnmatchable: PropTypes.func,
+  fetchData: PropTypes.func,
   matchingAPI: PropTypes.func,
-  record: PropTypes.object,
+  records: PropTypes.array,
   candidates: PropTypes.array,
   count: PropTypes.number,
   nextUrl: PropTypes.string,
-  prevUrl: PropTypes.string
+  prevUrl: PropTypes.string,
+  handleNext: PropTypes.func,
+  handlePrevious: PropTypes.func
 };
 
 OfficerMatching.defaultProps = {
-  offset: 0,
-  record: {},
-  candidates: [],
-  fetchUnmatchable: () => {},
+  fetchData: () => {},
   matchingAPI: () => {}
 };
 

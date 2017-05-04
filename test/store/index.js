@@ -110,8 +110,8 @@ describe('store', function () {
         summary: {}
       },
       resolvingPage: {
-        isRequesting: false,
-        unmatchable: {}
+        unmatchable: {},
+        unmergeable: {}
       }
     });
   });

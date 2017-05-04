@@ -1,15 +1,12 @@
 import React from 'react';
 import {
-  renderIntoDocument, scryRenderedComponentsWithType, findRenderedComponentWithType,
-  scryRenderedDOMComponentsWithClass, Simulate
+  renderIntoDocument, scryRenderedComponentsWithType, findRenderedDOMComponentWithClass, Simulate
 } from 'react-addons-test-utils';
 import { spy } from 'sinon';
 
 
 import Title from 'grommet/components/Title';
 import Search from 'grommet/components/Search';
-import CaretPrevious from 'grommet/components/icons/base/CaretPrevious';
-import CaretNext from 'grommet/components/icons/base/CaretNext';
 
 import { unmountComponentSuppressError } from 'utils/test';
 import OfficerMatching from 'components/resolving-page/officer-matching';
@@ -32,60 +29,78 @@ describe('OfficerMatching component', function () {
   });
 
   it('should render record', function () {
-    const record = {};
+    const record = {
+      'first_name': 'Foo'
+    };
+    const records = [{
+      'record': record,
+      'candidates': []
+    }];
 
-    instance = renderIntoDocument(<OfficerMatching record={ record }/>);
+
+    instance = renderIntoDocument(<OfficerMatching records={ records }/>);
     const officerForms = scryRenderedComponentsWithType(instance, OfficerForm);
     officerForms.should.have.length(1);
     officerForms[0].props.officer.should.eql(record);
   });
 
   it('should render list of candidates', function () {
-    const candidate = {};
+    const candidate = {
+      'first_name': 'Foo',
+      'last_name': 'Bar'
+    };
+    const records = [{
+      'record': {},
+      'candidates': [candidate]
+    }];
 
-    instance = renderIntoDocument(<OfficerMatching candidates={ [candidate] } />);
+    instance = renderIntoDocument(<OfficerMatching records={ records } />);
     const officerForms = scryRenderedComponentsWithType(instance, OfficerForm);
     officerForms.should.have.length(2);
     officerForms[1].props.officer.should.eql(candidate);
   });
 
-  it('should fetch unmatchable data on component did mount', function () {
-    const fetchUnmatchable = spy();
+  it('should come to next page if we click on the next button', function () {
+    const handleNext = spy();
 
-    instance = renderIntoDocument(<OfficerMatching fetchUnmatchable={ fetchUnmatchable } />);
-    fetchUnmatchable.called.should.be.true();
-  });
-
-  it('should handle when we click on next record button', function () {
-    const fetchUnmatchable = spy();
-    const nextUrl = 'nextUrl';
-
-    instance = renderIntoDocument(<OfficerMatching fetchUnmatchable={ fetchUnmatchable } nextUrl={ nextUrl } />);
-    const nextButton = findRenderedComponentWithType(instance, CaretNext);
+    instance = renderIntoDocument(<OfficerMatching handleNext={ handleNext } />);
+    const nextButton = findRenderedDOMComponentWithClass(instance, 'test--next-button');
 
     Simulate.click(nextButton);
 
-    fetchUnmatchable.calledWith(nextUrl).should.be.true();
+    handleNext.called.should.be.true();
   });
 
-  it('should handle when we click on previous record button', function () {
-    const fetchUnmatchable = spy();
-    const prevUrl = 'prevUrl';
+  it('should come to previous page if we click on the previous button', function () {
+    const handlePrevious = spy();
 
-    instance = renderIntoDocument(<OfficerMatching fetchUnmatchable={ fetchUnmatchable } prevUrl={ prevUrl } />);
-    const prevButton = findRenderedComponentWithType(instance, CaretPrevious);
+    instance = renderIntoDocument(<OfficerMatching handlePrevious={ handlePrevious } />);
+    const prevButton = findRenderedDOMComponentWithClass(instance, 'test--previous-button');
 
     Simulate.click(prevButton);
-    fetchUnmatchable.calledWith(prevUrl).should.be.true();
+
+    handlePrevious.called.should.be.true();
   });
 
   describe('select candidate', function () {
-    it('should fetch unmatchable data of next record if next url does exist', function () {
+    it('should fetch unmatchable data by default record', function () {
+      const matchingAPI = spy(() => Promise.resolve());
+      const fetchData = spy();
+      const records = [{
+        'record': {},
+        'candidates': [{}]
+      }];
 
-    });
+      instance = renderIntoDocument(
+        <OfficerMatching matchingAPI={ matchingAPI } fetchData={ fetchData } records={ records }/>
+      );
+      const selectCandidateButton = findRenderedDOMComponentWithClass(instance, 'test--select-candidate-button');
 
-    it('should fetch unmatchable data by default record if next url does not exist', function () {
-
+      Simulate.click(selectCandidateButton);
+      matchingAPI.called.should.be.true();
+      matchingAPI().then(function () {
+        fetchData.called.should.be.true();
+      });
     });
   });
 });

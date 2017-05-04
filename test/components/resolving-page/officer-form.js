@@ -2,6 +2,7 @@ import React from 'react';
 import {
   renderIntoDocument, scryRenderedComponentsWithType, findRenderedComponentWithType, scryRenderedDOMComponentsWithClass
 } from 'react-addons-test-utils';
+import { spy } from 'sinon';
 
 import TextInput from 'grommet/components/TextInput';
 import CheckBox from 'grommet/components/CheckBox';
@@ -25,14 +26,14 @@ describe('OfficerForm component', function () {
       'middle_initial': 'M',
       'race': 'White',
       'gender': 'Male',
-      'on_duty': true,
+      'active': true,
       'appointed_date': '02/02/2002'
     };
 
     instance = renderIntoDocument(<OfficerForm officer={ officer }/>);
     const textInputs = scryRenderedComponentsWithType(instance, TextInput);
     const checkbox = findRenderedComponentWithType(instance, CheckBox);
-    const datetime = findRenderedComponentWithType(instance, DateTime);
+    const dateTimeComponent = findRenderedComponentWithType(instance, DateTime);
 
     textInputs[0].props.value.should.equal('Foo');
     textInputs[1].props.value.should.equal('Bar');
@@ -40,7 +41,7 @@ describe('OfficerForm component', function () {
     textInputs[3].props.value.should.equal('White');
     textInputs[4].props.value.should.equal('Male');
     checkbox.props.checked.should.be.true();
-    datetime.props.value.should.equal('02/02/2002');
+    dateTimeComponent.props.value.should.equal('02/02/2002');
   });
 
   it('should render children', function () {
@@ -51,5 +52,23 @@ describe('OfficerForm component', function () {
     );
 
     scryRenderedDOMComponentsWithClass(instance, 'test-class').should.have.length(1);
+  });
+
+  it('should handle data change', function () {
+    const officer = {
+      'first_name': 'Foo',
+      'last_name': 'Bar',
+      'middle_initial': 'M',
+      'race': 'White',
+      'gender': 'Male',
+      'active': true,
+      'appointed_date': '02/02/2002'
+    };
+    const handler = spy();
+    instance = renderIntoDocument(<OfficerForm officer={ officer } handleDataChanges={ handler }/>);
+    const textInputs = scryRenderedComponentsWithType(instance, TextInput);
+
+    textInputs[0].props.onDOMChange({ target: { value: '123' } });
+    handler.called.should.be.true();
   });
 });

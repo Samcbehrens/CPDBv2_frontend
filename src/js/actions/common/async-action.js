@@ -55,6 +55,23 @@ export const patch = patchWithConfig();
 
 export const authenticatedPatch = patchWithConfig(authorizationHeaders);
 
+const putWithConfig = (config=() => ({})) => (url, types) => ((data, adapter=getMockAdapter()) => ({
+  types,
+  payload: {
+    request: {
+      method: 'put',
+      url,
+      data,
+      adapter,
+      ...config()
+    }
+  }
+}));
+
+export const put = putWithConfig();
+
+export const authenticatedPut = putWithConfig(authorizationHeaders);
+
 const destroyWithConfig = (config=() => ({})) => (url, types) => ((data, adapter=getMockAdapter()) => ({
   types,
   payload: {
@@ -70,4 +87,4 @@ const destroyWithConfig = (config=() => ({})) => (url, types) => ((data, adapter
 
 export const destroy = destroyWithConfig();
 
-export const authenticatedDestroy = destroyWithConfig(authorizationHeaders);
+export const authenticatedDestroy = putWithConfig(authorizationHeaders);
