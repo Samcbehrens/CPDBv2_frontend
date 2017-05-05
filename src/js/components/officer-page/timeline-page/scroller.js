@@ -1,5 +1,7 @@
 import React, { PropTypes, Component } from 'react';
 
+import { wrapperStyle } from './scroller.style';
+
 
 export default class Scroller extends Component {
   componentWillReceiveProps(nextProps) {
@@ -18,7 +20,8 @@ export default class Scroller extends Component {
   render() {
     const { style, children } = this.props;
     return (
-      <div style={ { overflow: 'auto', ...style } } ref={ this.handleElementRef.bind(this) }>
+      <div className='test--timeline-items-container'
+        style={ { ...wrapperStyle, ...style } } ref={ this.handleElementRef.bind(this) }>
       { children }
       </div>
     );
