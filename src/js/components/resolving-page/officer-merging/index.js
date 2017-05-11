@@ -47,9 +47,9 @@ class OfficerMerging extends Component {
   renderHeader() {
     return (
       <Header pad='small'>
-        <Title>Resolving</Title>
+        <Title className='test--merging-text'>Resolving</Title>
         <Box flex={ true } justify='end' direction='row' responsive={ false }>
-          <Search inline={ true } fill={ true } size='medium'
+          <Search className='test--search-box' inline={ true } fill={ true } size='medium'
             placeHolder='Search' dropAlign={ { 'right': 'right' } }/>
         </Box>
       </Header>
@@ -61,10 +61,10 @@ class OfficerMerging extends Component {
     const record = get(records, '0.record', {});
 
     return (
-      <Section align='center' pad='medium' margin='small' colorIndex='light-2'>
+      <Section className='test--record' pad='medium' margin='small' colorIndex='light-2'>
         <OfficerForm officer={ record } >
           <Header>
-            <Value label={ `${offset + 1}/${count}` } size='large'/>
+            <Value className='test--offset' label={ `${offset + 1}/${count}` } size='large'/>
             <Box flex={ true } justify='end' direction='row' responsive={ false }>
               <Button className='test--previous-button'
                 icon={ <CaretPrevious /> } onClick={ handlePrevious } href='#'/>
@@ -82,12 +82,12 @@ class OfficerMerging extends Component {
     const candidate = get(records, '0.candidate');
 
     return (
-      <Section align='center' pad='medium' margin='small' colorIndex='light-2'>
+      <Section className='test--candidate' pad='medium' margin='small' colorIndex='light-2'>
         <OfficerForm officer={ { ...candidate, ...this.state.updatedRecord } } disabled={ false }
           handleDataChanges={ (field, value, mapper) => { this.handleDataChanges(field, value, mapper); } }>
           <Footer justify='end'>
             <Button icon={ <Refresh /> } href='#'/>
-            <Button onClick={ this.handleMerge } icon={ <Checkmark /> } href='#'/>
+            <Button className='test--merge-button' onClick={ this.handleMerge } icon={ <Checkmark /> } href='#'/>
           </Footer>
         </OfficerForm>
       </Section>
@@ -100,7 +100,7 @@ class OfficerMerging extends Component {
         {
           this.renderHeader()
         }
-        <Columns align='center'>
+        <Columns>
           {
             this.renderCandidate()
           }

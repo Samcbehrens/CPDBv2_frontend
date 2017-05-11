@@ -11,6 +11,7 @@ import FAQPageGetData from './faq-page/get-data';
 import suggestionGetData from './landing-page/suggestions';
 import getSummaryData from './officer-page/get-summary';
 import getUnmatchableData from './resolving-page/get-unmatchable';
+import getUnmergeableData from './resolving-page/get-unmergeable';
 
 
 const SEARCH_API_URL = /^suggestion\/([^/]*)\//;
@@ -56,6 +57,16 @@ axiosMockClient.onGet(/unmatchable/).reply(config => {
     return [200, getUnmatchableData(1)];
   } else {
     return [200, getUnmatchableData(2)];
+  }
+});
+
+axiosMockClient.onGet(/unmergeable/).reply(config => {
+  if (config.url.includes('offset=0')) {
+    return [200, getUnmergeableData(0)];
+  } else if (config.url.includes('offset=1')) {
+    return [200, getUnmergeableData(1)];
+  } else {
+    return [200, getUnmergeableData(2)];
   }
 });
 

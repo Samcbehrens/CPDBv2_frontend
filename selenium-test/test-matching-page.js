@@ -50,8 +50,8 @@ describe('matching page', function () {
     matchingPage.recordSection.genderLabel.getText().should.be.equal('Gender');
     matchingPage.recordSection.genderValue.getValue().should.be.equal('F');
 
-    matchingPage.recordSection.onDutyLabel.getText().should.be.equal('On Duty');
-    matchingPage.recordSection.onDutyValue.isSelected().should.be.false();
+    matchingPage.recordSection.activeLabel.getText().should.be.equal('Active');
+    matchingPage.recordSection.activeValue.isSelected().should.be.false();
 
     matchingPage.recordSection.appointedDateLabel.getText().should.be.equal('Appointed Date');
     matchingPage.recordSection.appointedDateValue.getValue().should.be.equal('2008-11-04');
@@ -73,8 +73,8 @@ describe('matching page', function () {
     matchingPage.candidateSection.genderLabel.getText().should.be.equal('Gender');
     matchingPage.candidateSection.genderValue.getValue().should.be.equal('F');
 
-    matchingPage.candidateSection.onDutyLabel.getText().should.be.equal('On Duty');
-    matchingPage.candidateSection.onDutyValue.isSelected().should.be.false();
+    matchingPage.candidateSection.activeLabel.getText().should.be.equal('Active');
+    matchingPage.candidateSection.activeValue.isSelected().should.be.true();
 
     matchingPage.candidateSection.appointedDateLabel.getText().should.be.equal('Appointed Date');
     matchingPage.candidateSection.appointedDateValue.getValue().should.be.equal('2007-11-04');
@@ -95,7 +95,6 @@ describe('matching page', function () {
 
     // approve the candidate
     matchingPage.candidateSection.selectCandidateButton.click();
-
     // page should be reload
     matchingPage.recordSection.offset.getText().should.be.equal('1/2');
   });

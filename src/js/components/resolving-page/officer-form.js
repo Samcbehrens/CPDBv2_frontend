@@ -40,7 +40,7 @@ class OfficerForm extends Component {
               (e) => { handleDataChanges('gender', e.target.value); }
             }/>
         </FormField>
-        <FormField className='test--on-duty' label='On Duty'>
+        <FormField className='test--active' label='Active'>
           <CheckBox
             disabled={ disabled } name='active' checked={ !!officer['active'] } toggle={ false } onChange={
               (e) => { handleDataChanges('active', e.target.checked); }

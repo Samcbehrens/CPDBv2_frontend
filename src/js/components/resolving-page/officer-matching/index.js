@@ -62,7 +62,8 @@ class OfficerMatching extends Component {
   }
 
   handleOnCandidateSelected(candidate) {
-    const { id, matchingAPI, fetchData } = this.props;
+    const { records, matchingAPI, fetchData } = this.props;
+    const id = get(records, '0.id');
 
     matchingAPI(id, candidate.id).then(() => {
       fetchData();

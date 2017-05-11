@@ -74,13 +74,13 @@ class CandidateSection extends Section {
 
     this.prepareElementGetters({
       ...recordInfos,
-      selectCandidateButton: '//*[contains(@class, "test--select-candidate-button")]'
+      mergeButton: '//*[contains(@class, "test--merge-button")]'
     });
   }
 }
 
 
-class MatchingPage extends Page {
+class MergingPage extends Page {
   menu = new Menu();
   recordSection = new RecordSection();
   candidateSection = new CandidateSection();
@@ -88,7 +88,7 @@ class MatchingPage extends Page {
   constructor() {
     super();
     this.prepareElementGetters({
-      matchingText: '.test--matching-text',
+      mergingText: '.test--merging-text',
       searchBox: '.test--search-box',
       candidate: '.test--candidate',
       record: '.test--record'
@@ -96,9 +96,9 @@ class MatchingPage extends Page {
   }
 
   open() {
-    super.open('/resolving/officer-matching/');
+    super.open('/resolving/officer-merging/');
     browser.element('body').waitForVisible();
   }
 }
 
-module.exports = new MatchingPage();
+module.exports = new MergingPage();

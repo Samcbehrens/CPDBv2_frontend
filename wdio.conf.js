@@ -16,7 +16,7 @@ exports.config = {
   // directory is where your package.json resides, so `wdio` will be called from there.
   //
   specs: [
-    './selenium-test/**/test-resolving*.js'
+    './selenium-test/**/test-merging*.js'
   ],
   // Patterns to exclude.
   exclude: [
