@@ -84,7 +84,7 @@ class OfficerMerging extends Component {
     return (
       <Section className='test--candidate' pad='medium' margin='small' colorIndex='light-2'>
         <OfficerForm officer={ { ...candidate, ...this.state.updatedRecord } } disabled={ false }
-          handleDataChanges={ (field, value, mapper) => { this.handleDataChanges(field, value, mapper); } }>
+          handleDataChanges={ this.handleDataChanges }>
           <Footer justify='end'>
             <Button icon={ <Refresh /> } href='#'/>
             <Button className='test--merge-button' onClick={ this.handleMerge } icon={ <Checkmark /> } href='#'/>

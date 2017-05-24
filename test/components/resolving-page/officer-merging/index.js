@@ -82,6 +82,14 @@ describe('<OfficerMerging />', function () {
     handlePrevious.called.should.be.true();
   });
 
+  it('should handle data changes', function () {
+    instance = renderIntoDocument(
+        <OfficerMerging deleteUnmergeable={ spy() } fetchData={ spy() } records={ [] }/>
+    );
+    instance.handleDataChanges('a', 'b')
+    instance.state['updatedRecord'].should.be.deepEqual({ 'a': 'b' });
+  });
+
   describe('select candidate', function () {
     it('should fetch unmatchable data by default record', function () {
       const deleteUnmergeable = spy(() => Promise.resolve());
@@ -92,15 +100,16 @@ describe('<OfficerMerging />', function () {
       }];
 
       instance = renderIntoDocument(
-        <OfficerMerging deleteUnmergeable={ deleteUnmergeable } fetchData={ fetchData } records={ records }/>
+          <OfficerMerging deleteUnmergeable={ deleteUnmergeable } fetchData={ fetchData } records={ records }/>
       );
-      const selectCandidateButton = findRenderedDOMComponentWithClass(instance, 'test--merge-button');
+      const mergingButton = findRenderedDOMComponentWithClass(instance, 'test--merge-button');
 
-      Simulate.click(selectCandidateButton);
+      Simulate.click(mergingButton);
       deleteUnmergeable.called.should.be.true();
       deleteUnmergeable().then(function () {
         fetchData.called.should.be.true();
       });
     });
+
   });
 });

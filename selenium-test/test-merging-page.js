@@ -80,7 +80,7 @@ describe('merging page', function () {
     mergingPage.recordSection.offset.getText().should.be.equal('2/2');
 
     // approve the candidate
-    mergingPage.mergeButton.mergeButton.click();
+    mergingPage.candidateSection.mergeButton.click();
 
     // // page should be reload
     mergingPage.recordSection.offset.getText().should.be.equal('1/2');

@@ -69,6 +69,14 @@ describe('OfficerForm component', function () {
     const textInputs = scryRenderedComponentsWithType(instance, TextInput);
 
     textInputs[0].props.onDOMChange({ target: { value: '123' } });
-    handler.called.should.be.true();
+    handler.calledWith('first_name', '123').should.be.true();
+
+    const checkbox = findRenderedComponentWithType(instance, CheckBox);
+    checkbox.props.onChange({ target: { checked: false } })
+    handler.calledWith('active', false);
+
+    const dateTimeComponent = findRenderedComponentWithType(instance, DateTime);
+    dateTimeComponent.props.onChange('20-11-2012');
+    handler.calledWith('appointed_date', '20-11-2012');
   });
 });

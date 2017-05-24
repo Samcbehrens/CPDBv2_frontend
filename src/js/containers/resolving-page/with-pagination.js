@@ -60,7 +60,7 @@ export const wrap = (ChildComponent) => {
   return WrappedComponent;
 };
 
-
+/* istanbul ignore next */
 const withPagination = (fetchData, statePath) => {
   return (ChildComponent) => {
     return connect((state) => {
