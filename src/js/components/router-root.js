@@ -11,13 +11,10 @@ import FAQPage from 'components/faq-page/faq-page';
 import SearchPageContainer from 'containers/search-page-container';
 import ReportingPage from 'components/reporting-page';
 import OfficerPageContainer from 'containers/officer-page';
+import { COLLAB_PATH, FAQ_PATH, STORIES_PATH, SEARCH_PATH, OFFICER_PATH, RESOLVING_PATH } from 'utils/constants';
 import ResolvingPage from 'components/resolving-page';
-import OfficerConflicts from 'components/resolving-page/officer-conflicts';
-import OfficerMatching from 'components/resolving-page/officer-matching';
-import {
-  COLLAB_PATH, FAQ_PATH, STORIES_PATH, SEARCH_PATH, OFFICER_PATH, RESOLVING_PATH
-} from 'utils/constants';
-import ResolvingPageContainer from 'containers/resolving-page';
+import OfficerMatchingContainer from 'containers/resolving-page/officer-matching';
+import OfficerMergingContainer from 'containers/resolving-page/officer-merging';
 import configureStore from 'store';
 import history from 'utils/history';
 
@@ -53,9 +50,9 @@ class RouterRoot extends Component {
           <Route path={ SEARCH_PATH } component={ SearchPageContainer }/>
           <Route path={ OFFICER_PATH } component={ OfficerPageContainer }/>
           <Route path={ RESOLVING_PATH } component={ ResolvingPage }>
-            <IndexRoute component={ OfficerMatching }/>
-            <Route path='officer-matching' component={ ResolvingPageContainer }/>
-            <Route path='officer-resolving' component={ OfficerConflicts }/>
+            <IndexRoute component={ OfficerMatchingContainer }/>
+            <Route path='officer-matching' component={ OfficerMatchingContainer }/>
+            <Route path='officer-merging' component={ OfficerMergingContainer }/>
           </Route>
         </Router>
       </Provider>

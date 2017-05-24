@@ -34,18 +34,18 @@ export default offset => {
   if (offset === 0) {
     return {
       'count': 2,
-      'next': 'http://localhost:8000/api/v1/unmatchable/?limit=1&offset=1',
+      'next': 'http://localhost:8000/api/v1/unmergeable/?limit=1&offset=1',
       'previous': null,
       'offset': 0,
-      results: [{ 'id': 1, 'record': record, 'candidates': [candidate] }]
+      results: [{ 'id': 1, 'record': record, 'candidate': candidate }]
     };
   } else if (offset === 1) {
     return {
       'count': 2,
       'next': null,
-      'previous': 'http://localhost:8000/api/v1/unmatchable/?limit=1&offset=0',
+      'previous': 'http://localhost:8000/api/v1/unmergeable/?limit=1&offset=0',
       'offset': 1,
-      results: [{ 'id': 1, 'record': record, 'candidates': [candidate] }]
+      results: [{ 'id': 1, 'record': record, 'candidate': candidate }]
     };
   } else {
     return {
