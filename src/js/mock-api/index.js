@@ -1,7 +1,7 @@
 import axiosMockClient from 'utils/axios-mock-client';
 import {
   LANDING_PAGE_API_URL, SIGNIN_URL, RESET_PASSWORD_URL, MAIL_CHIMP_URL,
-  REPORTS_API_URL, FAQS_API_URL, SEARCH_OFFICER_URL, OFFICER_URL
+  REPORTS_API_URL, FAQS_API_URL, SEARCH_OFFICER_URL, OFFICER_URL, CR_URL
 } from 'utils/constants';
 
 import OfficerFactory from 'utils/test/factories/officer';
@@ -12,6 +12,9 @@ import suggestionGetData from './landing-page/suggestions';
 import getSummaryData from './officer-page/get-summary';
 import getUnmatchableData from './resolving-page/get-unmatchable';
 import getUnmergeableData from './resolving-page/get-unmergeable';
+import getMinimapData from './officer-page/get-minimap';
+import getTimelineItemsData, { reversedTimelineItems, nextTimelineItems } from './officer-page/get-timeline-item';
+import getCRData from './cr-page/get-data';
 
 
 const SEARCH_API_URL = /^suggestion\/([^/]*)\//;
@@ -73,6 +76,18 @@ axiosMockClient.onGet(/unmergeable/).reply(config => {
 axiosMockClient.onPut(/unmatchable\/1/, { 'candidate_pk': 1 }).reply(
   200, { 'code': '001', 'message': 'Merge successfully' }
 );
+
+axiosMockClient.onGet(`${CR_URL}1/`).reply(200, getCRData());
+
+axiosMockClient.onGet(`${OFFICER_URL}1/timeline-minimap/`).reply(200, getMinimapData());
+axiosMockClient.onGet(`${OFFICER_URL}1/timeline-items/`, { params: { offset: '10' } }).reply(200, nextTimelineItems());
+axiosMockClient.onGet(`${OFFICER_URL}1/timeline-items/`, { params: { sort: 'asc' } })
+  .reply(200, reversedTimelineItems());
+axiosMockClient.onGet(`${OFFICER_URL}1/timeline-items/`).reply(200, getTimelineItemsData());
+axiosMockClient.onGet(`${OFFICER_URL}1234/timeline-minimap/`).reply(200, getMinimapData(1234));
+axiosMockClient.onGet(`${OFFICER_URL}1234/timeline-items/`).reply(200, getTimelineItemsData(1234));
+axiosMockClient.onGet(`${OFFICER_URL}5678/timeline-minimap/`).reply(200, getMinimapData(5678));
+axiosMockClient.onGet(`${OFFICER_URL}5678/timeline-items/`).reply(200, getTimelineItemsData(5678));
 
 /*istanbul ignore next*/
 export function getMockAdapter() {
