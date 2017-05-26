@@ -29,30 +29,24 @@ const candidate = {
   'birth_year': 1940
 };
 
+let _data = [
+  { 'id': 0, 'record': record, 'candidate': candidate },
+  { 'id': 1, 'record': record, 'candidate': candidate }
+];
+
+export const deleteUnmergeable = (offset) => {
+  _data.splice(offset, 1);
+};
 
 export default offset => {
-  if (offset === 0) {
-    return {
-      'count': 2,
-      'next': 'http://localhost:8000/api/v1/unmergeable/?limit=1&offset=1',
-      'previous': null,
-      'offset': 0,
-      results: [{ 'id': 1, 'record': record, 'candidate': candidate }]
-    };
-  } else if (offset === 1) {
-    return {
-      'count': 2,
-      'next': null,
-      'previous': 'http://localhost:8000/api/v1/unmergeable/?limit=1&offset=0',
-      'offset': 1,
-      results: [{ 'id': 1, 'record': record, 'candidate': candidate }]
-    };
-  } else {
-    return {
-      'count': 0,
-      'next': null,
-      'previous': null,
-      'results': []
-    };
-  }
+  const data = _data;
+
+  const count = data.length;
+  const next = offset < count - 1 ? `http://localhost:8000/api/v1/unmergeable/?limit=1&offset=${offset + 1}` : null;
+  const previous = offset > 0 ? `http://localhost:8000/api/v1/unmergeable/?limit=1&offset=${offset - 1}` : null;
+  const results = [data[offset]];
+
+  return {
+    count, next, previous, offset, results
+  };
 };

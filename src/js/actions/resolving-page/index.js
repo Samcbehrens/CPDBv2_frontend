@@ -29,4 +29,4 @@ export const matchingAPI = (unmatchableId, candidateId) => (put(
 export const deleteUnmergeable = (unmergeableId, updatedRecord) => (destroy(
   `${UNMERGEABLE_URL}${unmergeableId}/`,
     [UNMERGEABLE_DELETE_START, UNMERGEABLE_DELETE_SUCCESS, UNMERGEABLE_DELETE_FAILURE]
-)({ 'updated_record': updatedRecord }));
+)({ 'record': updatedRecord }));

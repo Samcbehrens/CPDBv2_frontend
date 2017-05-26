@@ -84,9 +84,9 @@ describe('<OfficerMerging />', function () {
 
   it('should handle data changes', function () {
     instance = renderIntoDocument(
-        <OfficerMerging deleteUnmergeable={ spy() } fetchData={ spy() } records={ [] }/>
+      <OfficerMerging deleteUnmergeable={ spy() } fetchData={ spy() } records={ [] }/>
     );
-    instance.handleDataChanges('a', 'b')
+    instance.handleDataChanges('a', 'b');
     instance.state['updatedRecord'].should.be.deepEqual({ 'a': 'b' });
   });
 
@@ -100,7 +100,7 @@ describe('<OfficerMerging />', function () {
       }];
 
       instance = renderIntoDocument(
-          <OfficerMerging deleteUnmergeable={ deleteUnmergeable } fetchData={ fetchData } records={ records }/>
+        <OfficerMerging deleteUnmergeable={ deleteUnmergeable } fetchData={ fetchData } records={ records }/>
       );
       const mergingButton = findRenderedDOMComponentWithClass(instance, 'test--merge-button');
 

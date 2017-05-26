@@ -82,7 +82,7 @@ describe('merging page', function () {
     // approve the candidate
     mergingPage.candidateSection.mergeButton.click();
 
-    // // page should be reload
-    mergingPage.recordSection.offset.getText().should.be.equal('1/2');
+    // page should be reload
+    mergingPage.recordSection.offset.getText().should.be.equal('1/1');
   });
 });

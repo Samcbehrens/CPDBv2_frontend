@@ -10,8 +10,8 @@ import reportingPageGetData from './reporting-page/get-data';
 import FAQPageGetData from './faq-page/get-data';
 import suggestionGetData from './landing-page/suggestions';
 import getSummaryData from './officer-page/get-summary';
-import getUnmatchableData from './resolving-page/get-unmatchable';
-import getUnmergeableData from './resolving-page/get-unmergeable';
+import getUnmatchableData, { deleteUnmatchable } from './resolving-page/get-unmatchable';
+import getUnmergeableData, { deleteUnmergeable } from './resolving-page/get-unmergeable';
 import getMinimapData from './officer-page/get-minimap';
 import getTimelineItemsData, { reversedTimelineItems, nextTimelineItems } from './officer-page/get-timeline-item';
 import getCRData from './cr-page/get-data';
@@ -73,9 +73,15 @@ axiosMockClient.onGet(/unmergeable/).reply(config => {
   }
 });
 
-axiosMockClient.onPut(/unmatchable\/1/, { 'candidate_pk': 1 }).reply(
-  200, { 'code': '001', 'message': 'Merge successfully' }
-);
+axiosMockClient.onPut(/unmatchable\/1/, { 'candidate_pk': 1 }).reply(function (config) {
+  deleteUnmatchable(1);
+  return [200, { 'code': '001', 'message': 'Merge successfully' }];
+});
+
+axiosMockClient.onDelete(/unmergeable\/1/).reply(function (config) {
+  deleteUnmergeable(1);
+  return [200, {}];
+});
 
 axiosMockClient.onGet(`${CR_URL}1/`).reply(200, getCRData());
 

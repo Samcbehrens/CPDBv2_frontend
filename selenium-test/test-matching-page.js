@@ -96,6 +96,6 @@ describe('matching page', function () {
     // approve the candidate
     matchingPage.candidateSection.selectCandidateButton.click();
     // page should be reload
-    matchingPage.recordSection.offset.getText().should.be.equal('1/2');
+    matchingPage.recordSection.offset.getText().should.be.equal('1/1');
   });
 });

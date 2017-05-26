@@ -33,8 +33,11 @@ class OfficerMerging extends Component {
   }
 
   handleMerge() {
-    const { id, fetchData, deleteUnmergeable } = this.props;
-    deleteUnmergeable(id, this.state.updatedRecord).then(() => fetchData());
+    const { records, fetchData, deleteUnmergeable } = this.props;
+    const id = get(records, '0.id', '');
+    const record = get(records, '0.candidate', {});
+
+    deleteUnmergeable(id, { ...record, ...this.state.updatedRecord }).then(() => fetchData());
   }
 
   handleDataChanges(field, value) {
