@@ -12,6 +12,7 @@ import faqs from './faqs';
 import crs from './crs';
 import bottomSheet from './bottom-sheet';
 import officerPage from './officer-page';
+import resolvingPage from './resolving-page';
 import crPage from './cr-page';
 
 
@@ -28,5 +29,6 @@ export default combineReducers({
   bottomSheet,
   routing: routerReducer,
   officerPage,
+  resolvingPage,
   crPage
 });

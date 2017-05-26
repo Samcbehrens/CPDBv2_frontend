@@ -10,6 +10,8 @@ import suggestionGetData from './landing-page/suggestions';
 import reportingPageGetData from './reporting-page/get-data';
 import FAQPageGetData from './faq-page/get-data';
 import getSummaryData from './officer-page/get-summary';
+import getUnmatchableData, { deleteUnmatchable } from './resolving-page/get-unmatchable';
+import getUnmergeableData, { deleteUnmergeable } from './resolving-page/get-unmergeable';
 import getMinimapData from './officer-page/get-minimap';
 import getTimelineItemsData, { reversedTimelineItems, nextTimelineItems } from './officer-page/get-timeline-item';
 import getCRData from './cr-page/get-data';
@@ -50,6 +52,36 @@ axiosMockClient.onGet(`${SEARCH_OFFICER_URL}foo/`).reply(() => [200, OfficerFact
 axiosMockClient.onGet(`${SEARCH_OFFICER_URL}notfound/`).reply(200, []);
 
 axiosMockClient.onGet(`${OFFICER_URL}1/summary/`).reply(200, getSummaryData());
+
+axiosMockClient.onGet(/unmatchable/).reply(config => {
+  if (config.url.includes('offset=0')) {
+    return [200, getUnmatchableData(0)];
+  } else if (config.url.includes('offset=1')) {
+    return [200, getUnmatchableData(1)];
+  } else {
+    return [200, getUnmatchableData(2)];
+  }
+});
+
+axiosMockClient.onGet(/unmergeable/).reply(config => {
+  if (config.url.includes('offset=0')) {
+    return [200, getUnmergeableData(0)];
+  } else if (config.url.includes('offset=1')) {
+    return [200, getUnmergeableData(1)];
+  } else {
+    return [200, getUnmergeableData(2)];
+  }
+});
+
+axiosMockClient.onPut(/unmatchable\/1/, { 'candidate_pk': 1 }).reply(function (config) {
+  deleteUnmatchable(1);
+  return [200, { 'code': '001', 'message': 'Merge successfully' }];
+});
+
+axiosMockClient.onDelete(/unmergeable\/1/).reply(function (config) {
+  deleteUnmergeable(1);
+  return [200, {}];
+});
 
 axiosMockClient.onGet(`${CR_URL}1/`).reply(200, getCRData());
 

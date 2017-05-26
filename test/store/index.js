@@ -130,6 +130,10 @@ describe('store', function () {
           selectedItemIndex: null,
           sortDescending: true
         }
+      },
+      resolvingPage: {
+        unmatchable: {},
+        unmergeable: {}
       }
     });
   });
