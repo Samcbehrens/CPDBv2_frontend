@@ -49,7 +49,7 @@ describe('resolvingPage actions', function () {
         payload: {
           request: {
             url: `${UNMERGEABLE_URL}1/`,
-            data: { 'updated_record': 1 },
+            data: { 'record': 1 },
             method: 'delete',
             adapter: null
           }
