@@ -14,7 +14,7 @@ class OfficerForm extends Component {
   }
 
   handleChangeTextField(field) {
-    return (e) => { this.props.handleDataChanges(field, e.target.value) }
+    return (e) => { this.props.handleDataChanges(field, e.target.value); };
   }
 
   render() {
@@ -24,33 +24,39 @@ class OfficerForm extends Component {
       <Form compact={ true }>
         { children }
         <FormField className='test--first-name' label='First Name'>
-          <TextInput ref='firstName' name='first_name' value={ officer['first_name'] || '' }  onDOMChange={ this.handleChangeTextField('first_name') }/>
+          <TextInput ref='firstName' name='first_name' value={ officer['first_name'] || '' }
+            onDOMChange={ this.handleChangeTextField('first_name') }/>
         </FormField>
 
         <FormField className='test--last-name' label='Last Name'>
-          <TextInput disabled={ disabled } name='last_name' value={ officer['last_name'] || '' } onDOMChange={ this.handleChangeTextField('last_name') }/>
+          <TextInput disabled={ disabled } name='last_name' value={ officer['last_name'] || '' }
+            onDOMChange={ this.handleChangeTextField('last_name') }/>
         </FormField>
 
         <FormField className='test--middle-initial' label='Middle Initial'>
-          <TextInput disabled={ disabled } name='middle_initial' value={ officer['middle_initial'] || '' } onDOMChange={ this.handleChangeTextField('middle_initial') } />
+          <TextInput disabled={ disabled } name='middle_initial' value={ officer['middle_initial'] || '' }
+            onDOMChange={ this.handleChangeTextField('middle_initial') } />
         </FormField>
 
         <FormField className='test--race' label='Race'>
-          <TextInput disabled={ disabled } name='race' value={ officer['race'] || '' } onDOMChange={ this.handleChangeTextField('race') } />
+          <TextInput disabled={ disabled } name='race' value={ officer['race'] || '' }
+            onDOMChange={ this.handleChangeTextField('race') } />
         </FormField>
 
         <FormField className='test--gender' label='Gender'>
-          <TextInput disabled={ disabled } name='gender' value={ officer['gender'] || '' } onDOMChange={ this.handleChangeTextField('gender') }/>
+          <TextInput disabled={ disabled } name='gender' value={ officer['gender'] || '' }
+            onDOMChange={ this.handleChangeTextField('gender') }/>
         </FormField>
 
         <FormField className='test--active' label='Active'>
-          <CheckBox  disabled={ disabled } name='active' checked={ !!officer['active'] } toggle={ false } onChange={ (e) => { handleDataChanges('active', e.target.checked); } }/>
+          <CheckBox disabled={ disabled } name='active' checked={ !!officer['active'] } toggle={ false }
+            onChange={ (e) => { handleDataChanges('active', e.target.checked); } }/>
         </FormField>
 
         <FormField className='test--appointed-date' label='Appointed Date'>
           <DateTime name='appointed_date' disabled={ disabled } format='YYYY-MM-DD'
-                    value={ officer['appointed_date'] }
-                    onChange={ (e) => { handleDataChanges('appointed_date', e); } }/>
+            value={ officer['appointed_date'] }
+            onChange={ (e) => { handleDataChanges('appointed_date', e); } }/>
         </FormField>
       </Form>
     );
