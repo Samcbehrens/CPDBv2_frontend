@@ -12,21 +12,17 @@ export const aggregateNameStyle = {
   padding: '11px 0'
 };
 
-export const whiteSleeveStyle = {
-  height: '1px',
-  top: '38px',
-  zIndex: 1,
-  width: '100%',
-  position: 'absolute',
-  backgroundColor: 'white'
-};
-
 export const entryStyle = {
   paddingTop: '12.5px',
   paddingBottom: '9.5px',
   letterSpacing: 'normal',
   fontWeight: 400,
   borderTop: `solid 1px ${whiteTwoColor}`
+};
+
+export const firstEntryStyle = {
+  ...entryStyle,
+  borderTop: 'none'
 };
 
 export const countStyle = {

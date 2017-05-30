@@ -2,7 +2,13 @@ import React, { PropTypes, Component } from 'react';
 import { map } from 'lodash';
 
 import {
-  wrapperStyle, aggregateNameStyle, whiteSleeveStyle, entryStyle, countStyle, nameStyle, sustainedCountStyle
+  wrapperStyle,
+  aggregateNameStyle,
+  entryStyle,
+  firstEntryStyle,
+  countStyle,
+  nameStyle,
+  sustainedCountStyle
 } from './aggregate-facet.style';
 
 
@@ -13,12 +19,11 @@ export default class AggregateFacet extends Component {
     return (
       <div className='test--aggregate-facet' style={ wrapperStyle }>
         <div className='test--aggregate-facet-name' style={ aggregateNameStyle }>{ name.toUpperCase() }</div>
-        <div style={ whiteSleeveStyle }/>
         <div>
           {
             map(entries, ({ count, sustainedCount, name }, ind) => {
               return (
-                <div style={ entryStyle } key={ ind }>
+                <div style={ ind === 0 ? firstEntryStyle : entryStyle } key={ ind }>
                   <span className='test--entry-count' style={ countStyle }>{ count }</span>
                   <span className='test--entry-sustained-count'
                     style={ sustainedCountStyle(sustainedCount) }>{ sustainedCount }</span>
