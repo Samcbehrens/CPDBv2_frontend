@@ -41,7 +41,7 @@ describe('<DedupeTraining>', () => {
 
     Simulate.click(unmatchButton);
 
-    train.args[1][0].should.be.equal('unmatched');
+    train.args[1][0].should.be.equal('not_matched');
   });
 
   it('should fetch another training data after any successful matching', () => {

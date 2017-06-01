@@ -56,7 +56,7 @@ class DedupeTraining extends Component {
             <OfficerForm disabled={ true } officer={ records[1] }>
               <Header justify='end'>
                 <Button className='test--unmatched-button' icon={ <Close /> }
-                onClick={ () => this.handleTrain('unmatched') } href='#'/>
+                onClick={ () => this.handleTrain('not_matched') } href='#'/>
                 <Button className='test--matched-button'
                   icon={ <Checkmark /> } onClick={ () => this.handleTrain('matched') }/>
               </Header>
