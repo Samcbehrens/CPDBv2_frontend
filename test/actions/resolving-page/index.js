@@ -1,11 +1,16 @@
-import { deleteUnmergeable, fetchUnmatchable, matchingAPI, fetchUnmergeable } from 'actions/resolving-page';
+import {
+  deleteUnmergeable, fetchUnmatchable, matchingAPI, fetchUnmergeable, fetchTrainingData,
+  train
+} from 'actions/resolving-page';
 
 import {
-  RESOLVING_MATCHING_URL,
+  RESOLVING_MATCHING_URL, TRAINING_DATA_URL,
   UNMATCHABLE_START, UNMATCHABLE_SUCCESS, UNMATCHABLE_FAILURE,
   MATCHING_API_START, MATCHING_API_SUCCESS, MATCHING_API_FAILURE,
   UNMERGEABLE_URL, UNMERGEABLE_DELETE_START, UNMERGEABLE_DELETE_SUCCESS, UNMERGEABLE_DELETE_FAILURE,
-  UNMERGEABLE_START, UNMERGEABLE_SUCCESS, UNMERGEABLE_FAILURE
+  UNMERGEABLE_START, UNMERGEABLE_SUCCESS, UNMERGEABLE_FAILURE,
+  FETCH_TRAINING_DATA_START, FETCH_TRAINING_DATA_SUCCESS, FETCH_TRAINING_DATA_FAILURE,
+  TRAINING_DATA_START, TRAINING_DATA_SUCCESS, TRAINING_DATA_FAILURE
 } from 'utils/constants';
 
 
@@ -67,6 +72,41 @@ describe('resolvingPage actions', function () {
           request: {
             url: url,
             params: undefined,
+            adapter: null
+          }
+        }
+      });
+    });
+  });
+
+  describe('fetchTrainingData', function () {
+    it('should return the right action', function () {
+      fetchTrainingData().should.eql({
+        types: [FETCH_TRAINING_DATA_START, FETCH_TRAINING_DATA_SUCCESS, FETCH_TRAINING_DATA_FAILURE],
+        payload: {
+          request: {
+            url: TRAINING_DATA_URL,
+            params: undefined,
+            adapter: null
+          }
+        }
+      });
+    });
+  });
+
+  describe('train', function () {
+    it('should return the right action', function () {
+      train().should.eql({
+        types: [TRAINING_DATA_START, TRAINING_DATA_SUCCESS, TRAINING_DATA_FAILURE],
+        payload: {
+          request: {
+            url: TRAINING_DATA_URL,
+            method: 'post',
+            data: {
+              'action': undefined,
+              'other': undefined,
+              'this': undefined
+            },
             adapter: null
           }
         }

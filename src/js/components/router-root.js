@@ -14,9 +14,12 @@ import OfficerPageContainer from 'containers/officer-page';
 import ResolvingPage from 'components/resolving-page';
 import OfficerMatchingContainer from 'containers/resolving-page/officer-matching';
 import OfficerMergingContainer from 'containers/resolving-page/officer-merging';
+import DedupeTrainingContainer from 'containers/resolving-page/dedupe-training';
+
 import {
   COLLAB_PATH, FAQ_PATH, STORIES_PATH, SEARCH_PATH, OFFICER_PATH, OFFICER_TIMELINE_PATH, CR_PATH, RESOLVING_PATH
 } from 'utils/constants';
+
 import configureStore from 'store';
 import history from 'utils/history';
 
@@ -57,6 +60,7 @@ class RouterRoot extends Component {
             <IndexRoute component={ OfficerMatchingContainer }/>
             <Route path='officer-matching' component={ OfficerMatchingContainer }/>
             <Route path='officer-merging' component={ OfficerMergingContainer }/>
+            <Route path='dedupe-training' component={ DedupeTrainingContainer }/>
           </Route>
         </Router>
       </Provider>

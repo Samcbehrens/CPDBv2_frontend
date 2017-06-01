@@ -72,7 +72,7 @@ describe('OfficerForm component', function () {
     handler.calledWith('first_name', '123').should.be.true();
 
     const checkbox = findRenderedComponentWithType(instance, CheckBox);
-    checkbox.props.onChange({ target: { checked: false } })
+    checkbox.props.onChange({ target: { checked: false } });
     handler.calledWith('active', false);
 
     const dateTimeComponent = findRenderedComponentWithType(instance, DateTime);

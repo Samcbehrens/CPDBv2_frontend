@@ -132,7 +132,8 @@ describe('store', function () {
       },
       resolvingPage: {
         unmatchable: {},
-        unmergeable: {}
+        unmergeable: {},
+        dedupeTraining: {}
       }
     });
   });

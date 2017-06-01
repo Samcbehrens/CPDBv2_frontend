@@ -45,6 +45,14 @@ class ResolvingPage extends Component {
                       </Anchor>
                     </Menu>
                   </AccordionPanel>
+                  <AccordionPanel className='test--merging-menu-item' heading='Dedupe Training'>
+                    <Menu primary={ true }>
+                      <Anchor href={ `/${RESOLVING_PATH}dedupde-training` }
+                        className='active test--merging-officer-button'>
+                        Officer
+                      </Anchor>
+                    </Menu>
+                  </AccordionPanel>
                 </Accordion>
               </Menu>
             </Box>
