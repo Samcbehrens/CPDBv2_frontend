@@ -192,7 +192,7 @@ exports.config = {
   // Function to be executed before a test (in Mocha/Jasmine) or a step (in Cucumber) starts.
   beforeTest: function (test) {
     browser.setViewportSize({
-      width: 1000,
+      width: 1200,
       height: 1000
     });
   },

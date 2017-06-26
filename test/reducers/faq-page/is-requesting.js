@@ -20,7 +20,7 @@ describe('isRequesting reducer', function () {
     }).should.be.false();
   });
 
-  it('should handle FAQS_POST_FAILURE', function () {
+  it('should handle FAQS_REQUEST_FAILURE', function () {
     isRequesting(true, {
       type: FAQS_REQUEST_FAILURE,
       payload: new Error('Load failed')

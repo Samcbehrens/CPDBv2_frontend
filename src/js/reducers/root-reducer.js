@@ -14,6 +14,7 @@ import bottomSheet from './bottom-sheet';
 import officerPage from './officer-page';
 import resolvingPage from './resolving-page';
 import crPage from './cr-page';
+import tracking from './tracking';
 
 
 export default combineReducers({
@@ -30,5 +31,6 @@ export default combineReducers({
   routing: routerReducer,
   officerPage,
   resolvingPage,
-  crPage
+  crPage,
+  tracking
 });

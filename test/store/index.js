@@ -134,6 +134,10 @@ describe('store', function () {
         unmatchable: {},
         unmergeable: {},
         dedupeTraining: {}
+      },
+      tracking: {
+        isRequesting: false,
+        searchTracking: {}
       }
     });
   });
