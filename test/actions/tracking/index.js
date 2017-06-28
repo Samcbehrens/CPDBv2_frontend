@@ -8,7 +8,7 @@ import {
 describe('search tracking actions', function () {
   describe('getSearchTrackingList', function () {
     it('should return the right action', function () {
-      const params = { sort: 'asc', 'sort_field': 'query' };
+      const params = { sort: '-query' };
       getSearchTrackingList(params).should.eql({
         types: [SEARCH_TRACKING_START, SEARCH_TRACKING_SUCCESS, SEARCH_TRACKING_FAILURE],
         payload: {

@@ -95,10 +95,16 @@ axiosMockClient.onGet(`${OFFICER_URL}1234/timeline-minimap/`).reply(200, getMini
 axiosMockClient.onGet(`${OFFICER_URL}1234/timeline-items/`).reply(200, getTimelineItemsData(1234));
 axiosMockClient.onGet(`${OFFICER_URL}5678/timeline-minimap/`).reply(200, getMinimapData(5678));
 axiosMockClient.onGet(`${OFFICER_URL}5678/timeline-items/`).reply(200, getTimelineItemsData(5678));
-axiosMockClient.onGet(SEARCH_TRACKING_URL, { params: { 'sort': 'desc', 'sort_field': 'query' } })
+axiosMockClient.onGet(SEARCH_TRACKING_URL, { params: { 'sort': '-query' } })
   .reply(200, getSearchTrackingData());
-axiosMockClient.onGet(SEARCH_TRACKING_URL, { params: { 'sort': 'asc', 'sort_field': 'query' } })
+axiosMockClient.onGet(SEARCH_TRACKING_URL, { params: { 'sort': 'query' } })
   .reply(200, reversedSearchTrackingData());
+axiosMockClient.onGet(SEARCH_TRACKING_URL, {
+  params: {
+    'limit': '1',
+    'offset': '1'
+  }
+}).reply(200, getSearchTrackingData(1));
 
 /*istanbul ignore next*/
 export function getMockAdapter() {

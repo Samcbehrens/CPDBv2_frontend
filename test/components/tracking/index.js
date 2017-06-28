@@ -1,14 +1,17 @@
 import React from 'react';
 import { spy } from 'sinon';
+import should from 'should';
+
 import {
-  renderIntoDocument, findRenderedDOMComponentWithClass, findRenderedComponentWithType,
+  renderIntoDocument, findRenderedComponentWithType,
   scryRenderedComponentsWithType
 } from 'react-addons-test-utils';
 import TableHeader from 'grommet/components/TableHeader';
 import TableRow from 'grommet/components/TableRow';
+import Table from 'grommet/components/Table';
 
 import SearchTrackingPage from 'components/tracking';
-import { unmountComponentSuppressError } from 'utils/test';
+import { unmountComponentSuppressError, reRender } from 'utils/test';
 
 
 describe('SearchTrackingPage component', function () {
@@ -33,12 +36,6 @@ describe('SearchTrackingPage component', function () {
     unmountComponentSuppressError(instance);
   });
 
-  it('should render Loading... when requesting', function () {
-    instance = renderIntoDocument(<SearchTrackingPage isRequesting={ true } />);
-
-    findRenderedDOMComponentWithClass(instance, 'test--loading-text');
-  });
-
   it('should render tracking list', function () {
     instance = renderIntoDocument(<SearchTrackingPage trackingList={ trackingList }/>);
 
@@ -49,14 +46,51 @@ describe('SearchTrackingPage component', function () {
     const getSearchTrackingList = spy();
     instance = renderIntoDocument(<SearchTrackingPage getSearchTrackingList={ getSearchTrackingList }/>);
 
-    getSearchTrackingList.calledWith({ 'sort': 'desc', 'sort_field': 'query' }).should.be.true();
+    getSearchTrackingList.calledWith({ 'sort': '-query' }).should.be.true();
   });
 
-  it('should trigger getSearchTrackingList when clicking on header', function () {
-    const getSearchTrackingList = spy();
-    instance = renderIntoDocument(<SearchTrackingPage getSearchTrackingList={ getSearchTrackingList }/>);
+  it('should trigger changeSortField when clicking on header', function () {
+    const changeSortField = spy();
+    instance = renderIntoDocument(<SearchTrackingPage changeSortField={ changeSortField }/>);
     findRenderedComponentWithType(instance, TableHeader).props.onSort(1, true);
 
-    getSearchTrackingList.calledWith({ 'sort': 'asc', 'sort_field': 'query' }).should.be.true();
+    changeSortField.calledWith({ sortIndex: 1, sortAscending: true }).should.be.true();
+  });
+
+  it('should trigger getSearchTrackingList when hasMore and not requesting', function () {
+    const getSearchTrackingList = spy();
+    const nextParams = { a: 'b' };
+    instance = renderIntoDocument(<SearchTrackingPage getSearchTrackingList={ getSearchTrackingList }
+      hasMore={ true } nextParams={ nextParams } isRequesting={ false }
+    />);
+    findRenderedComponentWithType(instance, Table).props.onMore();
+
+    getSearchTrackingList.calledWith(nextParams).should.be.true();
+  });
+
+  it('should not trigger getSearchTrackingList when not hasMore', function () {
+    instance = renderIntoDocument(<SearchTrackingPage hasMore={ false } />);
+    should.not.exists(findRenderedComponentWithType(instance, Table).props.onMore);
+  });
+
+  it('should not trigger getSearchTrackingList when requesting', function () {
+    const getSearchTrackingList = spy();
+    instance = renderIntoDocument(<SearchTrackingPage getSearchTrackingList={ getSearchTrackingList }
+      isRequesting={ true } hasMore={ true }
+    />);
+    getSearchTrackingList.calledOnce.should.be.true();
+    findRenderedComponentWithType(instance, Table).props.onMore();
+    getSearchTrackingList.calledOnce.should.be.true();
+  });
+
+  it('should trigger getSearchTrackingList when sort changed', function () {
+    const getSearchTrackingList = spy();
+    instance = renderIntoDocument(<SearchTrackingPage getSearchTrackingList={ getSearchTrackingList }
+      sort={ { sortIndex: 1, sortAscending: false } }/>);
+    getSearchTrackingList.calledWith({ sort: '-query' }).should.be.true();
+
+    instance = reRender(<SearchTrackingPage getSearchTrackingList={ getSearchTrackingList }
+      sort={ { sortIndex: 2, sortAscending: true } }/>, instance);
+    getSearchTrackingList.calledWith({ sort: 'usages' }).should.be.true();
   });
 });

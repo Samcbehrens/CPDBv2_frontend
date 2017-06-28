@@ -137,7 +137,15 @@ describe('store', function () {
       },
       tracking: {
         isRequesting: false,
-        searchTracking: {}
+        searchTracking: [],
+        pagination: {
+          next: null,
+          previous: null
+        },
+        sort: {
+          sortIndex: 1,
+          sortAscending: false
+        }
       }
     });
   });

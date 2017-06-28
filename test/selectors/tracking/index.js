@@ -1,30 +1,48 @@
-import { searchTrackingListSelector } from 'selectors/tracking';
+import {
+  searchTrackingListSelector, searchTrackingNextParamsSelector,
+  hasMoreSearchTrackingSelector
+} from 'selectors/tracking';
 
 
 describe('search tracking selectors', function () {
+  const state = {
+    tracking: {}
+  };
+
   it('should return tracking list', function () {
-    const state = {
-      tracking: {
-        searchTracking: {
-          results: [
-            {
-              'query_type': 'foo'
-            },
-            {
-              'last_entered': 'bar'
-            }
-          ]
-        }
-      }
+    state.tracking.searchTracking = [{
+      'query_type': 'foo'
+    }, {
+      'last_entered': 'bar'
+    }];
+
+    searchTrackingListSelector(state).should.eql([{
+      queryType: 'foo'
+    }, {
+      lastEntered: 'bar'
+    }]);
+  });
+
+  it('should return search tracking next params', function () {
+    state.tracking.pagination = {
+      next: 'http://foo.com/?a=b&c=d'
     };
 
-    searchTrackingListSelector(state).should.eql([
-      {
-        queryType: 'foo'
-      },
-      {
-        lastEntered: 'bar'
-      }
-    ]);
+    searchTrackingNextParamsSelector(state).should.eql({
+      a: 'b',
+      c: 'd'
+    });
+  });
+
+  it('should return has more search tracking', function () {
+    state.tracking.pagination = {
+      next: 'http://foo.com'
+    };
+    hasMoreSearchTrackingSelector(state).should.be.true();
+
+    state.tracking.pagination = {
+      next: null
+    };
+    hasMoreSearchTrackingSelector(state).should.be.false();
   });
 });

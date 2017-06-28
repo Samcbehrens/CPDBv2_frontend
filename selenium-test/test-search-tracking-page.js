@@ -22,4 +22,8 @@ describe('search tracking page', function () {
     searchTrackingPage.trackingTable.header('Query').click();
     searchTrackingPage.trackingTable.cellAt(1, 'Query').getText().should.equal('Ab');
   });
+
+  it('should load more search tracking', function () {
+    searchTrackingPage.trackingTable.numOfRows().should.equal(3);
+  });
 });

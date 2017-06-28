@@ -10,6 +10,10 @@ class TrackingTable extends Section {
   header(label) {
     return browser.element(`//*/thead/tr/th/button/div/span[text()="${label}"]`);
   }
+
+  numOfRows() {
+    return browser.elements('tbody tr').value.length;
+  }
 }
 
 class SearchTrakingPage extends Page {

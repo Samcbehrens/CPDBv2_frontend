@@ -1,5 +1,5 @@
 import React, { PureComponent, PropTypes } from 'react';
-import { map } from 'lodash';
+import { map, isEqual } from 'lodash';
 
 import Table from 'grommet/components/Table';
 import TableHeader from 'grommet/components/TableHeader';
@@ -58,53 +58,48 @@ const HeaderBar = (props) => (
 export default class SearchTrackingPage extends PureComponent {
   constructor(props) {
     super(props);
-
-    this.sortIndex = 1;
-    this.sortAscending = false;
+    this.loadMore = this.loadMore.bind(this);
   }
 
   componentDidMount() {
-    this.callGetTrackingListAPI();
+    const { getSearchTrackingList, sort } = this.props;
+    getSearchTrackingList(this.getSortParams(sort));
   }
 
-  callGetTrackingListAPI() {
-    const { getSearchTrackingList } = this.props;
+  componentWillReceiveProps(nextProps) {
+    const { sort, getSearchTrackingList } = nextProps;
 
-    const sort = this.sortAscending ? 'asc' : 'desc';
-    const sortField = QUERY_FIELDS[this.sortIndex];
-    getSearchTrackingList({
-      sort,
-      'sort_field': sortField
-    });
+    if (!isEqual(sort, this.props.sort)) {
+      getSearchTrackingList(this.getSortParams(sort));
+    }
   }
 
-  updateCurrentSortState(sortAscending, sortIndex) {
-    this.sortAscending = sortAscending;
-    this.sortIndex = sortIndex;
+  getSortParams(sort) {
+    const { sortAscending, sortIndex } = sort;
+    return { sort: `${ sortAscending ? '' : '-' }${QUERY_FIELDS[sortIndex]}` };
+  }
+
+  loadMore() {
+    const { nextParams, getSearchTrackingList, isRequesting } = this.props;
+    if (!isRequesting) {
+      getSearchTrackingList(nextParams);
+    }
   }
 
   render() {
-    const { isRequesting, trackingList } = this.props;
-
-    if (isRequesting) {
-      return <div className='test--loading-text'>Loading...</div>;
-    }
+    const { trackingList, hasMore, changeSortField, sort } = this.props;
+    const { sortIndex, sortAscending } = sort;
 
     return (
       <div style={ wrapperStyle }>
         <HeaderBar />
         <FilterBar />
-        <Table>
+        <Table onMore={ hasMore ? this.loadMore : null }>
           <TableHeader labels={ HEADER_LABELS }
-            sortIndex={ this.sortIndex }
-            sortAscending={ this.sortAscending }
+            sortIndex={ sortIndex }
+            sortAscending={ sortAscending }
             onSort={
-              (sortIndex, sortAscending) => {
-                if (sortIndex != 0 || sortIndex != HEADER_LABELS.length - 1) {
-                  this.updateCurrentSortState(sortAscending, sortIndex);
-                  this.callGetTrackingListAPI();
-                }
-              }
+              (sortIndex, sortAscending) => changeSortField({ sortIndex, sortAscending })
             } />
           <tbody>
             {
@@ -134,11 +129,19 @@ export default class SearchTrackingPage extends PureComponent {
 SearchTrackingPage.propTypes = {
   isRequesting: PropTypes.bool,
   trackingList: PropTypes.array,
-  getSearchTrackingList: PropTypes.func
+  getSearchTrackingList: PropTypes.func,
+  nextParams: PropTypes.object,
+  hasMore: PropTypes.bool,
+  changeSortField: PropTypes.func,
+  sort: PropTypes.object
 };
 
 SearchTrackingPage.defaultProps = {
   isRequesting: false,
   trackingList: [],
-  getSearchTrackingList: () => {}
+  getSearchTrackingList: () => {},
+  sort: {
+    sortIndex: 1,
+    sortAscending: false
+  }
 };

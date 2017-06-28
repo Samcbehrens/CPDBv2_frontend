@@ -1,13 +1,10 @@
 import { createSelector } from 'reselect';
-import { get, each, map } from 'lodash';
+import { each, map } from 'lodash';
 
+import extractQuery from 'utils/extract-query';
 
-const getSearchTrackingList = state => get(state, 'tracking.searchTracking.results', []);
-
-export const searchTrackingListSelector = createSelector(
-  getSearchTrackingList,
-  trackingList => (map(trackingList, trackingToCamelCase))
-);
+const getSearchTrackingList = state => state.tracking.searchTracking;
+const getSearchTrackingNextUrl = state => state.tracking.pagination.next;
 
 const trackingToCamelCase = tracking => {
   const camelMaps = { 'query_type': 'queryType', 'last_entered': 'lastEntered' };
@@ -19,3 +16,18 @@ const trackingToCamelCase = tracking => {
 
   return obj;
 };
+
+export const searchTrackingListSelector = createSelector(
+  getSearchTrackingList,
+  trackingList => (map(trackingList, trackingToCamelCase))
+);
+
+export const searchTrackingNextParamsSelector = createSelector(
+  getSearchTrackingNextUrl,
+  url => extractQuery(url)
+);
+
+export const hasMoreSearchTrackingSelector = createSelector(
+  getSearchTrackingNextUrl,
+  url => url != null
+);
