@@ -14,7 +14,7 @@ describe('search tracking page', function () {
     searchTrackingPage.trackingTable.cellAt(1, 'Query').getText().should.equal('Ke');
     searchTrackingPage.trackingTable.cellAt(1, 'Usage(s)').getText().should.equal('2');
     searchTrackingPage.trackingTable.cellAt(1, 'Result(s)').getText().should.equal('22');
-    searchTrackingPage.trackingTable.cellAt(1, 'Last Entered').getText().should.equal('2017-06-22T10:53:53.916552Z');
+    searchTrackingPage.trackingTable.cellAt(1, 'Last Entered').getText().should.equal('05:53 pm, 22 Jun 2017');
   });
 
   it('should toggle sort order when clicking on table header', function () {

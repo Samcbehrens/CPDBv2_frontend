@@ -1,5 +1,6 @@
 import React, { PureComponent, PropTypes } from 'react';
 import { map, isEqual } from 'lodash';
+import moment from 'moment';
 
 import Table from 'grommet/components/Table';
 import TableHeader from 'grommet/components/TableHeader';
@@ -15,6 +16,7 @@ import {
   wrapperStyle, headingWrapperStyle, headingStyle, aliasButtonStyle, aliasButtonTextStyle,
   searchWrapperStyle, buttonTextStyle, searchInputWrapperStyle
 } from './search-tracking-style';
+import { DATE_TIME_FORMAT } from 'utils/constants';
 
 
 const QUERY_TYPES = {
@@ -109,11 +111,10 @@ export default class SearchTrackingPage extends PureComponent {
                 return (
                   <TableRow key={ index }>
                     <td>{ <IconComponent/> }</td>
-                    {
-                      map(['query', 'usages', 'results', 'lastEntered'], field => {
-                        return <td key={ field }>{ tracking[field] }</td>;
-                      })
-                    }
+                    <td>{ tracking.query }</td>
+                    <td>{ tracking.usages }</td>
+                    <td>{ tracking.results }</td>
+                    <td>{ moment(tracking.lastEntered).format(DATE_TIME_FORMAT) }</td>
                     <td><Button label={ <Label style={ buttonTextStyle }>Add</Label> } href='#' plain={ true }/></td>
                   </TableRow>
                 );

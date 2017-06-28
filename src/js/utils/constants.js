@@ -39,6 +39,7 @@ export const PAGINATION_DEFAULT = {
 // Date format
 export const DATE_FORMAT_IN = 'YYYY-MM-DD';
 export const DATE_FORMAT = 'MMM DD, YYYY';
+export const DATE_TIME_FORMAT = 'hh:mm a, DD MMM YYYY';
 
 // Form state
 export const FORM_INITIAL = 'FORM_INITIAL';
