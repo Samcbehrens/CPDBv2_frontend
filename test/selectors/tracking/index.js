@@ -1,6 +1,6 @@
 import {
-  searchTrackingListSelector, searchTrackingNextParamsSelector,
-  hasMoreSearchTrackingSelector
+  searchTrackingListSelector, searchTrackingNextParamsSelector, hasMoreSearchTrackingSelector,
+  searchTrackingFilterParams, searchTrackingSearchParams
 } from 'selectors/tracking';
 
 
@@ -44,5 +44,21 @@ describe('search tracking selectors', function () {
       next: null
     };
     hasMoreSearchTrackingSelector(state).should.be.false();
+  });
+
+  it('should return search tracking filter params', function () {
+    state.tracking.filter = [];
+    searchTrackingFilterParams(state).should.eql({});
+
+    state.tracking.filter = ['foo', 'bar'];
+    searchTrackingFilterParams(state).should.eql({ 'query_types': 'foo,bar' });
+  });
+
+  it('should return search tracking search params', function () {
+    state.tracking.searchTerm = '';
+    searchTrackingSearchParams(state).should.eql({});
+
+    state.tracking.searchTerm = 'foo';
+    searchTrackingSearchParams(state).should.eql({ 'search': 'foo' });
   });
 });

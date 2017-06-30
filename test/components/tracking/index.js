@@ -10,6 +10,8 @@ import TableHeader from 'grommet/components/TableHeader';
 import TableRow from 'grommet/components/TableRow';
 import Table from 'grommet/components/Table';
 
+import HeaderBar from 'components/tracking/header-bar';
+import FilterBar from 'components/tracking/filter-bar';
 import SearchTrackingPage from 'components/tracking';
 import { unmountComponentSuppressError, reRender } from 'utils/test';
 
@@ -34,6 +36,13 @@ describe('SearchTrackingPage component', function () {
 
   afterEach(function () {
     unmountComponentSuppressError(instance);
+  });
+
+  it('should render HeaderBar and FilterBar', function () {
+    instance = renderIntoDocument(<SearchTrackingPage />);
+
+    scryRenderedComponentsWithType(instance, HeaderBar).length.should.equal(1);
+    scryRenderedComponentsWithType(instance, FilterBar).length.should.equal(1);
   });
 
   it('should render tracking list', function () {
@@ -92,5 +101,19 @@ describe('SearchTrackingPage component', function () {
     instance = reRender(<SearchTrackingPage getSearchTrackingList={ getSearchTrackingList }
       sort={ { sortIndex: 2, sortAscending: true } }/>, instance);
     getSearchTrackingList.calledWith({ sort: 'usages' }).should.be.true();
+  });
+
+  it('should trigger changeFilter when clicking on filter button', function () {
+    const changeFilter = spy();
+    instance = renderIntoDocument(<SearchTrackingPage changeFilter={ changeFilter }/>);
+    findRenderedComponentWithType(instance, FilterBar).props.onFilterChange('foo');
+    changeFilter.calledWith('foo').should.be.true();
+  });
+
+  it('should trigger changeSearchTerm when changeing search term', function () {
+    const changeSearchTerm = spy();
+    instance = renderIntoDocument(<SearchTrackingPage changeSearchTerm={ changeSearchTerm }/>);
+    findRenderedComponentWithType(instance, FilterBar).props.onSearch('foo');
+    changeSearchTerm.calledWith('foo').should.be.true();
   });
 });

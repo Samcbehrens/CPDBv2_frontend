@@ -145,7 +145,9 @@ describe('store', function () {
         sort: {
           sortIndex: 1,
           sortAscending: false
-        }
+        },
+        searchTerm: null,
+        filter: []
       }
     });
   });

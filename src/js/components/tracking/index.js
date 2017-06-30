@@ -5,56 +5,25 @@ import moment from 'moment';
 import Table from 'grommet/components/Table';
 import TableHeader from 'grommet/components/TableHeader';
 import TableRow from 'grommet/components/TableRow';
-import Heading from 'grommet/components/Heading';
 import Button from 'grommet/components/Button';
-import Search from 'grommet/components/Search';
 import Label from 'grommet/components/Label';
 import OcticonsQuote from 'components/icons/octicons-quote';
 import Danger from 'components/icons/danger';
 
-import {
-  wrapperStyle, headingWrapperStyle, headingStyle, aliasButtonStyle, aliasButtonTextStyle,
-  searchWrapperStyle, buttonTextStyle, searchInputWrapperStyle
-} from './search-tracking-style';
+import FilterBar from './filter-bar';
+import HeaderBar from './header-bar';
+
+import { wrapperStyle, buttonTextStyle } from './search-tracking-style';
 import { DATE_TIME_FORMAT } from 'utils/constants';
+import QUERY_TYPES from './query-types';
 
-
-const QUERY_TYPES = {
-  freeText: 'free_text',
-  noInteraction: 'no_interaction'
-};
 
 const QUERY_ICONS = {
   [QUERY_TYPES.freeText]: OcticonsQuote,
   [QUERY_TYPES.noInteraction]: Danger
 };
-
 const HEADER_LABELS = ['', 'Query', 'Usage(s)', 'Result(s)', 'Last Entered', ''];
 const QUERY_FIELDS = ['', 'query', 'usages', 'results', 'last_entered', ''];
-
-
-const FilterBar = (props) => (
-  <div style={ searchWrapperStyle }>
-    <Button icon={ <OcticonsQuote/> }
-      label={ <Label style={ buttonTextStyle }>Free Text</Label> }
-      plain={ true } href='#'/>
-    <Button icon={ <Danger/> }
-      label={ <Label style={ buttonTextStyle }>No Interaction</Label> }
-      plain={ true } href='#'/>
-    <div style={ searchInputWrapperStyle } >
-      <Search size='small' inline={ true } style={ { padding: '15px' } }/>
-    </div>
-  </div>
-);
-
-
-const HeaderBar = (props) => (
-  <div style={ headingWrapperStyle }>
-    <Heading style={ headingStyle }>Search Box Tracking</Heading>
-    <Button style={ aliasButtonStyle } href='#' plain={ true }
-      label={ <Label style={ aliasButtonTextStyle } >Add Alias</Label> } />
-  </div>
-);
 
 
 export default class SearchTrackingPage extends PureComponent {
@@ -69,10 +38,12 @@ export default class SearchTrackingPage extends PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { sort, getSearchTrackingList } = nextProps;
+    const { sort, getSearchTrackingList, filterParams, searchParams } = nextProps;
 
-    if (!isEqual(sort, this.props.sort)) {
-      getSearchTrackingList(this.getSortParams(sort));
+    if (!isEqual(sort, this.props.sort)
+      || !isEqual(filterParams, this.props.filterParams)
+      || !isEqual(searchParams, this.props.searchParams)) {
+      getSearchTrackingList({ ...this.getSortParams(sort), ...filterParams, ...searchParams });
     }
   }
 
@@ -89,13 +60,13 @@ export default class SearchTrackingPage extends PureComponent {
   }
 
   render() {
-    const { trackingList, hasMore, changeSortField, sort } = this.props;
+    const { trackingList, hasMore, changeSortField, sort, changeFilter, filter, changeSearchTerm } = this.props;
     const { sortIndex, sortAscending } = sort;
 
     return (
       <div style={ wrapperStyle }>
         <HeaderBar />
-        <FilterBar />
+        <FilterBar onFilterChange={ changeFilter } filter={ filter } onSearch={ changeSearchTerm }/>
         <Table onMore={ hasMore ? this.loadMore : null }>
           <TableHeader labels={ HEADER_LABELS }
             sortIndex={ sortIndex }
@@ -134,7 +105,12 @@ SearchTrackingPage.propTypes = {
   nextParams: PropTypes.object,
   hasMore: PropTypes.bool,
   changeSortField: PropTypes.func,
-  sort: PropTypes.object
+  sort: PropTypes.object,
+  changeFilter: PropTypes.func,
+  changeSearchTerm: PropTypes.func,
+  filterParams: PropTypes.object,
+  searchParams: PropTypes.object,
+  filter: PropTypes.array
 };
 
 SearchTrackingPage.defaultProps = {

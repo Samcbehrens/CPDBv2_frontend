@@ -16,8 +16,22 @@ class TrackingTable extends Section {
   }
 }
 
+
+class FilterBar extends Section {
+  constructor() {
+    super();
+    this.prepareElementGetters({
+      freeTextButton: '//*/label[text()="Free Text"]',
+      noInteractionButton: '//*/label[text()="No Interaction"]',
+      searchInput: '//input'
+    });
+  }
+}
+
+
 class SearchTrakingPage extends Page {
   trackingTable = new TrackingTable()
+  filterBar = new FilterBar()
 
   open() {
     super.open('/resolving/search-tracking/');
