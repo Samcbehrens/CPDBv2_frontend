@@ -14,7 +14,7 @@ describe('search tracking page', function () {
     searchTrackingPage.trackingTable.cellAt(1, 'Query').getText().should.equal('Ke');
     searchTrackingPage.trackingTable.cellAt(1, 'Usage(s)').getText().should.equal('2');
     searchTrackingPage.trackingTable.cellAt(1, 'Result(s)').getText().should.equal('22');
-    searchTrackingPage.trackingTable.cellAt(1, 'Last Entered').getText().should.equal('05:53 pm, 22 Jun 2017');
+    searchTrackingPage.trackingTable.cellAt(1, 'Last Entered').getText().should.equal('10:53 am, 22 Jun 2017');
   });
 
   it('should toggle sort order when clicking on table header', function () {
@@ -56,7 +56,7 @@ describe('search tracking page', function () {
     searchTrackingPage.trackingTable.cellAt(1, 'Query').getText().should.equal('Ab');
     searchTrackingPage.trackingTable.cellAt(1, 'Usage(s)').getText().should.equal('2');
     searchTrackingPage.trackingTable.cellAt(1, 'Result(s)').getText().should.equal('0');
-    searchTrackingPage.trackingTable.cellAt(1, 'Last Entered').getText().should.equal('05:53 pm, 22 Jun 2017');
+    searchTrackingPage.trackingTable.cellAt(1, 'Last Entered').getText().should.equal('10:53 am, 22 Jun 2017');
     searchTrackingPage.trackingTable.numOfRows().should.equal(1);
   });
 });
