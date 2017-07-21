@@ -19,7 +19,7 @@ describe('FilterBar Component', function () {
   });
 
   it('should renderable', function () {
-    FilterBar.should.renderable();
+    FilterBar.should.be.renderable();
   });
 
   it('should trigger onSearch when input value changed', function () {
