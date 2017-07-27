@@ -1,11 +1,16 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
+
+import { iconStyle } from './icon-style';
 
 
 export default class Danger extends Component {
   render() {
+    const { selected } = this.props;
+
     return (
       <svg viewBox='0 0 24 24'
         className='grommetux-control-icon grommetux-control-icon--responsive'
+        style={ iconStyle(selected) }
         role='img'>
         <g transform='scale(0.04)'>
           <path d='
@@ -21,3 +26,7 @@ M256.498,411.018c-14.554,0-25.471-11.908-25.471-25.47c0-13.893,10.916-25.47,25.4
     );
   }
 }
+
+Danger.propTypes = {
+  selected: PropTypes.bool
+};

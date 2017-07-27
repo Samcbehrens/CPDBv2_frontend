@@ -15,7 +15,7 @@ import getUnmergeableData, { deleteUnmergeable } from './resolving-page/get-unme
 import getMinimapData from './officer-page/get-minimap';
 import getTimelineItemsData, { reversedTimelineItems, nextTimelineItems } from './officer-page/get-timeline-item';
 import getCRData from './cr-page/get-data';
-import getSearchTrackingData, { reversedSearchTrackingData } from './search-tracking/get-data';
+import getSearchTrackingData from './search-tracking/get-data';
 
 
 const SEARCH_API_URL = /^suggestion\/([^/]*)\//;
@@ -95,16 +95,10 @@ axiosMockClient.onGet(`${OFFICER_URL}1234/timeline-minimap/`).reply(200, getMini
 axiosMockClient.onGet(`${OFFICER_URL}1234/timeline-items/`).reply(200, getTimelineItemsData(1234));
 axiosMockClient.onGet(`${OFFICER_URL}5678/timeline-minimap/`).reply(200, getMinimapData(5678));
 axiosMockClient.onGet(`${OFFICER_URL}5678/timeline-items/`).reply(200, getTimelineItemsData(5678));
-axiosMockClient.onGet(SEARCH_TRACKING_URL, { params: { 'sort': '-query' } })
-  .reply(200, getSearchTrackingData());
-axiosMockClient.onGet(SEARCH_TRACKING_URL, { params: { 'sort': 'query' } })
-  .reply(200, reversedSearchTrackingData());
-axiosMockClient.onGet(SEARCH_TRACKING_URL, {
-  params: {
-    'limit': '1',
-    'offset': '1'
-  }
-}).reply(200, getSearchTrackingData(1));
+
+axiosMockClient.onGet(SEARCH_TRACKING_URL).reply(config => {
+  return [200, getSearchTrackingData(config.params)];
+});
 
 /*istanbul ignore next*/
 export function getMockAdapter() {

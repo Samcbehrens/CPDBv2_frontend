@@ -1,11 +1,16 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
+
+import { iconStyle } from './icon-style';
 
 
 export default class OcticonsQuote extends Component {
   render() {
+    const { selected } = this.props;
+
     return (
       <svg viewBox='0 0 24 24'
         className='grommetux-control-icon grommetux-control-icon--responsive'
+        style={ iconStyle(selected) }
         role='img'>
         <g transform='scale(0.04)'>
           <path d='M577.116,138.938c1.224,4.488,0.408,8.772-2.448,12.852c-2.854,4.08-6.732,6.528-11.628,7.344
@@ -23,3 +28,7 @@ c3.264,2.448,5.304,5.712,6.12,9.792L271.728,138.938z'/>
     );
   }
 }
+
+OcticonsQuote.propTypes = {
+  selected: PropTypes.bool
+};
