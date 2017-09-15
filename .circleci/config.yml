@@ -25,6 +25,7 @@ jobs:
       NODE_ENV: development
     steps:
       - checkout
+      - run: pip install --upgrade pyOpenSSL
       - run: bin/circle-deploy-staging
 
 workflows:
