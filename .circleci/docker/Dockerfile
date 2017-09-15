@@ -6,7 +6,7 @@ USER root
 # Yarn in the default CircleCI image is old. Let's use our specific version:
 ############################################################################
 
-ENV YARN_VERSION 1.0.2
+ENV YARN_VERSION 0.23.4
 
 RUN set -ex \
   && for key in \
