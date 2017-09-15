@@ -23,13 +23,8 @@ jobs:
       - image: nhanbui/cpdbv2_frontend:0.0.3
     environment:
       NODE_ENV: development
-      ERROR_SCREENSHOT_DIR: /home/ubuntu/CPDBv2_frontend/errorShots
     steps:
       - checkout
-      - run: sudo pip install ansible
-      - run: sudo ansible-galaxy install Heroqu.nodejs4x
-      - run: sudo ansible-galaxy install nicolai86.phantomjs
-      - run: sudo chown ubuntu ~/.ansible/ -R
       - run: bin/circle-deploy-staging
 
 workflows:
