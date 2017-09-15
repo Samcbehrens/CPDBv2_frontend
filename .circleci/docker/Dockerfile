@@ -93,3 +93,12 @@ RUN set -ex; \
 	update-alternatives --get-selections | awk -v home="$(readlink -f "$JAVA_HOME")" 'index($3, home) == 1 { $2 = "manual"; print | "update-alternatives --set-selections" }'; \
 # ... and verify that it actually worked for one of the alternatives we care about
 	update-alternatives --query java | grep -q 'Status: manual'
+
+
+############################################################################
+# We also need ansible for deploying stuff
+############################################################################
+
+RUN apt-get update && apt-get install python-dev python-pip
+RUN pip install --upgrade pip
+RUN pip install ansible
