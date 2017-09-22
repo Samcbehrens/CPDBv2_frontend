@@ -2,7 +2,7 @@ import { sanFranciscoTextFamily, lightBlackColor, softBlackColor, greyishColor }
 
 
 export const boxShadowStyle = {
-  boxShadow: `0 1px 2px 0 ${lightBlackColor}`,
+  borderBottom: `1px solid ${lightBlackColor}`,
   position: 'relative'
 };
 

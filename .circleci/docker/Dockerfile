@@ -101,4 +101,4 @@ RUN set -ex; \
 
 RUN apt-get update && apt-get install python-dev python-pip
 RUN pip install --upgrade pip
-RUN pip install ansible
+RUN pip install --upgrade pyOpenSSL ansible

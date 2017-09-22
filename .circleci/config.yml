@@ -3,7 +3,7 @@ jobs:
 
   test:
     docker:
-      - image: nhanbui/cpdbv2_frontend:0.0.3
+      - image: cpdbdev/cpdbv2_frontend:0.1.0
     environment:
       NODE_ENV: development
       ERROR_SCREENSHOT_DIR: /home/ubuntu/CPDBv2_frontend/errorShots
@@ -20,12 +20,11 @@ jobs:
 
   deploy:
     docker:
-      - image: nhanbui/cpdbv2_frontend:0.0.3
+      - image: cpdbdev/cpdbv2_frontend:0.1.0
     environment:
       NODE_ENV: development
     steps:
       - checkout
-      - run: pip install --upgrade pyOpenSSL
       - run: bin/circle-deploy-staging
 
 workflows:

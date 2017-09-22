@@ -46,7 +46,7 @@ We use instances from Azure for now. Both can be ssh'ed into with "ansible" user
 ## CircleCI setup
 
 We're using CircleCI 2.0 which makes use of docker images. For this repo, we're running CircleCI on our
-[custom image][1] which is built from `.circleci/docker/Dockerfile` and currently published as `nhanbui/cpdbv2_frontend`
+[custom image][1] which is built from `.circleci/docker/Dockerfile` and currently published as `cpdbdev/cpdbv2_frontend`
 on Docker Hub.
 
 We need the custom image because the CircleCI-provided node 6 image (circleci/node:6.10.3-browsers):
@@ -69,11 +69,11 @@ see how things go.
 
 ```bash
 docker login
-docker build -t nhanbui/cpdbv2_frontend:0.0.2 .circleci/docker
-docker push nhanbui/cpdbv2_frontend:0.0.2
+docker build -t cpdbdev/cpdbv2_frontend:0.1.0 .circleci/docker
+docker push cpdbdev/cpdbv2_frontend:0.1.0
 ```
 
-Remember to change the version of course.
+Remember to bump the version of course.
 
 ## Browser supports
 
