@@ -1,9 +1,8 @@
 import React, { PropTypes, Component } from 'react';
 import { map } from 'lodash';
 
-import AggregateRow from './aggregate-row';
 import {
-  wrapperStyle, aggregateNameStyle, whiteSleeveStyle
+  wrapperStyle, aggregateNameStyle, whiteSleeveStyle, entryStyle, countStyle, nameStyle, sustainedCountStyle
 } from './aggregate-facet.style';
 
 
@@ -17,18 +16,16 @@ export default class AggregateFacet extends Component {
         <div style={ whiteSleeveStyle }/>
         <div>
           {
-            map(
-              entries,
-              ({ count, sustainedCount, name, items }, ind) => (
-                <AggregateRow
-                  name={ name }
-                  count={ count }
-                  sustainedCount={ sustainedCount }
-                  key={ `aggr-row-${ind}` }
-                  items={ items }
-                />
-              )
-            )
+            map(entries, ({ count, sustainedCount, name }, ind) => {
+              return (
+                <div style={ entryStyle } key={ ind }>
+                  <span className='test--entry-count' style={ countStyle }>{ count }</span>
+                  <span className='test--entry-sustained-count'
+                    style={ sustainedCountStyle(sustainedCount) }>{ sustainedCount }</span>
+                  <span className='test--entry-name' style={ nameStyle }>{ name }</span>
+                </div>
+              );
+            })
           }
         </div>
       </div>
@@ -38,6 +35,5 @@ export default class AggregateFacet extends Component {
 
 AggregateFacet.propTypes = {
   name: PropTypes.string,
-  entries: PropTypes.array,
-  aggregateFacets: PropTypes.array
+  entries: PropTypes.array
 };

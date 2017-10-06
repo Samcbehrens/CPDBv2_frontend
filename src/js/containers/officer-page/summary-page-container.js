@@ -1,5 +1,4 @@
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
 import React from 'react';
 
 import SummaryPage from 'components/officer-page/summary-page';
@@ -23,4 +22,4 @@ const mapDispatchToProps = {
   openBottomSheetWithPoliceUnit
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SummaryPage));
+export default connect(mapStateToProps, mapDispatchToProps)(SummaryPage);

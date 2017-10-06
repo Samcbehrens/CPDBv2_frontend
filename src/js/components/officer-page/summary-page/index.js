@@ -35,7 +35,3 @@ SummaryPage.propTypes = {
   officerId: PropTypes.number,
   openBottomSheetWithPoliceUnit: PropTypes.func
 };
-
-SummaryPage.contextTypes = {
-  store: PropTypes.object
-};
