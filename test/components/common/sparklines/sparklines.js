@@ -1,14 +1,14 @@
 import React from 'react';
 import {
   renderIntoDocument,
-  scryRenderedDOMComponentsWithClass,
   scryRenderedDOMComponentsWithTag,
-  scryRenderedComponentsWithType
+  scryRenderedComponentsWithType,
+  findRenderedComponentWithType
 } from 'react-addons-test-utils';
 import { spy } from 'sinon';
 
 import { unmountComponentSuppressError } from 'utils/test';
-import SimpleSparklines from 'components/common/sparklines';
+import SimpleSparklines, { width } from 'components/common/sparklines';
 import HoverPoint from 'components/common/sparklines/hover-point';
 
 
@@ -36,40 +36,104 @@ describe('Sparkline components', function () {
     SimpleSparklines.should.be.renderable();
   });
 
-  it('should draw sparkline with 3 points, 2 line', function () {
+  it('should render HoverPoint and svg', function () {
     instance = renderIntoDocument(
-      <SimpleSparklines data={ data } />
+      <SimpleSparklines data={ data } startYear={ 2001 }/>
     );
-    scryRenderedDOMComponentsWithClass(instance, 'test--sparkline').length.should.eql(1);
-    scryRenderedDOMComponentsWithTag(instance, 'circle').length.should.eql(3);
-    scryRenderedDOMComponentsWithTag(instance, 'polyline').length.should.eql(2);
+
+    const yearCount = (new Date()).getFullYear() - 2001 + 1;
+    scryRenderedComponentsWithType(instance, HoverPoint).length.should.eql(yearCount);
+    scryRenderedDOMComponentsWithTag(instance, 'circle').length.should.eql(yearCount);
   });
 
-  it('should render HoverPoint', function () {
+  it('should render a single hover point with 100% width if there is only 1 item', function () {
+    const singleData = [{
+      year: 2001,
+      count: 1,
+      'sustained_count': 0
+    }];
     instance = renderIntoDocument(
-      <SimpleSparklines data={ data } />
+      <SimpleSparklines
+        data={ singleData }
+        startYear={ (new Date()).getFullYear() }
+      />
     );
-    scryRenderedComponentsWithType(instance, HoverPoint).length.should.eql(3);
+
+    const hoverPoint = findRenderedComponentWithType(instance, HoverPoint);
+    hoverPoint.props.width.should.eql(width);
   });
 
   describe('hoverPointClickHandler()', function () {
-    it('should redirect to officer timeline and focus on the selected year', function () {
+    it('should redirect to officer timeline', function () {
       const router = { push: spy() };
-      const selectMinimapItem = spy();
-      const minimapItems = [{ year: 2010, items: [{ index: 1 }] }, { year: 2011, items: [{ index: 2 }] }];
+      // const selectMinimapItem = spy();
+      // const minimapItems = [{ year: 2010, items: [{ index: 1 }] }, { year: 2011, items: [{ index: 2 }] }];
       instance = renderIntoDocument(
         <SimpleSparklines
           data={ data }
           router={ router }
-          selectMinimapItem={ selectMinimapItem }
-          minimapItems={ minimapItems }
           officerId={ 111 }
         />
       );
 
       instance.hoverPointClickHandler(2011);
       router.push.calledWith('/officer/111/timeline/').should.be.true();
-      selectMinimapItem.calledWith(2).should.be.true();
+    });
+
+  });
+
+  describe('fillEmptyDataYear', function () {
+    it('should fill data', function () {
+      const data = [{
+        count: 2,
+        'sustained_count': 0,
+        name: 'Unknown',
+        year: 2001
+      }, {
+        count: 32,
+        'sustained_count': 1,
+        name: 'Unknown',
+        year: 2003
+      }, {
+        count: 48,
+        'sustained_count': 1,
+        name: 'Unknown',
+        year: 2004
+      }];
+
+      SimpleSparklines.prototype.fillEmptyDataYear(data, 2000, 2005).should.eql(
+        [{
+          count: 0,
+          'sustained_count': 0,
+          name: 'Unknown',
+          year: 2000,
+        }, {
+          count: 2,
+          'sustained_count': 0,
+          name: 'Unknown',
+          year: 2001
+        }, {
+          count: 2,
+          'sustained_count': 0,
+          name: 'Unknown',
+          year: 2002
+        }, {
+          count: 32,
+          'sustained_count': 1,
+          name: 'Unknown',
+          year: 2003
+        }, {
+          count: 48,
+          'sustained_count': 1,
+          name: 'Unknown',
+          year: 2004
+        }, {
+          count: 48,
+          'sustained_count': 1,
+          name: 'Unknown',
+          year: 2005
+        }]
+      );
     });
   });
 });
