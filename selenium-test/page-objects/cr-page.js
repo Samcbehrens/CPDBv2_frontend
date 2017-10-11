@@ -12,8 +12,6 @@ class CoaccusedList extends Section {
     const itemGetters = {};
     each(itemOrders, (field, index) => {
       itemGetters[`${field}ListItem`] = `(//*[@class="test--coaccused-list-item"])[${index + 1}]`;
-      // itemGetters[`${field}ExtraInfo`] = `(//span[@class="test--coaccused-extra-info"])[${index + 1}]`;
-      // itemGetters[`${field}Category`] = `(//span[@class="test--coaccused-category"])[${index + 1}]`;
     });
 
     this.prepareElementGetters({

@@ -2,7 +2,6 @@ import React, { PropTypes } from 'react';
 import { Style } from 'radium';
 
 import { overlayStyle, contentStyle } from './generic-modal.style';
-// import RequestDocumentModalContent from './request-document-modal-content';
 import RequestDocumentModalContent from '../../containers/request-document-modal-container';
 import LegalDisclaimerModalContent from './legal-disclaimer-modal-content';
 import scrollbarWidth from 'utils/scrollbar-width';
