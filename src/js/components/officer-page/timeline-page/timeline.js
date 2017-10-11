@@ -1,10 +1,11 @@
 import React, { PropTypes, Component } from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
-import { map, size } from 'lodash';
+import { map, size, isEqual } from 'lodash';
 
 import TimelineItem from './timeline-item';
 import SmoothScroller from './smooth-scroller';
 import { wrapperStyle } from './timeline.style';
+import { Link } from 'react-router';
 
 
 export default class Timeline extends Component {
@@ -22,18 +23,26 @@ export default class Timeline extends Component {
     return { openBottomSheetWithComplaint };
   }
 
+  componentWillMount() {
+    this.props.changeTimelineFilters(this.props.urlParams);
+  }
+
   componentWillReceiveProps(nextProps) {
     const {
-      sortParams, fetchTimelineItems, selectedItemIndex,
-      fetchTimelineItemsWhenIndexOutOfBound, items, officerId
+      sortParams, fetchTimelineFullItems, selectedItemIndex,
+      fetchTimelineItemsWhenIndexOutOfBound, items, officerId,
+      filters, fetchMinimap
     } = this.props;
-
-    if (nextProps.sortParams !== sortParams) {
-      fetchTimelineItems(nextProps.officerId, nextProps.sortParams);
+    if (nextProps.sortParams !== sortParams || !isEqual(nextProps.filters, filters)) {
+      fetchTimelineFullItems(nextProps.officerId, { ...nextProps.sortParams, ...nextProps.filters });
+      fetchMinimap(nextProps.officerId, nextProps.filters);
     }
 
     if (nextProps.selectedItemIndex !== selectedItemIndex) {
-      fetchTimelineItemsWhenIndexOutOfBound(size(items), nextProps.selectedItemIndex, officerId, sortParams);
+      fetchTimelineItemsWhenIndexOutOfBound(
+        size(items), nextProps.selectedItemIndex,
+        officerId,
+        { ...sortParams, ...nextProps.filters });
       setTimeout(() => this.setState({ flashItemIndex: nextProps.selectedItemIndex }), 500);
     }
   }
@@ -45,13 +54,14 @@ export default class Timeline extends Component {
   render() {
     const {
       items, fetchTimelineItems, nextParams, hasMore, sortParams, selectedItemIndex, hoveredItemIndex,
-      officerId, hoverTimelineItem, selectTimelineItem
+      officerId, hoverTimelineItem, selectTimelineItem, filters
     } = this.props;
     const { selectedItemTop, flashItemIndex } = this.state;
     return (
       <SmoothScroller style={ wrapperStyle } selectedItemTop={ selectedItemTop }>
         <InfiniteScroll
-          loadMore={ () => hasMore ? fetchTimelineItems(officerId, { ...sortParams, ...nextParams }) : null }
+          loadMore={ () => hasMore
+            ? fetchTimelineItems(officerId, { ...sortParams, ...nextParams, ...filters }) : null }
           hasMore={ hasMore }
           useWindow={ false }>
           { map(items, (item, ind) => (
@@ -70,6 +80,7 @@ export default class Timeline extends Component {
 Timeline.propTypes = {
   items: PropTypes.array,
   fetchTimelineItems: PropTypes.func,
+  fetchTimelineFullItems: PropTypes.func,
   nextParams: PropTypes.object,
   sortParams: PropTypes.object,
   hasMore: PropTypes.bool,
@@ -79,11 +90,18 @@ Timeline.propTypes = {
   fetchTimelineItemsWhenIndexOutOfBound: PropTypes.func,
   openBottomSheetWithComplaint: PropTypes.func,
   hoverTimelineItem: PropTypes.func,
-  selectTimelineItem: PropTypes.func
+  selectTimelineItem: PropTypes.func,
+  urlParams: PropTypes.object,
+  filters: PropTypes.object,
+  changeTimelineFilters: PropTypes.func,
+  fetchMinimap: PropTypes.func
 };
 
 Timeline.defaultProps = {
-  fetchTimelineItems: () => {}
+  fetchTimelineItems: () => {},
+  fetchTimelineFullItems: () => {},
+  fetchMinimap: () => {},
+  changeTimelineFilters: () => {}
 };
 
 Timeline.childContextTypes = {
