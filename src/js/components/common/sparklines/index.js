@@ -18,11 +18,15 @@ export default class SimpleSparklines extends React.Component {
     const yearRange = range(begin, end + 1);
     const yearData = keyBy(data, 'year');
     let dummyRecord = Object.assign({}, data[0],
-      { 'year': begin, count: 0, 'sustained_count': 0 });
+      { 'year': begin, count: 0, 'sustained_count': 0, 'aggCount': 0 });
     return yearRange.map(function (value) {
       if (value in yearData) {
-        dummyRecord = yearData[value];
-        return yearData[value];
+        const currentYear = yearData[value];
+        dummyRecord.aggCount += currentYear.count;
+        return {
+          ...currentYear,
+          aggCount: dummyRecord.aggCount
+        };
       }
       else {
         let result = Object.assign({}, dummyRecord);
@@ -43,7 +47,7 @@ export default class SimpleSparklines extends React.Component {
     if (data.length === 0) {
       return [];
     }
-    const points = new Array(data.length);
+
     const length = data.length;
     const maxCount = data[length - 1]['count'];
     const minCount = data[0]['count'];
@@ -51,9 +55,9 @@ export default class SimpleSparklines extends React.Component {
     const halfHoverPointWidth = defaultHoverPointWidth / 2;
 
     let currentSustainedCount = 0;
-    for (let i = 0; i < length; i++) {
-      const { year, count, sustained_count } = data[i]; // eslint-disable-line camelcase
-      const sustainedCount = sustained_count;           // eslint-disable-line camelcase
+    return data.map((point, i) => {
+      const { year, count } = point;
+      const sustainedCount = point.sustained_count;
       let hoverPointWidth = defaultHoverPointWidth;
       let alignment = 'middle';
       if (length !== 1) {
@@ -73,7 +77,7 @@ export default class SimpleSparklines extends React.Component {
       }
 
       const y = (count - minCount) / maxCount * HEIGHT + 3.5;
-      points[i] = (
+      return (
         <HoverPoint
           clickHandler={ this.hoverPointClickHandler.bind(this) }
           i={ i }
@@ -86,15 +90,14 @@ export default class SimpleSparklines extends React.Component {
           tooltipData={ { 'year': year, 'count': count } }
         />
       );
-    }
-    return points;
+    });
   }
 
   render() {
     const { data, startYear } = this.props;
     const endYear = (new Date()).getFullYear();
     let filledData = this.fillEmptyDataYear(data, startYear, endYear);
-    const sparklineData = filledData.map(d => d['count']);
+    const sparklineData = filledData.map(d => d['aggCount']);
     return (
       <div className='test--sparkline' style={ wrapperStyle(width) }>
         <Sparklines
