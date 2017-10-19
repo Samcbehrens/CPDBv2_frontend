@@ -132,8 +132,8 @@ class OfficerTimelinePage extends Page {
     });
   }
 
-  open(officerId) {
-    super.open(`/officer/${officerId}/timeline/`);
+  open(officerId, urlParams='') {
+    super.open(`/officer/${officerId}/timeline/${urlParams}`);
     browser.element('body').waitForVisible();
   }
 }
