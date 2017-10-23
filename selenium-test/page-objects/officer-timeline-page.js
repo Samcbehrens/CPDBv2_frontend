@@ -11,7 +11,8 @@ class SideBar extends Section {
       filterButton: '.test--filter-button',
       sortButton: '.test--sort-button',
       yearLabel: '.test--year-label',
-      minimapItem: '.test--minimapitem'
+      minimapItem: '.test--minimapitem',
+      filterItem: '.test--filter-block'
     });
   }
 
@@ -29,6 +30,11 @@ class SideBar extends Section {
 
   itemAt(year, index) {
     return browser.element(this.getMinimapItemSelector(year, index));
+  }
+
+  findFilterItemRemoveBtnWithText(name) {
+    const selector = `//*[@class="test--filter-block"]//p[text()[.="${name}"]]/../a`;
+    return browser.element(selector);
   }
 }
 

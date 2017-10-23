@@ -209,10 +209,40 @@ describe('officer timeline page', function () {
   });
 });
 
-describe('Officer Timeline page with filters', function () {
-  it('should apply filters when the correct URL params are available', function () {
-    timelinePage.open(1, '?category=Use%20of%20Force');
+describe('Timeline page with filtered params', function () {
+  beforeEach(function () {
+    timelinePage.open(1, '?category=Use%20of%20Force&race=Black&invalid=xxx');
+  });
 
+  it('should show 2 filtered item and handle clear each filter', function () {
 
+    timelinePage.sidebar.filterItem.count.should.equal(2);
+
+    let categoryFilterLink = timelinePage.sidebar.findFilterItemRemoveBtnWithText('Use of Force');
+    categoryFilterLink.waitForVisible();
+
+    let raceFilterLink = timelinePage.sidebar.findFilterItemRemoveBtnWithText('Black');
+    raceFilterLink.waitForVisible();
+
+    timelinePage.sidebar.itemAt('2002', 2).waitForVisible(500, true);
+    timelinePage.sidebar.itemAt('2003', 2).waitForVisible(500, true);
+    timelinePage.timeline.element.getText().should.not.containEql('Illegal Search');
+    timelinePage.timeline.element.getText().should.not.containEql('CR 123456');
+    timelinePage.timeline.element.getText().should.containEql('CR 456123');
+    raceFilterLink.click();
+
+    timelinePage.sidebar.findFilterItemRemoveBtnWithText('Black').waitForVisible(500, true);
+    timelinePage.sidebar.itemAt('2003', 2).waitForVisible();  // more item appear
+    timelinePage.timeline.element.getText().should.not.containEql('Illegal Search');
+    timelinePage.timeline.element.getText().should.containEql('CR 123456');
+    timelinePage.timeline.element.getText().should.containEql('CR 456123');
+
+    timelinePage.sidebar.findFilterItemRemoveBtnWithText('Use of Force').waitForVisible();
+
+    categoryFilterLink.click();
+    timelinePage.sidebar.findFilterItemRemoveBtnWithText('Use of Force').waitForVisible(500, true);
+    timelinePage.sidebar.itemAt('2002', 2).waitForVisible();
+    timelinePage.timeline.element.getText().should.containEql('CR 123456');
+    timelinePage.timeline.element.getText().should.containEql('CR 456123');
   });
 });

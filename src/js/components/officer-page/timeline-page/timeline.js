@@ -1,11 +1,10 @@
 import React, { PropTypes, Component } from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
-import { map, size, isEqual } from 'lodash';
+import { map, size } from 'lodash';
 
 import TimelineItem from './timeline-item';
 import SmoothScroller from './smooth-scroller';
 import { wrapperStyle } from './timeline.style';
-import { Link } from 'react-router';
 
 
 export default class Timeline extends Component {
@@ -31,9 +30,9 @@ export default class Timeline extends Component {
     const {
       sortParams, fetchTimelineFullItems, selectedItemIndex,
       fetchTimelineItemsWhenIndexOutOfBound, items, officerId,
-      filters, fetchMinimap
+      fetchMinimap
     } = this.props;
-    if (nextProps.sortParams !== sortParams || !isEqual(nextProps.filters, filters)) {
+    if (nextProps.sortParams !== sortParams) {
       fetchTimelineFullItems(nextProps.officerId, { ...nextProps.sortParams, ...nextProps.filters });
       fetchMinimap(nextProps.officerId, nextProps.filters);
     }
