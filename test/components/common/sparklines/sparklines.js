@@ -66,14 +66,12 @@ describe('Sparkline components', function () {
   describe('hoverPointClickHandler()', function () {
     it('should redirect to officer timeline', function () {
       const router = { push: spy() };
-      // const selectMinimapItem = spy();
-      // const minimapItems = [{ year: 2010, items: [{ index: 1 }] }, { year: 2011, items: [{ index: 2 }] }];
       instance = renderIntoDocument(
         <SimpleSparklines
           data={ data }
           router={ router }
           officerId={ 111 }
-          timelineEventQuery={ { 'complainant race': 'Black' } }
+          timelineLink='/officer/111/timeline/?race=Black'
         />
       );
 

@@ -1,8 +1,7 @@
 import React, { PropTypes } from 'react';
-import { range, keyBy, mapKeys } from 'lodash';
+import { range, keyBy } from 'lodash';
 import { Sparklines, SparklinesLine } from 'react-sparklines';
 
-import { serializeFilterParams } from 'utils/location';
 import HoverPoint from './hover-point';
 import { wrapperStyle, hoverOverlayStyle, sparklinesStyle, HEIGHT } from './sparklines.style';
 
@@ -10,6 +9,10 @@ import { wrapperStyle, hoverOverlayStyle, sparklinesStyle, HEIGHT } from './spar
 export const width = 600;
 
 export default class SimpleSparklines extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
   fillEmptyDataYear(data, begin = 2000, end = 2017) {
     /* Fills empty years with previous data, to ensure no sudden jump between years
      */
@@ -38,11 +41,9 @@ export default class SimpleSparklines extends React.Component {
   }
 
   hoverPointClickHandler() {
-    const { router, officerId, timelineEventQuery } = this.props;
-    let urlParams = mapKeys(timelineEventQuery, (value, key) => key.replace('complainant ', ''));
-    const urlParamsString = serializeFilterParams(urlParams, '?');
-    router.push(`/officer/${officerId}/timeline/${urlParamsString}`);
-    // TODO: Should scroll to selected year to.
+    const { router, timelineLink } = this.props;
+    router.push(timelineLink);
+    // TODO: Should scroll to selected year too.
   }
 
   renderHoverPoints(data) {
@@ -122,7 +123,7 @@ SimpleSparklines.propTypes = {
   router: PropTypes.object,
   officerId: PropTypes.number,
   startYear: PropTypes.number,
-  timelineEventQuery: PropTypes.object
+  timelineLink: PropTypes.string
 };
 
 SimpleSparklines.defaultProps = {
