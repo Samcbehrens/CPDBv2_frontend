@@ -50,6 +50,17 @@ describe('officer timeline page', function () {
     getRequestCount('/officers/1/timeline-minimap/').should.equal(1);
   });
 
+  // Sorting is disabled in this release
+  it.skip('should preserve sort order when click other tabs', function () {
+    timelinePage.sidebar.sortButton.getText().should.equal('Sort by oldest first');
+
+    timelinePage.sidebar.sortButton.click();
+    timelinePage.header.summaryButton.click();
+    timelinePage.header.timelineButton.click();
+
+    timelinePage.sidebar.sortButton.getText().should.equal('Sort by newest first');
+  });
+
   it('should change selected minimap item when going back from CR page', function () {
     timelinePage.sidebar.clickOn('2005', 1);
     timelinePage.timeline.cardItemAtIndex(5).click();
@@ -95,8 +106,6 @@ describe('officer timeline page', function () {
       timelinePage.timeline.yearItem.year.getText().should.equal('2005');
       timelinePage.timeline.yearItem.crsLabel.getText().should.equal('CRs');
       timelinePage.timeline.yearItem.crsValue.getText().should.equal('1');
-      timelinePage.timeline.yearItem.trrsLabel.getText().should.equal('TRRs');
-      timelinePage.timeline.yearItem.trrsValue.getText().should.equal('0');
       timelinePage.timeline.yearItem.salaryLabel.getText().should.equal('Salary');
       timelinePage.timeline.yearItem.salaryValue.getText().should.equal('Data not available');
 

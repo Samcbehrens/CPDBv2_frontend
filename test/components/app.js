@@ -210,7 +210,7 @@ describe('App component', function () {
           location={ location }
           appContent='/'
         >
-          <OfficerPageContainer location={ { query: {} } }/>
+          <OfficerPageContainer location={ { query: {} } } />
         </App>
       </Provider>
     );
