@@ -29,6 +29,8 @@ export const innerWrapperStyle = {
 const baseInputStyle = {
   color: softBlackColor,
   border: 0,
+  paddingLeft: 0,
+  paddingRight: 0,
   outline: 'none'
 };
 
