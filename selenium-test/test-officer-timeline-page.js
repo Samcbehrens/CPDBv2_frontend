@@ -9,9 +9,22 @@ import { getRequestCount } from './utils';
 
 
 describe('officer timeline page', function () {
+
   beforeEach(function () {
+    browser.setViewportSize({
+      width: 1000,
+      height: 500
+    });
     timelinePage.open(1);
   });
+
+  afterEach(function () {
+    browser.setViewportSize({
+      width: 1000,
+      height: 1000
+    });
+  });
+
   it('should show minimap', function () {
     timelinePage.sidebar.yearLabel.waitForVisible();
 
@@ -104,12 +117,6 @@ describe('officer timeline page', function () {
     it('should show timeline items', function () {
       timelinePage.timeline.cardItem.count.should.equal(10);
 
-      timelinePage.timeline.yearItem.year.getText().should.equal('2005');
-      timelinePage.timeline.yearItem.crsLabel.getText().should.equal('CRs');
-      timelinePage.timeline.yearItem.crsValue.getText().should.equal('1');
-      timelinePage.timeline.yearItem.salaryLabel.getText().should.equal('Salary');
-      timelinePage.timeline.yearItem.salaryValue.getText().should.equal('Data not available');
-
       timelinePage.timeline.crItem.date.getText().should.equal('NOV 28, 2005');
       timelinePage.timeline.crItem.crid.getText().should.equal('CR 968734');
       timelinePage.timeline.crItem.category.getText().should.equal('Use of Force');
@@ -140,11 +147,10 @@ describe('officer timeline page', function () {
       summaryPage.aggregateSection.title.waitForVisible();
 
       summaryPage.header.timelineButton.click();
-      const tenthMinimapItem = timelinePage.sidebar.itemAt(2002, 1);
+      const tenthMinimapItem = timelinePage.sidebar.itemAt(2001, 2);
       tenthMinimapItem.waitForVisible();
       tenthMinimapItem.click();
-
-      timelinePage.timeline.cardItemAtIndex(13).waitForVisible();
+      timelinePage.timeline.cardItemAtIndex(8).waitForVisible();
     });
   });
 });
@@ -225,13 +231,13 @@ describe('Timeline page with filtered params', function () {
   });
 
   it('should scroll to latest item of chosen year if provided in URL params', function () {
-    timelinePage.open(1, '?year=2004');
+    timelinePage.open(1, '?year=2003');
     browser.pause(2000);
 
     const container = browser.element('.test--timeline-items-container');
     // Should have scrolled past the "Unit Change" event item above it
     container.getText().should.not.containEql('APR 28, 2005');
-    container.getAttribute('scrollTop').should.be.greaterThan(500);
+    container.getAttribute('scrollTop').should.be.greaterThan(300);
   });
 
 });
