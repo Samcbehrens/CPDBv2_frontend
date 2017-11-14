@@ -1,6 +1,7 @@
 import React from 'react';
 import {
-  renderIntoDocument, findRenderedComponentWithType, scryRenderedComponentsWithType
+  renderIntoDocument, findRenderedComponentWithType, scryRenderedComponentsWithType,
+  findRenderedDOMComponentWithClass
 } from 'react-addons-test-utils';
 import { spy, stub } from 'sinon';
 import { Motion } from 'react-motion';
@@ -36,6 +37,14 @@ describe('TimelineItem component', function () {
       <TimelineItem item={ { kind: TimelineItemType.JOINED } }/>
     );
     findRenderedComponentWithType(instance, JoinedItem);
+  });
+
+  it('should not render year item', function () {
+    instance = renderIntoDocument(
+      <TimelineItem item={ { kind: TimelineItemType.YEAR } }/>
+    );
+    const year = findRenderedDOMComponentWithClass(instance, 'test--card-item');
+    year.textContent.should.eql('');
   });
 
   it('should render cr item when received a cr item', function () {

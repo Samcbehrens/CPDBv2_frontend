@@ -147,9 +147,9 @@ describe('officer timeline page', function () {
       summaryPage.aggregateSection.title.waitForVisible();
 
       summaryPage.header.timelineButton.click();
-      const tenthMinimapItem = timelinePage.sidebar.itemAt(2001, 2);
-      tenthMinimapItem.waitForVisible();
-      tenthMinimapItem.click();
+      const earliestMinimapItem = timelinePage.sidebar.itemAt(2001, 2);
+      earliestMinimapItem.waitForVisible();
+      earliestMinimapItem.click();
       timelinePage.timeline.cardItemAtIndex(8).waitForVisible();
     });
   });
