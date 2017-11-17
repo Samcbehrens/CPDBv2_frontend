@@ -178,7 +178,7 @@ describe('<SuggestionItem/>', function () {
   });
 
   describe('when edit mode off', function () {
-    it('should not display aliases when edit mode off', function () {
+    it('should not display aliases', function () {
       instance = renderIntoDocument(
         <Provider store={ store }>
           <SuggestionItem
@@ -196,7 +196,7 @@ describe('<SuggestionItem/>', function () {
   });
 
   describe('when edit mode on', function () {
-    it('should display aliases when edit mode on', function () {
+    it('should display aliases', function () {
       instance = renderIntoDocument(
         <Provider store={ store }>
           <SuggestionItem
