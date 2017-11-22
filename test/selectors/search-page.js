@@ -160,7 +160,7 @@ describe('autocomplete selector', function () {
             itemIndex: 1
           }
         }
-      }).should.deepEqual({ header: 'CO-ACCUSED', c2: 'c2' });
+      }).should.deepEqual({ header: 'COMMUNITY', c2: 'c2' });
     });
 
     it('should return correct suggestion when viewing single group', function () {
