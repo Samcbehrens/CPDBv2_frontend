@@ -76,7 +76,7 @@ describe('autocomplete selector', function () {
           suggestionGroups: {
             'OFFICER': [{}],
             'UNIT': [],
-            'CO-ACCUSED': [{}, {}]
+            'COMMUNITY': [{}, {}]
           }
         }
       }).should.deepEqual([
@@ -85,7 +85,7 @@ describe('autocomplete selector', function () {
           items: [{}]
         },
         {
-          header: 'CO-ACCUSED',
+          header: 'COMMUNITY',
           items: [{}, {}]
         }
       ]);
@@ -101,7 +101,7 @@ describe('autocomplete selector', function () {
           suggestionGroups: {
             'OFFICER': ['o1', 'o2', 'o3', 'o4'],
             'UNIT': [],
-            'CO-ACCUSED': ['c1', 'c2']
+            'COMMUNITY': ['c1', 'c2']
           }
         }
       }).should.deepEqual([
@@ -123,7 +123,7 @@ describe('autocomplete selector', function () {
           suggestionGroups: {
             'OFFICER': ['o1', 'o2', 'o3', 'o4'],
             'UNIT': [],
-            'CO-ACCUSED': ['c1', 'c2']
+            'COMMUNITY': ['c1', 'c2']
           }
         }
       }).should.deepEqual([
@@ -135,7 +135,7 @@ describe('autocomplete selector', function () {
           canLoadMore: true
         },
         {
-          header: 'CO-ACCUSED',
+          header: 'COMMUNITY',
           columns: [
             ['c1', 'c2']
           ],
@@ -153,7 +153,7 @@ describe('autocomplete selector', function () {
           suggestionGroups: {
             'OFFICER': ['o1', 'o2', 'o3', 'o4'],
             'UNIT': [],
-            'CO-ACCUSED': ['c1', 'c2']
+            'COMMUNITY': ['c1', 'c2']
           },
           navigation: {
             columnIndex: 1,
@@ -170,7 +170,7 @@ describe('autocomplete selector', function () {
           suggestionGroups: {
             'OFFICER': ['o1', 'o2', 'o3', 'o4', 'o5'],
             'UNIT': [],
-            'CO-ACCUSED': ['c1', 'c2']
+            'COMMUNITY': ['c1', 'c2']
           },
           contentType: 'OFFICER',
           navigation: {

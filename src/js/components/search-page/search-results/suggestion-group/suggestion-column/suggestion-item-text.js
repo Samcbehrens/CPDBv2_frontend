@@ -75,7 +75,7 @@ class SuggestionItemText extends Component {
                 className='link--transition test--suggestion-item-reason'
                 style={ reasonStyle(hovering, isFocused) }>
                 { reason || (aliasEditModeOn && aliases.join(', ') + ' ') }
-                { (aliasEditModeOn && suggestionType !== 'co-accused') ? aliasLink : null }
+                { aliasEditModeOn ? aliasLink : null }
               </div>
             </div>
           )

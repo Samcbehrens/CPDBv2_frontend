@@ -13,19 +13,8 @@ fill(officers, {
 export default {
   'default': {
     'OFFICER': officers,
-    'CO-ACCUSED': [
-      {
-        'text': 'Bernadette Kelly',
-        'payload': {
-          'result_text': 'Bernadette Kelly',
-          'result_extra_information': '7186',
-          'to': '/officer/1/'
-        }
-      }
-    ],
-    'UNIT': [
-
-    ],
+    'CO-ACCUSED': [],
+    'UNIT': [],
     'NEIGHBORHOOD': [
       {
         'text': 'Kenwood',
