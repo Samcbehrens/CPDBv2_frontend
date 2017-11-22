@@ -188,14 +188,12 @@ describe('autocomplete selector', function () {
         header: 'OFFICER',
         id: '12345',
         text: 'John Wang',
-        payload: {
-          unit: '001',
-          rank: null,
-          salary: '$99,999',
-          race: 'White',
-          sex: 'Male',
-          'visual_token_background_color': '#fafafa'
-        }
+        unit: '001',
+        rank: null,
+        salary: '$99,999',
+        race: 'White',
+        sex: 'Male',
+        'visual_token_background_color': '#fafafa'
       };
       const currentYear = (new Date()).getFullYear();
       const info = {

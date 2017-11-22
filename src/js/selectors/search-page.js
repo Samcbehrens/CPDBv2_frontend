@@ -12,16 +12,19 @@ const getNumberOfItemsPerColumn = state => state.searchPage.itemsPerColumn;
 export const previewPaneInfoSelector = createSelector(
   suggestion => suggestion,
   (suggestion) => {
-    const { payload, id, text } = suggestion;
+    let { text, unit, rank, salary, race, sex } = suggestion;
     const currentYear = (new Date()).getFullYear();
     const data = [
-      ['unit', payload.unit],
-      ['rank', payload.rank],
-      [`${currentYear} salary`, payload.salary],
-      ['race', payload.race],
-      ['sex', payload.sex]
+      ['unit', unit],
+      ['rank', rank],
+      [`${currentYear} salary`, salary],
+      ['race', race],
+      ['sex', sex]
     ];
-    const visualTokenBackgroundColor = payload['visual_token_background_color'];
+
+    const visualTokenBackgroundColor = suggestion['visual_token_background_color'];
+    const id = suggestion.header === 'CO-ACCUSED' ? suggestion['officer_id'] : suggestion['id'];
+
     return { data, visualTokenBackgroundColor, id, text };
   }
 );

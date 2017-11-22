@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { map } from 'lodash';
+import { map, includes, isEmpty } from 'lodash';
 
 import { resultWrapperStyle, columnWrapperStyle } from './search-results.style';
 import SuggestionGroup from './suggestion-group';
@@ -49,9 +49,10 @@ export default class SuggestionResults extends Component {
   render() {
     const { isRequesting, focusedSuggestion } = this.props;
     let previewPane = null;
-    const shouldShowPreviewPane = focusedSuggestion.header === 'OFFICER';
+    const previewPaneAvailableHeaders = ['OFFICER', 'CO-ACCUSED'];
+    const shouldShowPreviewPane = includes(previewPaneAvailableHeaders, focusedSuggestion.header);
 
-    if (focusedSuggestion.payload && shouldShowPreviewPane) {
+    if (!isEmpty(focusedSuggestion) && shouldShowPreviewPane) {
       const { data, visualTokenBackgroundColor, id, text } = previewPaneInfoSelector(focusedSuggestion);
       previewPane = (
         <PreviewPane

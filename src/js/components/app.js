@@ -36,7 +36,7 @@ export default class App extends React.Component {
     ALPHA_NUMBERIC.forEach((letter) => {
       LayeredKeyBinding.bind(letter, () => {
         const pathname = this.props.location.pathname;
-        if (['/', '/edit/'].includes(pathname)) {
+        if (includes(['/', '/edit/'], pathname)) {
           this.props.changeSearchQuery(letter);
           this.props.toggleSearchMode();
         }

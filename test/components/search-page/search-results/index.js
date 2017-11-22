@@ -55,7 +55,7 @@ describe('SearchResults component', function () {
   describe('Preview Pane', function () {
     it('should not render PreviewPane when no officer is focused', function () {
       const focusedSuggestion = {
-        header: 'CO-ACCUSED',
+        header: 'Neighborhood',
         text: 'Traci Walker',
         payload: {
           'result_extra_information': 'Badge # 2374',
@@ -72,18 +72,22 @@ describe('SearchResults component', function () {
       previewPane.length.should.eql(0);
     });
 
-    it('should render PreviewPane when an officer is focused', function () {
+    it('should render PreviewPane when a coaccused is focused', function () {
       const focusedSuggestion = {
-        header: 'OFFICER',
-        id: '12345',
+        header: 'CO-ACCUSED',
+        'officer_id': '12345',
         text: 'John Wang',
+        'visual_token_background_color': '#fafafa',
+        unit: '001',
+        rank: 'Footballer',
+        race: 'White',
+        sex: 'Male',
+        salary: '$99,999',
         payload: {
-          unit: '001',
-          rank: null,
-          salary: '$99,999',
-          race: 'White',
-          sex: 'Male',
-          'visual_token_background_color': '#fafafa'
+          'result_text': 'name',
+          'result_extra_information': 'Badge # 123',
+          'to': 'to',
+          'result_reason': 'coaccused with David Beckham (7)'
         }
       };
       instance = renderIntoDocument(
@@ -95,7 +99,7 @@ describe('SearchResults component', function () {
 
       previewPane.props.data.should.eql([
         ['unit', '001'],
-        ['rank', null],
+        ['rank', 'Footballer'],
         [`${currentYear} salary`, '$99,999'],
         ['race', 'White'],
         ['sex', 'Male']
@@ -104,5 +108,36 @@ describe('SearchResults component', function () {
       previewPane.props.backgroundColor.should.eql('#fafafa');
       previewPane.props.title.should.eql('John Wang');
     });
+  });
+
+  it('should render PreviewPane when an officer is focused', function () {
+    const focusedSuggestion = {
+      header: 'OFFICER',
+      id: '12345',
+      text: 'John Wang',
+      unit: '001',
+      rank: null,
+      salary: '$99,999',
+      race: 'White',
+      sex: 'Male',
+      'visual_token_background_color': '#fafafa',
+    };
+    instance = renderIntoDocument(
+      <SearchResults isEmpty={ false } focusedSuggestion={ focusedSuggestion }/>
+    );
+
+    const previewPane = findRenderedComponentWithType(instance, PreviewPane);
+    const currentYear = (new Date()).getFullYear();
+
+    previewPane.props.data.should.eql([
+      ['unit', '001'],
+      ['rank', null],
+      [`${currentYear} salary`, '$99,999'],
+      ['race', 'White'],
+      ['sex', 'Male']
+    ]);
+    previewPane.props.officerId.should.eql('12345');
+    previewPane.props.backgroundColor.should.eql('#fafafa');
+    previewPane.props.title.should.eql('John Wang');
   });
 });
