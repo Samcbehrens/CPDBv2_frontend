@@ -96,15 +96,6 @@ describe('Search Page', function () {
     searchPage.currentBasePath.should.eql('/officer/1/');
   });
 
-  it('should trigger officer summary page when click on co-accused', function () {
-    searchPage.input.waitForVisible();
-    searchPage.input.setValue('Ke');
-
-    searchPage.firstCoAccusedResult.waitForVisible();
-    searchPage.firstCoAccusedResult.click();
-    searchPage.currentBasePath.should.eql('/officer/1/');
-  });
-
   it('should show the recent search', function () {
     browser.execute(() => {
       window.localStorage.clear();

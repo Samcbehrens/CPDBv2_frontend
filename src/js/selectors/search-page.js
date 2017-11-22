@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
 import { omitBy, isEmpty, keys, pick, indexOf, sortBy, chunk, flatten } from 'lodash';
 
-const SEARCH_CATEGORIES = ['OFFICER', 'CO-ACCUSED', 'COMMUNITY', 'NEIGHBORHOOD', 'UNIT', 'UNIT > OFFICERS'];
+const SEARCH_CATEGORIES = ['OFFICER', 'COMMUNITY', 'NEIGHBORHOOD', 'UNIT', 'UNIT > OFFICERS'];
 
 const getSuggestionGroups = (state) => (state.searchPage.suggestionGroups);
 const getSuggestionTags = (state) => (state.searchPage.tags);
@@ -41,8 +41,8 @@ export const suggestionGroupsSelector = createSelector(
       items: [<officer1>, <officer2>]
     },
     {
-      header: 'CO-ACCUSED',
-      items: [<ca1>, <ca2>]
+      header: 'COMMUNITY',
+      items: [<co1>, <co2>]
     }
   ]
 */
@@ -70,7 +70,7 @@ export const isShowingSingleContentTypeSelector = createSelector(
     canLoadMore: <boolean>
   },
   {
-    header: 'CO-ACCUSED',
+    header: 'COMMUNITY',
     columns: [
       [1, 2],
       [3, 4]
