@@ -1,51 +1,103 @@
-import { mediumGrayColor, softBlackColor, clayGray } from 'utils/styles';
+import { mediumGrayColor, softBlackColor, clayGray, accentColor, sugarCaneColor } from 'utils/styles';
 
-export const slimHeaderHeight = 22;
+const middleSlimHeaderHeight = 40;
+const topSlimHeaderHeight = 102;
+const leftPadding = 16;
+const logoWidth = 288;
+const rightLinkMargin = 46;
 
-export const slimHeaderStyle = {
-  height: `${slimHeaderHeight}px`,
-  lineHeight: '22px',
-  padding: '0 16px',
-  backgroundColor: 'white',
+const slimHeaderStyle = {
+  padding: `0 ${leftPadding}px`,
   boxSizing: 'border-box',
-  position: 'fixed',
-  top: 0,
-  zIndex: 1,
-  width: 'inherit'
+  width: 'inherit',
+  fontSize: '14px',
+  lineHeight: '18px'
+};
+
+export const topSlimHeaderStyle = {
+  ...slimHeaderStyle,
+  height: `${topSlimHeaderHeight}px`,
+};
+
+export const middleSlimHeaderStyle = {
+  ...slimHeaderStyle,
+  height: `${middleSlimHeaderHeight}px`,
+  boxShadow: '0 1px 1px 0 rgba(0, 0, 0, 0.13)',
+  backgroundColor: 'white'
+};
+
+export const bottomSlimHeaderStyle = {
+  ...topSlimHeaderStyle,
+  cursor: 'pointer',
+  backgroundColor: accentColor
 };
 
 const linkStyle = {
   textDecoration: 'none',
-  fontSize: '12px',
   color: mediumGrayColor,
-  fontWeight: 500,
+  fontWeight: 400,
   cursor: 'pointer'
 };
 
-export const leftLinkStyle = {
+export const topLeftLinkStyle = {
   ...linkStyle,
-  fontWeight: 600
-};
-
-export const rightLinkStyle = {
-  ...linkStyle,
-  marginLeft: '50px'
-};
-
-export const activeLinkStyle = {
   color: softBlackColor
 };
 
+export const middleLeftLinkStyle = {
+  ...linkStyle,
+  color: softBlackColor
+};
+
+export const bottomLeftLinkStyle = {
+  ...linkStyle,
+  color: sugarCaneColor
+};
+
+const rightLinkStyle = {
+  ...linkStyle,
+  marginLeft: `${rightLinkMargin}px`
+};
+
+export const topRightLinkStyle = {
+  ...rightLinkStyle,
+  color: accentColor
+};
+
+export const middleRightLinkStyle = {
+  ...rightLinkStyle,
+  color: clayGray
+};
+
+export const bottomRightLinkStyle = {
+  ...rightLinkStyle,
+  color: 'white',
+};
+
 export const rightLinksWrapperStyle = {
-  float: 'right'
+  float: 'right',
+  position: 'relative',
+  top: '50%',
+  transform: 'translateY(-50%)'
 };
 
-export const outerStyle = {
-  width: 'inherit'
+export const logoWrapperStyle = {
+  position: 'relative',
+  top: '50%',
+  transform: 'translateY(-50%)',
+  maxWidth: `${logoWidth}px`
 };
 
-export const subtitleStyle = {
-  fontSize: '12px',
+const subtitleStyle = {
+  fontSize: '14px',
+  fontWeight: '300',
+  width: `${logoWidth}px`,
   color: clayGray,
-  marginLeft: '4px'
 };
+
+export const topSubtitleStyle = subtitleStyle;
+export const middleSubtitleStyle = {
+  ...subtitleStyle,
+  display: 'none',
+};
+export const bottomSubtitleStyle = subtitleStyle;

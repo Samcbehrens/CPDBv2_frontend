@@ -7,13 +7,27 @@ import {
   scryRenderedComponentsWithType,
   scryRenderedDOMComponentsWithTag,
   findRenderedComponentWithType,
-  scryRenderedDOMComponentsWithClass
+  scryRenderedDOMComponentsWithClass, Simulate
 } from 'react-addons-test-utils';
 import { unmountComponentSuppressError } from 'utils/test';
 import { Link } from 'react-router';
 import MockStore from 'redux-mock-store';
 import ContextWrapper from 'utils/test/components/context-wrapper';
 import { stub, spy } from 'sinon';
+import {
+  bottomLeftLinkStyle, bottomRightLinkStyle,
+  bottomSlimHeaderStyle, bottomSubtitleStyle,
+  middleLeftLinkStyle, middleRightLinkStyle,
+  middleSlimHeaderStyle, middleSubtitleStyle, topLeftLinkStyle, topRightLinkStyle,
+  topSlimHeaderStyle, topSubtitleStyle
+} from 'components/headers/slim-header.style';
+import { scrollToTop } from 'utils/dom';
+import StickyHeader from 'components/common/sticky-header';
+import {
+  bottomSearchBoxStyle, middleSearchBoxStyle,
+  topSearchBoxStyle
+} from 'components/landing-page/search-section/search-section.style';
+import { accentColor, clayGray } from 'utils/styles';
 
 class SlimHeaderContextWrapper extends ContextWrapper {
 }
@@ -46,7 +60,7 @@ describe('SlimHeader component', function () {
     element = renderIntoDocument(
       <Provider store={ store }>
         <SlimHeaderContextWrapper context={ { editModeOn: false } }>
-          <SlimHeader show={ false }/>
+          <SlimHeader show={ false } />
         </SlimHeaderContextWrapper>
       </Provider>
     );
@@ -58,14 +72,15 @@ describe('SlimHeader component', function () {
     element = renderIntoDocument(
       <Provider store={ store }>
         <SlimHeaderContextWrapper context={ { editModeOn: false } }>
-          <SlimHeader show={ true } openLegalDisclaimerModal={ openRequestDocumentModal } pathname='/'/>
+          <SlimHeader show={ true } openLegalDisclaimerModal={ openRequestDocumentModal } pathname='/' />
         </SlimHeaderContextWrapper>
       </Provider>
     );
 
     const links = scryRenderedComponentsWithType(element, Link);
     const legalLink = links.filter(link => link.props.children === 'Legal Disclaimer')[0];
-    legalLink.props.onClick.should.equal(openRequestDocumentModal);
+    legalLink.props.onClick();
+    openRequestDocumentModal.calledOnce.should.be.true();
   });
 
   it('should render FAQ link', function () {
@@ -73,7 +88,7 @@ describe('SlimHeader component', function () {
     element = renderIntoDocument(
       <Provider store={ store }>
         <SlimHeaderContextWrapper context={ { editModeOn: false } }>
-          <SlimHeader show={ true } openLegalDisclaimerModal={ openRequestDocumentModal } pathname='/'/>
+          <SlimHeader show={ true } openLegalDisclaimerModal={ openRequestDocumentModal } pathname='/' />
         </SlimHeaderContextWrapper>
       </Provider>
     );
@@ -88,7 +103,7 @@ describe('SlimHeader component', function () {
     element = renderIntoDocument(
       <Provider store={ store }>
         <SlimHeaderContextWrapper context={ { editModeOn: false } }>
-          <SlimHeader show={ true } openLegalDisclaimerModal={ openRequestDocumentModal } pathname='/'/>
+          <SlimHeader show={ true } openLegalDisclaimerModal={ openRequestDocumentModal } pathname='/' />
         </SlimHeaderContextWrapper>
       </Provider>
     );
@@ -103,7 +118,7 @@ describe('SlimHeader component', function () {
     element = renderIntoDocument(
       <Provider store={ store }>
         <SlimHeaderContextWrapper context={ { editModeOn: false } }>
-          <SlimHeader show={ true } openLegalDisclaimerModal={ openRequestDocumentModal } pathname='/'/>
+          <SlimHeader show={ true } openLegalDisclaimerModal={ openRequestDocumentModal } pathname='/' />
         </SlimHeaderContextWrapper>
       </Provider>
     );
@@ -113,41 +128,113 @@ describe('SlimHeader component', function () {
     link.getAttribute('href').should.eql('https://beta.cpdb.co/glossary/');
   });
 
-  it('should subscribe & unsubscribe scrollEventListener on mount & unmount', function () {
-
+  it('should show correct style by default', function () {
     element = renderIntoDocument(
       <Provider store={ store }>
         <SlimHeaderContextWrapper context={ { editModeOn: false } }>
-          <SlimHeader show={ true } pathname='/'/>
+          <SlimHeader show={ true } pathname='/' />
         </SlimHeaderContextWrapper>
       </Provider>
     );
 
     const slimHeader = findRenderedComponentWithType(element, SlimHeader);
-    window.addEventListener.calledWith('scroll', slimHeader.scrollEventListener).should.be.true();
 
-    unmountComponentSuppressError(element);
-    window.removeEventListener.calledWith('scroll', slimHeader.scrollEventListener).should.be.true();
+    slimHeader.state.slimHeaderStyle.should.eql(topSlimHeaderStyle);
+    slimHeader.state.leftLinkStyle.should.eql(topLeftLinkStyle);
+    slimHeader.state.rightLinkStyle.should.eql(topRightLinkStyle);
+    slimHeader.state.subtitleStyle.should.eql(topSubtitleStyle);
+    slimHeader.state.subtitleStyle.should.eql(topSubtitleStyle);
+    slimHeader.state.searchBoxStyle.should.eql(topSearchBoxStyle);
+    slimHeader.state.magnifyingGlassColor.should.eql(accentColor);
+    slimHeader.state.handleOnClick.should.not.eql(scrollToTop);
   });
 
-  it('should toggle subtitle when scrolling up or down', function () {
-    const element = renderIntoDocument(
+  it('should pass state change and click handlers to StickyHeader', function () {
+    element = renderIntoDocument(
       <Provider store={ store }>
         <SlimHeaderContextWrapper context={ { editModeOn: false } }>
-          <SlimHeader show={ true } pathname='/'/>
+          <SlimHeader show={ true } pathname='/' />
         </SlimHeaderContextWrapper>
       </Provider>
     );
 
     const slimHeader = findRenderedComponentWithType(element, SlimHeader);
-    slimHeader.state.showSubtitle.should.be.true();
+    const stickyHeader = findRenderedComponentWithType(slimHeader, StickyHeader);
+    stickyHeader.props.handleStateChange.should.equal(slimHeader.handleStateChange);
+    stickyHeader.props.onClick.should.equal(slimHeader.state.handleOnClick);
+  });
 
-    window.scrollY = 999;
-    slimHeader.scrollEventListener();
-    slimHeader.state.showSubtitle.should.be.false();
+  describe('handleStateChange', function () {
+    beforeEach(function () {
+      element = renderIntoDocument(
+        <Provider store={ store }>
+          <SlimHeaderContextWrapper context={ { editModeOn: false } }>
+            <SlimHeader show={ true } pathname='/' />
+          </SlimHeaderContextWrapper>
+        </Provider>
+      );
 
-    window.scrollY = 0;
-    slimHeader.scrollEventListener();
-    slimHeader.state.showSubtitle.should.be.true();
+      this.slimHeader = findRenderedComponentWithType(element, SlimHeader);
+
+      // Clear default styling to make sure they will be actually set by handleStateChange():
+      this.slimHeader.setState({
+        slimHeaderStyle: {},
+        leftLinkStyle: {},
+        rightLinkStyle: {},
+        handleOnClick: () => {},
+        subtitleStyle: {},
+      });
+    });
+
+    it('should set top header style when sticky', function () {
+      this.slimHeader.handleStateChange(false);
+      this.slimHeader.state.slimHeaderStyle.should.eql(topSlimHeaderStyle);
+      this.slimHeader.state.leftLinkStyle.should.eql(topLeftLinkStyle);
+      this.slimHeader.state.rightLinkStyle.should.eql(topRightLinkStyle);
+      this.slimHeader.state.subtitleStyle.should.eql(topSubtitleStyle);
+      this.slimHeader.state.searchBoxStyle.should.eql(topSearchBoxStyle);
+      this.slimHeader.state.magnifyingGlassColor.should.eql(accentColor);
+      this.slimHeader.state.handleOnClick.should.not.eql(scrollToTop);
+    });
+
+    it('should set middle header style when sticky but not yet at bottom', function () {
+      this.slimHeader.handleStateChange(true, false);
+      this.slimHeader.state.slimHeaderStyle.should.eql(middleSlimHeaderStyle);
+      this.slimHeader.state.leftLinkStyle.should.eql(middleLeftLinkStyle);
+      this.slimHeader.state.rightLinkStyle.should.eql(middleRightLinkStyle);
+      this.slimHeader.state.subtitleStyle.should.eql(middleSubtitleStyle);
+      this.slimHeader.state.searchBoxStyle.should.eql(middleSearchBoxStyle);
+      this.slimHeader.state.magnifyingGlassColor.should.eql(clayGray);
+      this.slimHeader.state.handleOnClick.should.not.eql(scrollToTop);
+    });
+
+    it('should set bottom header style when at bottom', function () {
+      this.slimHeader.handleStateChange(true, true);
+      this.slimHeader.state.slimHeaderStyle.should.eql(bottomSlimHeaderStyle);
+      this.slimHeader.state.leftLinkStyle.should.eql(bottomLeftLinkStyle);
+      this.slimHeader.state.rightLinkStyle.should.eql(bottomRightLinkStyle);
+      this.slimHeader.state.subtitleStyle.should.eql(bottomSubtitleStyle);
+      this.slimHeader.state.searchBoxStyle.should.eql(bottomSearchBoxStyle);
+      this.slimHeader.state.magnifyingGlassColor.should.eql('white');
+      this.slimHeader.state.handleOnClick.should.eql(scrollToTop);
+    });
+  });
+
+  describe('External links', function () {
+    it('should stopPropagation when being clicked', function () {
+      element = renderIntoDocument(
+        <Provider store={ store }>
+          <SlimHeaderContextWrapper context={ { editModeOn: false } }>
+            <SlimHeader show={ true } pathname='/' />
+          </SlimHeaderContextWrapper>
+        </Provider>
+      );
+      let externalLinks = scryRenderedDOMComponentsWithClass(element, 'test--right-external-link');
+      const dummyEvent = {
+        stopPropagation: spy()
+      };
+      Simulate.click(externalLinks[0], dummyEvent);
+      dummyEvent.stopPropagation.called.should.be.true();
+    });
   });
 });

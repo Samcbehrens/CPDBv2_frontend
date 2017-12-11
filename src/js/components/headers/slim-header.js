@@ -1,55 +1,65 @@
 import React, { PropTypes, Component } from 'react';
 import { Link } from 'react-router';
+import MediaQuery from 'react-responsive';
+
 
 import ResponsiveFluidWidthComponent from 'components/responsive/responsive-fluid-width-component';
+import StickyHeader, { recalculateStickyness } from 'components/common/sticky-header';
 import { ROOT_PATH, FAQ_PATH } from 'utils/constants';
 import { editMode } from 'utils/edit-path';
 import ConfiguredRadium from 'utils/configured-radium';
 import PropsStateRerender from 'components/common/higher-order/props-state-rerender';
 import LogOutButtonContainer from 'containers/log-out-container';
-import FadeMotion from 'components/animation/fade-motion';
+import SearchSectionComponent from 'components/landing-page/search-section';
 import {
-  slimHeaderStyle,
-  leftLinkStyle,
-  rightLinkStyle,
-  activeLinkStyle,
+  topSlimHeaderStyle,
+  middleSlimHeaderStyle,
+  bottomSlimHeaderStyle,
+  topLeftLinkStyle,
+  middleLeftLinkStyle,
+  bottomLeftLinkStyle,
+  topRightLinkStyle,
+  middleRightLinkStyle,
+  bottomRightLinkStyle,
   rightLinksWrapperStyle,
-  outerStyle,
-  subtitleStyle,
-  slimHeaderHeight,
+  bottomSubtitleStyle,
+  logoWrapperStyle,
+  middleSubtitleStyle,
+  topSubtitleStyle
 } from './slim-header.style';
+import { scrollToTop } from 'utils/dom';
+import {
+  bottomSearchBoxStyle, middleSearchBoxStyle,
+  topSearchBoxStyle
+} from 'components/landing-page/search-section/search-section.style';
+import { accentColor, clayGray } from 'utils/styles';
 
 export class SlimHeader extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      showSubtitle: true
+      subtitleStyle: topSubtitleStyle,
+      slimHeaderStyle: topSlimHeaderStyle,
+      leftLinkStyle: topLeftLinkStyle,
+      rightLinkStyle: topRightLinkStyle,
+      searchBoxStyle: topSearchBoxStyle,
+      magnifyingGlassColor: accentColor,
+      handleOnClick: () => {},
     };
-    this.scrollEventListener = this.scrollEventListener.bind(this);
+
+    this.handleStateChange = this.handleStateChange.bind(this);
   }
 
   componentDidMount() {
-    addEventListener('scroll', this.scrollEventListener);
+    addEventListener('scroll', recalculateStickyness);
   }
 
   componentWillUnmount() {
-    removeEventListener('scroll', this.scrollEventListener);
-  }
-
-  scrollEventListener() {
-    if (window.scrollY > slimHeaderHeight && this.state.showSubtitle) {
-      this.setState({
-        showSubtitle: false
-      });
-    } else if (window.scrollY <= slimHeaderHeight && !this.state.showSubtitle) {
-      this.setState({
-        showSubtitle: true
-      });
-    }
+    removeEventListener('scroll', recalculateStickyness);
   }
 
   renderRightLinks() {
-    const { pathname, openLegalDisclaimerModal } = this.props;
+    const { openLegalDisclaimerModal } = this.props;
     const { editModeOn } = this.context;
     const links = [
       {
@@ -74,7 +84,9 @@ export class SlimHeader extends Component {
       if (link.externalHref) {
         return (
           <a
-            style={ rightLinkStyle }
+            className='test--right-external-link'
+            onClick={ (e) => { e.stopPropagation(); } }
+            style={ this.state.rightLinkStyle }
             key={ index }
             href={ link.externalHref }
           >
@@ -84,63 +96,119 @@ export class SlimHeader extends Component {
       }
 
       const href = link.href && (editModeOn ? editMode(link.href) : link.href);
-      const style = pathname === href ? { ...rightLinkStyle, ...activeLinkStyle } : rightLinkStyle;
 
       return (
         <Link
-          style={ style }
+          style={ this.state.rightLinkStyle }
           key={ index }
           to={ href }
-          onClick={ link.onClick }>
+          onClick={ link.onClick }
+        >
           { link.name }
         </Link>
       );
     });
   }
 
+  handleStateChange(isSticky, isAtBottom) {
+    // top
+    if (!isSticky) {
+      this.setState({
+        slimHeaderStyle: topSlimHeaderStyle,
+        leftLinkStyle: topLeftLinkStyle,
+        rightLinkStyle: topRightLinkStyle,
+        subtitleStyle: topSubtitleStyle,
+        searchBoxStyle: topSearchBoxStyle,
+        magnifyingGlassColor: accentColor,
+        handleOnClick: () => {
+        }
+      });
+    }
+    // middle
+    else if (!isAtBottom) {
+      this.setState({
+        slimHeaderStyle: middleSlimHeaderStyle,
+        leftLinkStyle: middleLeftLinkStyle,
+        rightLinkStyle: middleRightLinkStyle,
+        subtitleStyle: middleSubtitleStyle,
+        searchBoxStyle: middleSearchBoxStyle,
+        magnifyingGlassColor: clayGray,
+        handleOnClick: () => {}
+      });
+    }
+    // bottom
+    else {
+      this.setState({
+        slimHeaderStyle: bottomSlimHeaderStyle,
+        leftLinkStyle: bottomLeftLinkStyle,
+        rightLinkStyle: bottomRightLinkStyle,
+        subtitleStyle: bottomSubtitleStyle,
+        searchBoxStyle: bottomSearchBoxStyle,
+        magnifyingGlassColor: 'white',
+        handleOnClick: scrollToTop
+      });
+    }
+  }
+
   render() {
     const { show, pathname } = this.props;
     const { editModeOn } = this.context;
+    const {
+      slimHeaderStyle,
+      leftLinkStyle,
+      subtitleStyle,
+      searchBoxStyle,
+      magnifyingGlassColor,
+      handleOnClick
+    } = this.state;
 
     if (!show) {
       return null;
     }
 
-    const homeHref = editModeOn ? editMode(ROOT_PATH) : ROOT_PATH;
-    const homeLinkStyle = (
-      pathname === homeHref ? { ...leftLinkStyle, ...activeLinkStyle } : leftLinkStyle
-    );
-
     const rightLinks = this.renderRightLinks();
 
     return (
-      <ResponsiveFluidWidthComponent style={ outerStyle }>
-        <div style={ slimHeaderStyle } className='test--slim-header'>
+      <StickyHeader
+        wrapperComponent={ ResponsiveFluidWidthComponent }
+        className='test--slim-header'
+        handleStateChange={ this.handleStateChange }
+        onClick={ handleOnClick }
+        style={ slimHeaderStyle }
+      >
+        <div style={ { height: slimHeaderStyle.height } }>
           <div style={ rightLinksWrapperStyle }>
             { rightLinks }
-            <LogOutButtonContainer pathname={ pathname }/>
+            <LogOutButtonContainer pathname={ pathname } />
           </div>
 
-          <Link
-            style={ homeLinkStyle }
-            to={ editModeOn ? editMode(ROOT_PATH) : ROOT_PATH }
-            className='test--header-logo'
-          >
-            Citizens Police Data Project
-          </Link>
+          <SearchSectionComponent
+            searchBoxStyle={ searchBoxStyle }
+            magnifyingGlassColor={ magnifyingGlassColor } />
 
-          <FadeMotion show={ this.state.showSubtitle }>
-            {
-              (opacity) => (
-                <span style={ { ...subtitleStyle, opacity: opacity } }>
-                  collects and publishes
-                  <span style={ { whiteSpace: 'nowrap' } }> information about police misconduct in Chicago.</span>
-                </span>
-              )
-            }
-          </FadeMotion>
+          <div style={ logoWrapperStyle }>
+            <MediaQuery minWidth={ 830 }>
+              { (matches) => (
+                <Link
+                  style={ leftLinkStyle }
+                  to={ editModeOn ? editMode(ROOT_PATH) : ROOT_PATH }
+                  className='test--header-logo'
+                >
+                  { matches ? 'Citizens Police Data Project' : 'CPDP' }
+                </Link>
+              ) }
+            </MediaQuery>
+            <MediaQuery minWidth={ 950 }>
+              <div style={ subtitleStyle }>
+                <div> collects and publishes information</div>
+                <div> about police misconduct in Chicago.</div>
+              </div>
+            </MediaQuery>
+          </div>
+
         </div>
-      </ResponsiveFluidWidthComponent>
+      </StickyHeader>
+
     );
   }
 }
