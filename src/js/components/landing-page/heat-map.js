@@ -9,6 +9,16 @@ export default class HeatMap extends Component {
   render() {
     return (
       <MapboxGL style={ mapContainerStyle }
+        onMouseMove={ [
+          ['neighborhood-fill', (e, map) =>
+            map.setFilter('neighborhood-hover', ['==', 'name', e.features[0].properties.name])
+          ]
+        ] }
+        onMouseLeave={ [
+          ['neighborhood-fill', (e, map) =>
+            map.setFilter('neighborhood-hover', ['==', 'name', ''])
+          ]
+        ] }
         sources={ [
           { name: 'cluster', type: 'geojson', data: clusterGeoJSONPath },
           { name: 'neighborhood', type: 'geojson', data: neighborhoodGeoJSONPath },
@@ -29,7 +39,7 @@ export default class HeatMap extends Component {
               },
               'heatmap-intensity': {
                 stops: [
-                  [10, 0.1],
+                  [9, 0.09],
                   [17, 3]
                 ]
               },
@@ -46,17 +56,44 @@ export default class HeatMap extends Component {
               ],
               'heatmap-radius': {
                 stops: [
-                  [10, 15],
+                  [9, 10],
                   [17, 20]
                 ]
               },
               'heatmap-opacity': {
                 default: 1,
                 stops: [
-                  [10, 1],
+                  [9, 1],
                   [17, 1]
                 ]
               },
+            }
+          },
+          {
+            id: 'neighborhood-hover',
+            type: 'fill',
+            source: 'neighborhood',
+            paint: {
+              'fill-color': '#007991',
+              'fill-opacity': 0.3
+            }
+          },
+          {
+            id: 'neighborhood-outline',
+            type: 'line',
+            source: 'neighborhood',
+            paint: {
+              'line-color': '#007991',
+              'line-opacity': 0.8
+            }
+          },
+          {
+            id: 'neighborhood-fill',
+            type: 'fill',
+            source: 'neighborhood',
+            paint: {
+              'fill-color': '#007991',
+              'fill-opacity': 0
             }
           }
         ] }
