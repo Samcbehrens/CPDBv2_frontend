@@ -23,7 +23,7 @@ export default class SimpleSparklines extends React.Component {
     const yearRange = range(begin, end + 1);
     const yearData = keyBy(data, 'year');
     let dummyRecord = Object.assign({}, data[0],
-      { 'year': begin, count: 0, 'sustained_count': 0, 'aggCount': 0 });
+      { 'year': begin, count: 0, 'sustainedCount': 0, 'aggCount': 0 });
     return yearRange.map(function (value) {
       if (value in yearData) {
         const currentYear = yearData[value];
@@ -77,7 +77,7 @@ export default class SimpleSparklines extends React.Component {
           clickHandler={ this.hoverPointClickHandler.bind(this, year) }
           i={ i }
           y={ y }
-          hasSustainedCR={ point.sustained_count > 0 }
+          hasSustainedCR={ point.sustainedCount > 0 }
           width={ hoverPointWidth }
           alignment={ alignment }
           height={ HEIGHT }

@@ -1,19 +1,19 @@
-import { whiteTwoColor, clayGray, softBlackColor } from 'utils/styles';
+import { whiteTwoColor, clayGray, softBlackColor, sugarCaneColor } from 'utils/styles';
 
 const shareMenuHorizontalMargin = 16;
 
 export const outerStyle = {
-  borderBottom: '1px solid ' + whiteTwoColor
+  backgroundColor: sugarCaneColor
 };
 
 export const navBarStyle = {
-  height: '22px',
+  height: '40px',
   lineHeight: '22px',
   color: clayGray,
   padding: '0 16px',
-  fontSize: '12px',
+  fontSize: '14px',
   fontWeight: 400,
-  position: 'relative'
+  position: 'relative',
 };
 
 export const leftLinkStyle = {
@@ -24,8 +24,16 @@ export const leftLinkStyle = {
 
 export const rightLinkStyle = (active) => ({
   float: 'right',
-  color: active ? softBlackColor : 'inherit',
-  cursor: 'pointer'
+  color: active ? 'white' : clayGray,
+  backgroundColor: active ? softBlackColor : 'inherit',
+  cursor: 'pointer',
+  lineHeight: '28px',
+  borderRadius: '2px',
+  padding: '0 8px',
+  border: `solid 1px ${whiteTwoColor}`,
+  position: 'relative',
+  top: '50%',
+  transform: 'translateY(-50%)'
 });
 
 export const shareMenuStyle = {
@@ -69,4 +77,9 @@ export const shareMenuLinkItemStyle = {
   ...shareMenuItemStyle,
   color: 'inherit',
   textDecoration: 'none'
+};
+
+export const breadcrumbsStyle = {
+  margin: 0,
+  padding: 0,
 };
