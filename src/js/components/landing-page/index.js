@@ -41,4 +41,3 @@ LandingPage.propTypes = {
 };
 
 export default PropsRerender(ConfiguredRadium(LandingPage));
-

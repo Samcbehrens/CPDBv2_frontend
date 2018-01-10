@@ -39,10 +39,10 @@ describe('Sparkline components', function () {
 
   it('should render HoverPoint and svg', function () {
     instance = renderIntoDocument(
-      <SimpleSparklines data={ data } startYear={ 2001 }/>
+      <SimpleSparklines data={ data } startYear={ 2000 }/>
     );
 
-    const yearCount = getThisYear() - 2001 + 1;
+    const yearCount = getThisYear() - 2000 + 1;
     scryRenderedComponentsWithType(instance, HoverPoint).length.should.eql(yearCount);
     scryRenderedDOMComponentsWithTag(instance, 'circle').length.should.eql(yearCount);
   });

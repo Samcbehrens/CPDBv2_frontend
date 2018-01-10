@@ -8,7 +8,6 @@ import {
 import { getSvgUrl } from 'utils/visual-token';
 import { RawOfficerSuggestion, RawCRSuggestion } from 'utils/test/factories/suggestion';
 
-
 describe('search page selector', function () {
   describe('isShowingSingleContentTypeSelector', function () {
     it('should tell if showing single type of content', function () {

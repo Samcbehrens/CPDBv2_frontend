@@ -3,11 +3,12 @@ import { Link } from 'react-router';
 
 import OfficerVisualToken from 'components/visual-token/officer-visual-token';
 import { wrapperStyle, lightTextStyle, boldTextStyle, visualTokenStyle } from './officer-card.style.js';
-import { CURRENT_YEAR } from 'utils/constants';
+import { getThisYear } from 'utils/date';
 import {
   extraInfoStyle, noBorderSectionStyle,
   sectionStyle, sustainedStyle
 } from 'components/landing-page/activity-grid/officer-card.style';
+import { pluralize } from 'utils/language';
 
 
 export default class OfficerCard extends Component {
@@ -18,7 +19,6 @@ export default class OfficerCard extends Component {
       visualTokenBackgroundColor,
       complaintCount,
       sustainedCount,
-      complaintRate,
       birthYear,
       race,
       gender,
@@ -26,7 +26,7 @@ export default class OfficerCard extends Component {
     } = this.props;
 
     const complaintString = () => {
-      const complaint = `${complaintCount} Complaint${complaintCount !== 1 ? 's' : ''}`;
+      const complaint = `${complaintCount} ${pluralize('Complaint', complaintCount)}`;
       const sustained = `${sustainedCount} Sustained`;
       if (sustainedCount) {
         return (
@@ -44,12 +44,12 @@ export default class OfficerCard extends Component {
       if (!birthYear) {
         return '';
       }
-      const age = CURRENT_YEAR - birthYear;
-      return `${age - 1}/${age} years old, `;
+      const age = getThisYear() - birthYear - 1;
+      return `${age} year old`;
     };
 
     const extraInfo = () => {
-      return `${ageString()}${race}, ${gender}.`;
+      return `${ageString()} ${race} ${gender}`;
     };
 
     return (
@@ -69,7 +69,10 @@ export default class OfficerCard extends Component {
           </div>
           <div style={ sectionStyle }>
             <p style={ boldTextStyle }>{ complaintString() }</p>
-            <p style={ lightTextStyle }>Less than { complaintRate }% of other officers</p>
+            {/*
+            TODO: uncomment when actual complaintRate is available from server
+            <p style={ lightTextStyle }>More than { complaintRate }% of other officers</p>
+            */}
           </div>
           <div style={ noBorderSectionStyle }>
             <p style={ extraInfoStyle }>{ extraInfo() }</p>

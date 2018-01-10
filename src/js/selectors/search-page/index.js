@@ -18,7 +18,6 @@ const getPagination = state => state.searchPage.pagination;
 
 const currentYear = getThisYear();
 
-
 export const isShowingSingleContentTypeSelector = createSelector(
   getSuggestionContentType,
   contentType => !!contentType
