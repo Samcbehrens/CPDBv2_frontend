@@ -13,6 +13,7 @@ import Row from 'components/common/row';
 import Location from 'components/cr-page/location';
 import Attachments from 'components/cr-page/attachments';
 import { unmountComponentSuppressError, reRender } from 'utils/test';
+import * as domUtils from 'utils/dom';
 
 
 describe('CRPage component', function () {
@@ -133,6 +134,15 @@ describe('CRPage component', function () {
       />, instance
     );
     stubResetBreadcrumbs.calledWith({ breadcrumbs: [secondBreadcrumbItem] }).should.be.true();
+  });
+
+  it('should call scrollToTop after mounted', function () {
+    stub(domUtils, 'scrollToTop');
+
+    instance = renderIntoDocument(<CRPage />);
+
+    domUtils.scrollToTop.called.should.be.true();
+    domUtils.scrollToTop.restore();
   });
 
   describe('refineBreadcrumbs', function () {

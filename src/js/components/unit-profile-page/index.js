@@ -3,12 +3,14 @@ import React, { Component, PropTypes } from 'react';
 import Header from './header';
 import SummaryPageContainer from 'containers/unit-profile-page/summary-page';
 import { pageWrapperStyle } from './unit-profile-page.style';
+import { scrollToTop } from 'utils/dom';
 
 
 export default class UnitProfilePage extends Component {
   componentDidMount() {
     const { fetchUnitProfileSummary, unitName } = this.props;
     fetchUnitProfileSummary(unitName);
+    scrollToTop();
   }
 
   render() {

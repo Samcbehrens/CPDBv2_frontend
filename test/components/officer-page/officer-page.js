@@ -2,6 +2,7 @@ import React from 'react';
 import { renderIntoDocument, scryRenderedComponentsWithType } from 'react-addons-test-utils';
 import MockStore from 'redux-mock-store';
 import { Provider } from 'react-redux';
+import { stub } from 'sinon';
 
 import { unmountComponentSuppressError } from 'utils/test';
 import OfficerPage from 'components/officer-page';
@@ -9,6 +10,7 @@ import TimelinePage from 'components/officer-page/timeline-page';
 import SummaryPageContainer from 'containers/officer-page/summary-page-container';
 import Header from 'components/officer-page/header';
 import SocialGraphPageContainer from 'containers/officer-page/social-graph-page';
+import * as domUtils from 'utils/dom';
 
 
 describe('OfficerPage component', function () {
@@ -88,5 +90,18 @@ describe('OfficerPage component', function () {
 
     scryRenderedComponentsWithType(instance, Header).should.have.length(1);
     scryRenderedComponentsWithType(instance, SocialGraphPageContainer).should.have.length(1);
+  });
+
+  it('should call scrollToTop after mounted', function () {
+    stub(domUtils, 'scrollToTop');
+
+    instance = renderIntoDocument(
+      <Provider store={ store }>
+        <OfficerPage />
+      </Provider>
+    );
+
+    domUtils.scrollToTop.called.should.be.true();
+    domUtils.scrollToTop.restore();
   });
 });

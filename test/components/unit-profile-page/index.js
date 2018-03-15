@@ -2,12 +2,13 @@ import React from 'react';
 import { renderIntoDocument, scryRenderedComponentsWithType } from 'react-addons-test-utils';
 import MockStore from 'redux-mock-store';
 import { Provider } from 'react-redux';
+import { spy, stub } from 'sinon';
 
 import UnitProfilePage from 'components/unit-profile-page';
 import Header from 'components/unit-profile-page/header';
 import SummaryPage from 'components/unit-profile-page/summary-page';
 import { unmountComponentSuppressError } from 'utils/test';
-import { spy } from 'sinon';
+import * as domUtils from 'utils/dom';
 
 
 describe('UnitProfilePage component', function () {
@@ -43,5 +44,18 @@ describe('UnitProfilePage component', function () {
       </Provider>
     );
     fetchUnitProfileSummary.calledWith(unitName).should.be.true();
+  });
+
+  it('should call scrollToTop after mounted', function () {
+    stub(domUtils, 'scrollToTop');
+
+    instance = renderIntoDocument(
+      <Provider store={ store }>
+        <UnitProfilePage />
+      </Provider>
+    );
+
+    domUtils.scrollToTop.called.should.be.true();
+    domUtils.scrollToTop.restore();
   });
 });

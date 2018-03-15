@@ -17,6 +17,7 @@ import {
   wrapperStyle, titleStyle, subtitleStyle, summarySectionStyle, overlayStyle, leftColumnStyle,
   pageWrapperStyle, rightColumnStyle, headerWrapperStyle
 } from './cr-page.style';
+import { scrollToTop } from 'utils/dom';
 
 
 export default class CRPage extends Component {
@@ -35,6 +36,7 @@ export default class CRPage extends Component {
     const { crid, fetchCR } = this.props;
 
     fetchCR(crid);
+    scrollToTop();
   }
 
   componentWillReceiveProps(nextProps) {

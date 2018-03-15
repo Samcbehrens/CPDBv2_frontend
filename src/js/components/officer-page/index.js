@@ -5,9 +5,14 @@ import Header from './header';
 import SummaryPageContainer from 'containers/officer-page/summary-page-container';
 import TimelinePage from './timeline-page';
 import SocialGraphPageContainer from 'containers/officer-page/social-graph-page';
+import { scrollToTop } from 'utils/dom';
 
 
 export default class OfficerPage extends Component {
+
+  componentDidMount() {
+    scrollToTop();
+  }
 
   renderChildren() {
     const { activeTab, query } = this.props;
