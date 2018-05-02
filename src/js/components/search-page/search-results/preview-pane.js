@@ -6,9 +6,9 @@ import {
   OfficerPane,
   CommunityPane,
   NeighborhoodPane,
+  TermPane
 } from 'components/search-page/preview-pane';
-
-
+import { SEARCH_BOX } from 'utils/constants';
 import { wrapperStyle } from './preview-pane.style';
 
 
@@ -21,6 +21,7 @@ export default class PreviewPane extends Component {
   renderPane() {
     const { data, type } = this.props;
     const paneTypes = {
+      [SEARCH_BOX]: () => <TermPane { ...data } />,
       OFFICER: () => <OfficerPane { ...data }/>,
       COMMUNITY: () => <CommunityPane { ...data } />,
       NEIGHBORHOOD: () => <NeighborhoodPane { ...data } />

@@ -54,18 +54,13 @@ export const slicedSuggestionGroupsSelector = createSelector(
   isShowingSingleContentTypeSelector,
   (suggestionGroups, isSingle) => {
     let groups = pick(omitBy(suggestionGroups, isEmpty), constants.SEARCH_CATEGORIES);
-
-    let lastIndex = 1;
     return keys(groups).map((key) => {
       let items = isSingle ? groups[key] : groups[key].slice(0, itemsPerCategory);
       items = map(items, item => ({
         ...item,
         type: key,
-        itemIndex: lastIndex++
       }));
-
       const canLoadMore = !isSingle && items.length >= itemsPerCategory;
-      canLoadMore && lastIndex++;
       return {
         header: key,
         items,

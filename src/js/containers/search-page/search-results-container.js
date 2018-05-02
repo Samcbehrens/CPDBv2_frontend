@@ -19,17 +19,16 @@ import {
 } from 'selectors/search-page/search-results/suggestion-groups';
 import {
   previewPaneInfoSelector,
-  totalItemCountSelector
 } from 'selectors/search-page/search-results/navigation';
 import { getFocusedItem } from 'selectors/search-page';
+import { navigationKeySelector } from '../../selectors/search-page/search-results/navigation';
 
 
 function mapStateToProps(state, ownProps) {
   const { onLoadMore, aliasEditModeOn, editModeOn } = ownProps;
-  const { isRequesting, navigation, query, contentType } = state.searchPage;
+  const { isRequesting, query, contentType } = state.searchPage;
 
   return {
-    navigation,
     onLoadMore,
     aliasEditModeOn,
     isEmpty: isEmptySelector(state),
@@ -43,7 +42,7 @@ function mapStateToProps(state, ownProps) {
     hasMore: hasMoreSelector(state),
     nextParams: nextParamsSelector(state),
     singleContent: isShowingSingleContentTypeSelector(state),
-    totalItemCount: totalItemCountSelector(state)
+    navigationKeys: navigationKeySelector(state),
   };
 }
 

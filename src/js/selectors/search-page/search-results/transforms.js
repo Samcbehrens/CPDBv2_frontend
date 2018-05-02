@@ -2,6 +2,7 @@ import { compact, get, sumBy, map } from 'lodash';
 
 import { getThisYear } from 'utils/date';
 import { getSvgUrl } from 'utils/visual-token';
+import { SEARCH_BOX } from 'utils/constants';
 
 
 const mappingRace = (race) => {
@@ -15,6 +16,9 @@ const mappingRace = (race) => {
 
 
 const previewPaneTypeMap = {
+  [SEARCH_BOX]: (item) => {
+    return { type: SEARCH_BOX, data: item };
+  },
   OFFICER: (suggestion) => {
     const { payload, id, text } = suggestion;
     const visualTokenImg = getSvgUrl(id);

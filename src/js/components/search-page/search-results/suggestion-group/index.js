@@ -13,12 +13,13 @@ export default class SuggestionGroup extends Component {
   componentDidMount() {
     const { getSuggestionWithContentType, searchText, singleContent, header } = this.props;
     if (singleContent) {
-      getSuggestionWithContentType(searchText, { contentType: header }).catch(() => {});
+      getSuggestionWithContentType(searchText, { contentType: header }).catch(() => {
+      });
     }
   }
 
   renderHeader() {
-    return (<div style={ groupHeaderStyle }>{ this.props.header }</div>);
+    return <div style={ groupHeaderStyle }>{ this.props.header }</div>;
   }
 
   renderResults() {
@@ -33,6 +34,7 @@ export default class SuggestionGroup extends Component {
       nextParams,
       getSuggestionWithContentType,
       setSearchNavigation,
+      navigationKeys,
     } = this.props;
 
     return (
@@ -44,7 +46,7 @@ export default class SuggestionGroup extends Component {
         {
           map(suggestions, (suggestion) => (
             <SuggestionItem
-              selectItem={ () => setSearchNavigation({ itemIndex: suggestion.itemIndex }) }
+              selectItem={ () => setSearchNavigation({ itemIndex: navigationKeys.indexOf(suggestion.uniqueKey) }) }
               key={ suggestion.uniqueKey }
               aliasEditModeOn={ aliasEditModeOn }
               setAliasAdminPageContent={ setAliasAdminPageContent }
@@ -111,6 +113,7 @@ SuggestionGroup.propTypes = {
   nextParams: PropTypes.object,
   singleContent: PropTypes.bool,
   setSearchNavigation: PropTypes.func,
+  navigationKeys: PropTypes.array,
 };
 
 SuggestionGroup.defaultProps = {
@@ -118,6 +121,7 @@ SuggestionGroup.defaultProps = {
   focusedItem: {},
   header: '',
   getSuggestionWithContentType: () => ({
-    catch: () => {}
+    catch: () => {
+    }
   })
 };

@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { containerStyle, buttonStyle, textStyle } from './view-widget.style';
+import OutboundLink from 'components/common/outbound-link';
 
 
 export default class CallToActionWidget extends Component {
@@ -7,7 +8,7 @@ export default class CallToActionWidget extends Component {
     return (
       <div style={ containerStyle }>
         <span style={ textStyle }>{ this.props.text }</span>
-        <a href={ this.props.url } style={ buttonStyle }>→</a>
+        <OutboundLink href={ this.props.url || '#' } style={ buttonStyle }>→</OutboundLink>
       </div>
     );
   }
@@ -18,6 +19,6 @@ CallToActionWidget.defaultProps = {
 };
 
 CallToActionWidget.propTypes = {
-  url: PropTypes.string.isRequired,
+  url: PropTypes.string,
   text: PropTypes.string,
 };

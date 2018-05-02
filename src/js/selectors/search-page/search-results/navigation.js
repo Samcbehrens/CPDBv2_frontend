@@ -10,20 +10,22 @@ const getSuggestionNavigation = state => state.searchPage.navigation;
 
 const navigationItemListSelector = createSelector(
   slicedSuggestionGroupsSelector,
-  groups => concat(
-    [{ uniqueKey: constants.SEARCH_BOX }],
-    flatten(groups.map(group => [
-      ...group.items,
-      ...(
-        group.canLoadMore ?
-        [{
-          id: group.header,
-          type: constants.MORE_BUTTON
-        }] :
-        []
-      )
-    ]))
-  )
+  groups => {
+    return concat(
+      [{ uniqueKey: constants.SEARCH_BOX, type: constants.SEARCH_BOX }],
+      flatten(groups.map(group => [
+        ...group.items,
+        ...(
+          group.canLoadMore ?
+          [{
+            id: group.header,
+            type: constants.MORE_BUTTON
+          }] :
+          []
+        )
+      ]))
+    );
+  }
 );
 
 const rawFocusedItemSelector = createSelector(
@@ -47,7 +49,10 @@ export const previewPaneInfoSelector = createSelector(
   previewPaneTransform
 );
 
-export const totalItemCountSelector = createSelector(
+export const navigationKeySelector = createSelector(
   navigationItemListSelector,
-  (itemsList) => itemsList.length
+  (items) => {
+    const navigationItems = items.map(navigationItemTransform);
+    return navigationItems.map((navigationItem) => navigationItem.uniqueKey);
+  }
 );

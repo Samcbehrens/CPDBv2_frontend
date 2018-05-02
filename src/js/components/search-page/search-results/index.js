@@ -29,8 +29,8 @@ export default class SuggestionResults extends Component {
       direction,
       (event) => {
         event.preventDefault && event.preventDefault();
-        // totalItemCount cannot be declared in the "const" way as it needs updating
-        move(direction, this.props.totalItemCount);
+        // navigationKeys cannot be declared in the "const" way as it needs updating
+        move(direction, this.props.navigationKeys.length);
       }
     )));
   }
@@ -47,7 +47,6 @@ export default class SuggestionResults extends Component {
       searchText,
       isEmpty,
       suggestionClick,
-      navigation,
       onLoadMore,
       aliasEditModeOn,
       setAliasAdminPageContent,
@@ -57,6 +56,7 @@ export default class SuggestionResults extends Component {
       singleContent,
       nextParams,
       setSearchNavigation,
+      navigationKeys,
     } = this.props;
 
     if (isEmpty) {
@@ -71,7 +71,6 @@ export default class SuggestionResults extends Component {
         focusedItem={ focusedItem }
         onLoadMore={ onLoadMore }
         key={ `suggestion-group-${group.header}` }
-        navigation={ navigation }
         setAliasAdminPageContent={ setAliasAdminPageContent }
         suggestions={ group.items }
         showMoreButton={ group.canLoadMore }
@@ -82,7 +81,8 @@ export default class SuggestionResults extends Component {
         hasMore={ hasMore }
         searchText={ searchText }
         nextParams={ nextParams }
-        singleContent={ singleContent }/>
+        singleContent={ singleContent }
+        navigationKeys={ navigationKeys }/>
     ));
   }
 
@@ -146,7 +146,6 @@ export default class SuggestionResults extends Component {
 }
 
 SuggestionResults.propTypes = {
-  navigation: PropTypes.object,
   searchText: PropTypes.string,
   suggestionGroups: PropTypes.array,
   isRequesting: PropTypes.bool,
@@ -166,8 +165,8 @@ SuggestionResults.propTypes = {
   nextParams: PropTypes.object,
   singleContent: PropTypes.bool,
   move: PropTypes.func,
-  totalItemCount: PropTypes.number,
   setSearchNavigation: PropTypes.func,
+  navigationKeys: PropTypes.array,
 };
 
 SuggestionResults.defaultProps = {
