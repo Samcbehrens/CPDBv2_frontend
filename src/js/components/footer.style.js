@@ -7,7 +7,7 @@ export const sectionStyle = {
 };
 
 export const wrapperStyle = {
-  height: '88px',
+  paddingTop: '32px',
   display: 'table',
   width: '100%'
 };
