@@ -27,7 +27,7 @@ describe('Footer component', function () {
   it('should render GitHub external link', function () {
     element = renderIntoDocument(<Footer />);
     const links = scryRenderedComponentsWithType(element, FooterNavLink);
-    const githubLink = links.filter(link => link.props.name === 'Github')[0];
+    const githubLink = links.filter(link => link.props.name === 'GitHub')[0];
     githubLink.props.externalHref.should.eql('https://github.com/invinst/');
   });
 

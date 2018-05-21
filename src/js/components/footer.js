@@ -20,7 +20,7 @@ class Footer extends React.Component {
         onClick: openLegalDisclaimerModal
       },
       {
-        name: 'Github',
+        name: 'GitHub',
         externalHref: 'https://github.com/invinst/'
       },
       {
