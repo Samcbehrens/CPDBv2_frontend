@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import DocumentTitle from 'react-document-title';
 
 import Header from './header';
 import ShareableHeaderContainer from 'containers/headers/shareable-header/shareable-header-container';
@@ -12,7 +13,7 @@ export default class UnitProfilePage extends Component {
     const { pathname } = location;
 
     return (
-      <div>
+      <DocumentTitle title={ unitName }>
         <ShareableHeaderContainer/>
         <Header
           unitName={ unitName }
@@ -23,7 +24,7 @@ export default class UnitProfilePage extends Component {
         <div style={ pageWrapperStyle }>
           <SummaryPageContainer unitName={ unitName } summary={ summary }/>;
         </div>
-      </div>
+      </DocumentTitle>
     );
   }
 }
