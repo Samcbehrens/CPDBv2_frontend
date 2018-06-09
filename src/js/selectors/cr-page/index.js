@@ -118,6 +118,10 @@ const getCoaccusedSelector = createSelector(
 );
 
 const getInvestigatorAffiliation = obj => {
+  if (!obj['current_rank']) {
+    return '';
+  }
+
   if (obj['current_rank'].indexOf('IPRA') > -1) {
     return 'IPRA';
   }

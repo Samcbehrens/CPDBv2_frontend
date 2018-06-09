@@ -29,7 +29,7 @@ export default class OfficerPage extends Component {
       currentTab
     } = this.props;
     return (
-      <DocumentTitle title={ officerName }>
+      <DocumentTitle title={ `${officerSummary.rank} ${officerName}` }>
         <div style={ wrapperStyle }>
           <ShareableHeaderContainer/>
           <div style={ pageWrapperStyle }>
@@ -60,4 +60,5 @@ OfficerPage.propTypes = {
 
 OfficerPage.defaultProps = {
   changeOfficerTab: () => {},
+  officerSummary: {}
 };

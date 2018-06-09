@@ -13,16 +13,18 @@ export default class UnitProfilePage extends Component {
     const { pathname } = location;
 
     return (
-      <DocumentTitle title={ unitName }>
-        <ShareableHeaderContainer/>
-        <Header
-          unitName={ unitName }
-          pathname={ pathname }
-          unitDescription={ summary.description }
-          scrollPosition={ scrollPosition }
-        />
-        <div style={ pageWrapperStyle }>
-          <SummaryPageContainer unitName={ unitName } summary={ summary }/>;
+      <DocumentTitle title={ `${unitName} ${summary.description}` }>
+        <div>
+          <ShareableHeaderContainer/>
+          <Header
+            unitName={ unitName }
+            pathname={ pathname }
+            unitDescription={ summary.description }
+            scrollPosition={ scrollPosition }
+          />
+          <div style={ pageWrapperStyle }>
+            <SummaryPageContainer unitName={ unitName } summary={ summary }/>;
+          </div>
         </div>
       </DocumentTitle>
     );
