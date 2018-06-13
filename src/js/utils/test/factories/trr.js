@@ -26,8 +26,7 @@ export const RawTRROfficerFactory = Factory.define('RawTRROfficerFactory')
   })
   .attr('percentile_allegation_civilian', percentileGenerator)
   .attr('percentile_allegation_internal', percentileGenerator)
-  .attr('percentile_trr', percentileGenerator)
-  .attr('point', { lat: 41.7508596, lng: -87.6533166 });
+  .attr('percentile_trr', percentileGenerator);
 
 
 /* istanbul ignore next */

@@ -55,7 +55,6 @@ export const trrLocationSelector = createSelector(
     address: get(data, 'address'),
     beat: String(get(data, 'beat')),
     locationType: get(data, 'location_type'),
-    point: data.point,
   })
 );
 
