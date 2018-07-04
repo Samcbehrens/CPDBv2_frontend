@@ -1,7 +1,6 @@
 'use strict';
 
 import should from 'should';
-import { times } from 'lodash';
 
 import landingPage from './page-objects/landing-page';
 
@@ -78,11 +77,18 @@ describe('landing page', function () {
 
     it('should able to show the last item', function () {
       browser.setViewportSize({
-        width: 1700,
-        height: 1000
+        width: 1000,
+        height: 800
       });
 
-      times(7, () => landingPage.recentActivityCarousel.rightArrow.click());
+      let i = 0;
+      const maxTries = 100;
+      do {
+        landingPage.recentActivityCarousel.rightArrow.click();
+        i++;
+      }
+      while (i < maxTries && landingPage.recentActivityCarousel.rightArrow.isExisting());
+
       landingPage.recentActivityCarousel.rightArrow.waitForVisible(1000, true);
     });
 
