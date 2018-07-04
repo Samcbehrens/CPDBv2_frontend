@@ -61,8 +61,12 @@ export default class Carousel extends Component {
   }
 
   updateArrowsAndSlideIndex({ isEnd, isBeginning, activeIndex }) {
+    const { children } = this.props;
+    // SwiperJs with { slidesPerView: 'auto' } may cause activeIndex to not be updated correctly
+    // and we cannot set index to last items
+    const updateIndex = (isEnd) ? children.length - this.slidesPerGroup : activeIndex;
     this.setState({
-      slideIndex: activeIndex,
+      slideIndex: updateIndex,
       displayLeftArrow: !isBeginning,
       displayRightArrow: !isEnd
     });

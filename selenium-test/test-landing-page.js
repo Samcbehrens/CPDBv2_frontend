@@ -1,6 +1,7 @@
 'use strict';
 
 import should from 'should';
+import { times } from 'lodash';
 
 import landingPage from './page-objects/landing-page';
 
@@ -73,6 +74,16 @@ describe('landing page', function () {
     it('should change next group of slides when click to right arrow', function () {
       landingPage.recentActivityCarousel.rightArrow.click();
       landingPage.recentActivityCarousel.leftArrow.waitForVisible(1000);
+    });
+
+    it('should able to show the last item', function () {
+      browser.setViewportSize({
+        width: 1700,
+        height: 1000
+      });
+
+      times(7, () => landingPage.recentActivityCarousel.rightArrow.click());
+      landingPage.recentActivityCarousel.rightArrow.waitForVisible(1000, true);
     });
 
     it('should go to officer summary page when click to card', function () {
