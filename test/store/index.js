@@ -163,7 +163,7 @@ describe('store', function () {
           ]
         },
         newTimeline: {
-          filter: 'ALL EVENTS',
+          filter: 'COMPLAINTS',
           isRequesting: false,
           items: []
         },
