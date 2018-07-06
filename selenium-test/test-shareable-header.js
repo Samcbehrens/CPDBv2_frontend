@@ -56,10 +56,6 @@ describe('shareableHeader', function () {
       'should show breadcrumb Officer > TRR when click TRR row through officer timeline',
       function () {
         officerPage.open();
-        officerPage.tabbedPaneSection.timelineSection.filter.button.waitForVisible();
-        officerPage.tabbedPaneSection.timelineSection.filter.button.click();
-        officerPage.tabbedPaneSection.timelineSection.filter.force.click();
-
         officerPage.tabbedPaneSection.timelineSection.trrItem.waitForVisible();
         officerPage.tabbedPaneSection.timelineSection.trrItem.click();
 

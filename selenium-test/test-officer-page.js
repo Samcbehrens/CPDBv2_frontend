@@ -56,7 +56,7 @@ describe('officer page', function () {
     browser.getUrl().should.match(/\/unit\/\d+\/$/);
   });
 
-  it('should display the timeline with CRs by default', function () {
+  it('should display the timeline by default', function () {
     officerPage.tabbedPaneSection.menu.waitForVisible();
 
     officerPage.tabbedPaneSection.menu.getText().should.eql('TIMELINEMAPCOACCUSALSATTACHMENTS');
@@ -64,15 +64,11 @@ describe('officer page', function () {
       'rgba(0,94,244,1)'
     );
     // Due to float right, we need to add a '\n' here
-    officerPage.tabbedPaneSection.timelineSection.header.getText().should.containEql('RANK');
-    officerPage.tabbedPaneSection.timelineSection.header.getText().should.containEql('UNIT');
-    officerPage.tabbedPaneSection.timelineSection.header.getText().should.containEql('SHOWING');
-    officerPage.tabbedPaneSection.timelineSection.header.getText().should.containEql('COMPLAINTS');
-    officerPage.tabbedPaneSection.timelineSection.header.getText().should.containEql('\nDATE');
+    officerPage.tabbedPaneSection.timelineSection.header.getText().should.eql('RANKUNITSHOWINGALL EVENTS\nDATE');
 
     officerPage.tabbedPaneSection.timelineSection.crItem.waitForVisible();
-    officerPage.tabbedPaneSection.timelineSection.trrItem.waitForVisible(1000, true);
-    officerPage.tabbedPaneSection.timelineSection.awardItem.waitForVisible(1000, true);
+    officerPage.tabbedPaneSection.timelineSection.trrItem.waitForVisible();
+    officerPage.tabbedPaneSection.timelineSection.awardItem.waitForVisible();
     officerPage.tabbedPaneSection.timelineSection.unitChangeItem.waitForVisible();
     officerPage.tabbedPaneSection.timelineSection.joinedItem.waitForVisible();
     officerPage.tabbedPaneSection.timelineSection.yearItem.waitForVisible();
@@ -223,10 +219,6 @@ describe('officer page', function () {
     });
 
     it('should go to trr page when clicking on an trr timeline item', function () {
-      officerPage.tabbedPaneSection.timelineSection.filter.button.waitForVisible();
-      officerPage.tabbedPaneSection.timelineSection.filter.button.click();
-      officerPage.tabbedPaneSection.timelineSection.filter.force.click();
-
       officerPage.tabbedPaneSection.timelineSection.trrItem.waitForVisible();
       officerPage.tabbedPaneSection.timelineSection.trrItem.click();
 
@@ -246,18 +238,18 @@ describe('officer page', function () {
         officerPage.tabbedPaneSection.timelineSection.emptyItem.waitForVisible();
       });
 
-      it('should filter complaints by default', function () {
-        officerPage.tabbedPaneSection.timelineSection.crItem.waitForVisible();
-        officerPage.tabbedPaneSection.timelineSection.trrItem.waitForVisible(1000, true);
-        officerPage.tabbedPaneSection.timelineSection.awardItem.waitForVisible(1000, true);
-      });
-
-      it('should filter all events', function () {
-        officerPage.tabbedPaneSection.timelineSection.filter.all.click();
-
+      it('should filter all events by by default', function () {
         officerPage.tabbedPaneSection.timelineSection.crItem.waitForVisible();
         officerPage.tabbedPaneSection.timelineSection.trrItem.waitForVisible();
         officerPage.tabbedPaneSection.timelineSection.awardItem.waitForVisible();
+      });
+
+      it('should filter complaints', function () {
+        officerPage.tabbedPaneSection.timelineSection.filter.crs.click();
+
+        officerPage.tabbedPaneSection.timelineSection.crItem.waitForVisible();
+        officerPage.tabbedPaneSection.timelineSection.trrItem.waitForVisible(1000, true);
+        officerPage.tabbedPaneSection.timelineSection.awardItem.waitForVisible(1000, true);
       });
 
       it('should filter TRRs', function () {

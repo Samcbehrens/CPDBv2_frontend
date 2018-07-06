@@ -27,7 +27,7 @@ export default class Timeline extends Component {
         <div style={ showingContentHeaderStyle }>
           <div style={ showingTextStyle }>SHOWING</div>
           <Dropdown
-            defaultValue={ NEW_TIMELINE_FILTERS.CRS }
+            defaultValue={ NEW_TIMELINE_FILTERS.ALL }
             onChange={ changeFilter }
             options={ values(NEW_TIMELINE_FILTERS) }
             className='test--timeline-filter'
