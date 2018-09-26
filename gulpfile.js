@@ -72,8 +72,6 @@ const buildJs = (output, produceSourceMap) => (() => {
     .pipe(gulp.dest(output));
 });
 
-const ROOT = '/www/static/';
-
 let globalVariableBlock = '<script type="text/javascript">'
   + 'var GA_TRACKING_ID = "UA-63671047-3";'
   + 'var INTERCOM_ID = "gbsby1ik";'
@@ -85,16 +83,15 @@ if (process.env.NODE_ENV === 'production') {
     + '</script>';
 }
 
-gulp.task('build-js', buildJs(`${ROOT}dist/`));
-gulp.task('build-css', buildCss(`${ROOT}dist/`));
-gulp.task('copy-static', copyStatic(`${ROOT}dist/`));
+gulp.task('build-js', buildJs('./dist/'));
+gulp.task('build-css', buildCss('./dist/'));
 gulp.task(
   'build-html',
   ['build-js', 'build-css'],
-  buildHTML(globalVariableBlock, `${ROOT}templates/`, `${ROOT}dist/*-manifest.json`)
+  buildHTML(globalVariableBlock, './dist/templates/', './dist/*-manifest.json')
 );
 
-gulp.task('build', ['build-html', 'copy-static']);
+gulp.task('build', ['build-html']);
 
 const liveTestDir = './live-test-build';
 const testBlock = '<script type="text/javascript">' +

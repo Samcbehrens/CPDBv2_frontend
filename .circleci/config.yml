@@ -3,7 +3,7 @@ jobs:
 
   test:
     docker:
-      - image: cpdbdev/cpdbv2_frontend:0.1.2
+      - image: cpdbdev/cpdbv2_frontend:0.2.0
     environment:
       NODE_ENV: development
     steps:
@@ -19,12 +19,15 @@ jobs:
 
   deploy:
     docker:
-      - image: cpdbdev/cpdbv2_frontend:0.1.1
+      - image: cpdbdev/cpdbv2_frontend:0.2.0
     environment:
       NODE_ENV: development
     steps:
       - checkout
-      - run: bin/circle-deploy-staging
+      - run: yarn install
+      - run: yarn build
+      - run: az storage blob delete-batch -s fstatic --account-name cpdbv21777
+      - run: azcopy --source ./dist/ --destination https://cpdbv21777.blob.core.windows.net/fstatic --dest-key $STORAGE_KEY --recursive
 
 workflows:
   version: 2

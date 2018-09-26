@@ -2,11 +2,9 @@ FROM circleci/node:boron-browsers
 
 USER root
 
-############################################################################
-# Yarn in the default CircleCI image is old. Let's use our specific version:
-############################################################################
 
-ENV YARN_VERSION 0.23.4
+# Install Yarn
+ENV YARN_VERSION 1.10.0
 
 RUN set -ex \
   && for key in \
@@ -30,10 +28,6 @@ RUN set -ex \
   && rm yarn-v$YARN_VERSION.tar.gz.asc yarn-v$YARN_VERSION.tar.gz
 
 
-############################################################################
-# Update Chrome to latest
-############################################################################
-
 # Install Google Chrome
 RUN curl -sS -o - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - && \
     echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list && \
@@ -42,19 +36,36 @@ RUN curl -sS -o - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-ke
     rm -rf /var/lib/apt/lists/*
 
 
-############################################################################
-# We also need ansible for deploying stuff
-############################################################################
+# Install azcopy to copy static content to cdn
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+         rsync \
+         libunwind8 \
+    && rm -rf /var/lib/apt/lists/*
 
-RUN apt-get update && apt-get install python-dev python-pip
-RUN pip install --upgrade pip
-RUN pip install --upgrade pyOpenSSL ansible
+RUN set -ex \
+    && curl -L -o azcopy.tar.gz \
+    https://aka.ms/downloadazcopylinux64 \
+    && tar -xf azcopy.tar.gz && rm -f azcopy.tar.gz \
+    && ./install.sh && rm -f install.sh \
+    && rm -rf azcopy
 
 
-############################################################################
+# Install Azure cli
+RUN apt-get update && \
+    apt-get install apt-transport-https && \
+    echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ $(lsb_release -cs) main" | \
+      tee /etc/apt/sources.list.d/azure-cli.list && \
+    curl -L https://packages.microsoft.com/keys/microsoft.asc | apt-key add - && \
+    apt-get update && \
+    apt-get install azure-cli
+
+
+# Install additional packages via yarn
+RUN yarn global add gulp@3.9.1 gulp-cli@1.2.1
+
+
 # Run as non root user
-############################################################################
-
 RUN useradd -ms /bin/bash deploy
 
 USER deploy
