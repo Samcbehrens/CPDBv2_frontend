@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import MediaQuery from 'react-responsive';
+import { isNaN } from 'lodash';
 
 import {
   containerStyle,
@@ -9,10 +10,18 @@ import {
   tableContentStyle,
   yearTextStyle,
   radarStyle,
+  yearlyRowStyle,
   cellStyle
 } from './percentiles-by-year.style';
 import StaticRadarChart from 'components/common/radar-chart';
 import { roundedPercentile } from 'utils/calculations';
+
+
+function formatPercentile(value) {
+  if (isNaN(value))
+    return '';
+  return roundedPercentile(value);
+}
 
 
 export default class PercentilesByYear extends Component {
@@ -47,10 +56,20 @@ export default class PercentilesByYear extends Component {
                     data={ yearlyItem.items }
                   />
                 </div>
-                <div style={ yearTextStyle }>{ yearlyItem.year }</div>
-                <div style={ cellStyle }>{ roundedPercentile(internalComplaintItem.value) }</div>
-                <div style={ cellStyle }>{ roundedPercentile(civilComplaintItem.value) }</div>
-                <div style={ cellStyle }>{ roundedPercentile(trrItem.value) }</div>
+                <div style={ yearlyRowStyle }>
+                  <div className='test--yearly-year-item' style={ yearTextStyle }>
+                    { yearlyItem.year }
+                  </div>
+                  <div className='test--yearly-internal-complaint-item' style={ cellStyle }>
+                    { formatPercentile(internalComplaintItem.value) }
+                  </div>
+                  <div className='test--yearly-civil-complaint-item' style={ cellStyle }>
+                    { formatPercentile(civilComplaintItem.value) }
+                  </div>
+                  <div className='test--yearly-trr-item' style={ cellStyle }>
+                    { formatPercentile(trrItem.value) }
+                  </div>
+                </div>
               </li>
             );
           }) }

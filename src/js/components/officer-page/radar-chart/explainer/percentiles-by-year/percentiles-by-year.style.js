@@ -50,9 +50,7 @@ export const yearTextStyle = {
   color: greyishColor,
   padding: '13px 0 11px',
   fontSize: '13px',
-  borderBottom: `1px solid ${whiteTwoColor}`,
   width: '62px',
-  marginLeft: '16px',
   verticalAlign: 'top',
   fontWeight: 300,
 };
@@ -64,13 +62,19 @@ export const radarStyle = {
   height: '32px',
   borderRadius: '3px',
   overflow: 'hidden',
+  marginRight: '16px',
+};
+
+export const yearlyRowStyle = {
+  display: 'inline-block',
+  borderBottom: `1px solid ${whiteTwoColor}`,
+  verticalAlign: 'top',
+  width: 'calc((100% - 48px)'
 };
 
 export const cellStyle = {
   display: 'inline-block',
   padding: '12px 0 11px',
   fontSize: '14px',
-  borderBottom: `1px solid ${whiteTwoColor}`,
-  width: `calc((100% - 110px) / ${NUM_RESPONSIVE_COLUMNS})`,
-  verticalAlign: 'top',
+  width: `calc((100% - 62px) / ${NUM_RESPONSIVE_COLUMNS})`,
 };
