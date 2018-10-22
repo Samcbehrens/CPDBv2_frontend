@@ -36,6 +36,11 @@ if (global.LIVE_TEST !== undefined || global.mocha !== undefined) {
   const setLngLatSpy = spy();
   const setPopupSpy = spy();
   const addToSpy = spy();
+  const setMaxBoundsSpy = spy();
+  const getBoundsSpy = spy();
+  const dragPanSpy = {
+    enable: spy(),
+  };
 
   class MockMap {
     constructor() {
@@ -48,6 +53,9 @@ if (global.LIVE_TEST !== undefined || global.mocha !== undefined) {
       this.setFilter = setFilterSpy;
       this.addControl = addControlSpy;
       this.remove = removeSpy;
+      this.setMaxBounds = setMaxBoundsSpy;
+      this.getBounds = getBoundsSpy;
+      this.dragPan = dragPanSpy;
     }
     on() {
       arguments[arguments.length - 1]();
