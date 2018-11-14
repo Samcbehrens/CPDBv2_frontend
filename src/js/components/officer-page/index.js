@@ -11,9 +11,16 @@ import MetricsSection from './metrics-section';
 import TabbedPaneSection from './tabbed-pane-section';
 import ShareableHeaderContainer from 'containers/headers/shareable-header/shareable-header-container';
 import { POPUP_NAMES } from 'utils/constants';
+import Printable from 'components/common/higher-order/printable';
 
 
-export default class OfficerPage extends Component {
+class OfficerPage extends Component {
+  getChildContext() {
+    return {
+      isPrinting: this.props.isPrinting,
+    };
+  }
+
   render() {
     const {
       officerId,
@@ -99,3 +106,9 @@ OfficerPage.defaultProps = {
   officerSummary: {},
   pathName: '',
 };
+
+OfficerPage.childContextTypes = {
+  isPrinting: PropTypes.bool,
+};
+
+export default Printable(OfficerPage);

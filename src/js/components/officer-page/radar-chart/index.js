@@ -150,6 +150,12 @@ export default class AnimatedRadarChart extends Component {
     this.startTimer();
   }
 
+  getStyle(style) {
+    console.log('this.context.isPrinting', this.context.isPrinting)
+    console.log('style', this.context.isPrinting ? {...style.base, ...style.customPrint} : style.base)
+    return this.context.isPrinting ? {...style.base, ...style.customPrint} : style.base
+  }
+
   render() {
     const { transitionValue, showExplainer } = this.state;
     const {
@@ -164,12 +170,16 @@ export default class AnimatedRadarChart extends Component {
     if (isRequesting)
       return <div className='test--officer--radar-chart' style={ animatedRadarChartStyle }/>;
 
+    const { isPrinting } = this.context;
+
+    console.warn('printing', isPrinting);
+
     const itemData = this.getCurrentTransitionData();
     if (itemData) {
       return (
         <div
           className='test--officer--radar-chart'
-          style={ animatedRadarChartStyle }
+          style={ this.getStyle(animatedRadarChartStyle) }
         >
           <div
             style={ radarChartPlaceholderStyle }
@@ -178,7 +188,7 @@ export default class AnimatedRadarChart extends Component {
           >
             <StaticRadarChart
               textColor={ itemData.textColor }
-              backgroundColor={ itemData.visualTokenBackground }
+              backgroundColor={ isPrinting ? '#000' : itemData.visualTokenBackground }
               fadeOutLegend={ transitionValue >= (this.animatedData.length - 1) }
               legendText={ itemData.year }
               data={ itemData.items }
@@ -188,7 +198,7 @@ export default class AnimatedRadarChart extends Component {
               showAxisTitle={ true }
               showValueWithSuffix={ true }
             />
-            <div style={ openExplainerButtonStyle } className='test--radar-explainer-question-mark'>
+            <div style={ openExplainerButtonStyle } className='test--radar-explainer-question-mark no-print'>
               <span style={ questionMarkStyle }>?</span>
             </div>
           </div>
@@ -232,6 +242,10 @@ export default class AnimatedRadarChart extends Component {
   }
 }
 
+AnimatedRadarChart.defaultProps = {
+  isPrinting: false,
+};
+
 AnimatedRadarChart.propTypes = {
   officerId: PropTypes.number,
   data: PropTypes.array,
@@ -240,4 +254,9 @@ AnimatedRadarChart.propTypes = {
   scaleEditWrapperStateProps: PropTypes.object,
   noDataRadarChartEditWrapperStateProps: PropTypes.object,
   noDataPopup: PropTypes.object,
+  isPrinting: PropTypes.bool,
+};
+
+AnimatedRadarChart.contextTypes = {
+  isPrinting: PropTypes.bool,
 };

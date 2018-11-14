@@ -80,10 +80,12 @@ export default class RadarChart extends Component {
       .angle(i => this.angle(i));
     const boundaryPathD = boundaryLine(range(this.getNumMetrics()));
 
+    const customBackground = this.context.isPrinting ? '#ddd' : backgroundColor
+
     return (
       <svg
         className='test--radar'
-        style={ { ...radarContaninerStyle, backgroundColor } }
+        style={ { ...radarContaninerStyle, backgroundColor: customBackground } }
         width='100%'
         height='100%'
         viewBox={ `0 0 ${width} ${height}` }
@@ -180,5 +182,9 @@ RadarChart.propTypes = {
   fadeOutLegend: PropTypes.bool,
   boundaryAreaColor: PropTypes.string,
   numMetrics: PropTypes.number
+};
+
+RadarChart.contextTypes = {
+  isPrinting: PropTypes.bool,
 };
 

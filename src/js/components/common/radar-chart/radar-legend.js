@@ -14,7 +14,7 @@ export default class RadarLegend extends React.Component {
         style={ { ...radarLegendTextStyle, opacity, visibility: opacity ? 'visible' : 'hidden' } }
         x={ 180 }
         y={ 180 }>
-        { content }
+        { this.context.isPrinting ? `${content} Printing` : content }
       </text>
     ) : null;
 
@@ -38,4 +38,8 @@ RadarLegend.propTypes = {
 
 RadarLegend.defaultProps = {
   fadeOut: false
+};
+
+RadarLegend.contextTypes = {
+  isPrinting: PropTypes.bool,
 };
