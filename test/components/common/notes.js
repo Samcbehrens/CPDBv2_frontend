@@ -3,10 +3,13 @@ import {
   renderIntoDocument,
   findRenderedDOMComponentWithClass,
   scryRenderedDOMComponentsWithClass,
+  scryRenderedComponentsWithType
 } from 'react-addons-test-utils';
+import { findDOMNode } from 'react-dom';
 
 import { unmountComponentSuppressError } from 'utils/test/index';
 import Notes from 'components/common/notes';
+import MarkdownLink from 'components/common/markdown-renderers/markdown-link';
 
 
 describe('Notes component', function () {
@@ -17,7 +20,7 @@ describe('Notes component', function () {
   });
 
   it('should render notes correctly', function () {
-    let notes = [
+    const notes = [
       {
         page: 'complaint',
         title: 'Investigator',
@@ -37,5 +40,41 @@ describe('Notes component', function () {
     noteContents.should.have.length(2);
     noteContents[0].textContent.should.eql('Investigator: this is investigator note.');
     noteContents[1].textContent.should.eql('Accused Officer: this is accused officer note.');
+  });
+
+  it('should able to render markdown code', function () {
+    const notes = [
+      {
+        name: 'force_category',
+        page: 'trr',
+        title: 'Force Category',
+        text: 'See CPD\'s official [Use of Force Model]' +
+          '(http://directives.chicagopolice.org/directives/data/a7a57be2-128ff3f0-ae912-8fff-cec11383d806e05f.html)'
+      },
+      {
+        name: 'type_of_force',
+        page: 'trr',
+        title: 'Type of Force',
+        text: 'See CPD\'s official [Use of Force Model]' +
+          '(http://directives.chicagopolice.org/directives/data/a7a57be2-128ff3f0-ae912-8fff-cec11383d806e05f.html)'
+      }
+    ];
+    instance = renderIntoDocument(<Notes notes={ notes }/>);
+    findRenderedDOMComponentWithClass(instance, 'notes-title').textContent.should.eql('Notes');
+    const noteContents = scryRenderedDOMComponentsWithClass(instance, 'notes-content');
+    noteContents.should.have.length(2);
+    noteContents[0].textContent.should.eql('Force Category: See CPD\'s official Use of Force Model');
+    noteContents[1].textContent.should.eql('Type of Force: See CPD\'s official Use of Force Model');
+
+    const noteContentMarkdownLinks = scryRenderedComponentsWithType(instance, MarkdownLink).map(findDOMNode);
+    noteContentMarkdownLinks.should.have.length(2);
+    noteContentMarkdownLinks[0].textContent.should.eql('Use of Force Model');
+    noteContentMarkdownLinks[0].href.should.eql(
+      'http://directives.chicagopolice.org/directives/data/a7a57be2-128ff3f0-ae912-8fff-cec11383d806e05f.html'
+    );
+    noteContentMarkdownLinks[1].textContent.should.eql('Use of Force Model');
+    noteContentMarkdownLinks[1].href.should.eql(
+      'http://directives.chicagopolice.org/directives/data/a7a57be2-128ff3f0-ae912-8fff-cec11383d806e05f.html'
+    );
   });
 });
