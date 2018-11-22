@@ -19,7 +19,7 @@ import { POPUP_NAMES } from 'utils/constants';
 import styles from './cr-page.sass';
 import responsiveContainerStyles from 'components/common/responsive-container.sass';
 import Printable from 'components/common/higher-order/printable';
-import NoteContainer from 'containers/cr-page/notes';
+import PrintNoteContainer from 'containers/cr-page/print-notes';
 
 
 class CRPage extends Component {
@@ -35,6 +35,8 @@ class CRPage extends Component {
       incidentDate, point, address, crLocation, beat, involvements, attachments,
       openRequestDocumentModal, summary, victims, startDate, endDate, popup, pathname, isPrinting
     } = this.props;
+
+    const involvementItem = <Involvement involvements={ involvements } popup={ popup } pathName={ pathname }/>;
 
     return (
       <DocumentMeta title={ `CR ${crid}` }>
@@ -83,15 +85,22 @@ class CRPage extends Component {
                 alreadyRequested={ alreadyRequested }
                 pathname={ pathname }
               />
-              <div className='investigation-timeline'>
-                <Timeline startDate={ startDate } endDate={ endDate } incidentDate={ incidentDate }/>
-                <Involvement involvements={ involvements } popup={ popup } pathName={ pathname }/>
+              <div className='timeline-location-container'>
+                <div className='investigation-timeline'>
+                  <Timeline startDate={ startDate } endDate={ endDate } incidentDate={ incidentDate }/>
+                  {
+                    isPrinting ?
+                    null : involvementItem
+
+                  }
+                </div>
+                <div className='cr-location'>
+                  <Location point={ point } address={ address } location={ crLocation } beat={ beat }/>
+                </div>
+                <div className='clearfix'/>
               </div>
-              <div className='cr-location'>
-                <Location point={ point } address={ address } location={ crLocation } beat={ beat }/>
-              </div>
-              <div className='clearfix'/>
-              { isPrinting ? <NoteContainer /> : null }
+              { isPrinting ? involvementItem : null }
+              { isPrinting ? <PrintNoteContainer /> : null }
             </div>
           </div>
           { !isEmpty(address) ? <RelatedComplaints crid={ crid } /> : null }

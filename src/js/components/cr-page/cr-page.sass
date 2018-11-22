@@ -9,7 +9,6 @@ $print-investigator-timeline-width: 200px
 
   @media print
     background-color: white
-    padding-bottom: 60px
 
   .top-content
     box-sizing: border-box
@@ -28,27 +27,30 @@ $print-investigator-timeline-width: 200px
       border: none
       margin: 0
 
-  .investigation-timeline
-    width: $investigator-timeline-width
-    display: block
-    padding: 0 16px
-    box-sizing: border-box
-    vertical-align: top
-    float: left
+  .timeline-location-container
+    page-break-inside: avoid
 
-    @media print
-      padding: 0 16px 0 0
-      width: $print-investigator-timeline-width
+    .investigation-timeline
+      width: $investigator-timeline-width
+      display: block
+      padding: 0 16px
+      box-sizing: border-box
+      vertical-align: top
+      float: left
 
-  .cr-location
-    width: calc(100% - #{$investigator-timeline-width})
-    display: block
-    box-sizing: border-box
-    float: left
+      @media print
+        padding: 0 16px 0 0
+        width: $print-investigator-timeline-width
 
-    @media print
-      width: calc(100% - #{$print-investigator-timeline-width})
-      page-break-inside: avoid
+    .cr-location
+      width: calc(100% - #{$investigator-timeline-width})
+      display: block
+      box-sizing: border-box
+      float: left
+
+      @media print
+        width: calc(100% - #{$print-investigator-timeline-width})
+        page-break-inside: avoid
 
   .clearfix
     clear: both

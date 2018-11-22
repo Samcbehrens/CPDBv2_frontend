@@ -8,11 +8,11 @@ import {
 import { findDOMNode } from 'react-dom';
 
 import { unmountComponentSuppressError } from 'utils/test/index';
-import Notes from 'components/common/notes';
+import PrintNotes from 'components/common/print-notes';
 import MarkdownLink from 'components/common/markdown-renderers/markdown-link';
 
 
-describe('Notes component', function () {
+describe('PrintNotes component', function () {
   let instance;
 
   afterEach(function () {
@@ -34,7 +34,7 @@ describe('Notes component', function () {
         text: 'this is accused officer note.'
       }
     ];
-    instance = renderIntoDocument(<Notes notes={ notes }/>);
+    instance = renderIntoDocument(<PrintNotes notes={ notes }/>);
     findRenderedDOMComponentWithClass(instance, 'notes-title').textContent.should.eql('Notes');
     const noteContents = scryRenderedDOMComponentsWithClass(instance, 'notes-content');
     noteContents.should.have.length(2);
@@ -59,7 +59,7 @@ describe('Notes component', function () {
           '(http://directives.chicagopolice.org/directives/data/a7a57be2-128ff3f0-ae912-8fff-cec11383d806e05f.html)'
       }
     ];
-    instance = renderIntoDocument(<Notes notes={ notes }/>);
+    instance = renderIntoDocument(<PrintNotes notes={ notes }/>);
     findRenderedDOMComponentWithClass(instance, 'notes-title').textContent.should.eql('Notes');
     const noteContents = scryRenderedDOMComponentsWithClass(instance, 'notes-content');
     noteContents.should.have.length(2);

@@ -16,7 +16,7 @@ import TRRInfoSection from 'components/trr-page/trr-info-section';
 import ShareableHeaderContainer from 'containers/headers/shareable-header/shareable-header-container';
 import FooterContainer from 'containers/footer-container';
 import TRRPageContainer from 'containers/trr-page';
-import Notes from 'components/common/notes';
+import Notes from 'components/common/print-notes';
 import MarkdownLink from 'components/common/markdown-renderers/markdown-link';
 
 

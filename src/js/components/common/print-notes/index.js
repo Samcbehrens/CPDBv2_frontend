@@ -1,15 +1,15 @@
 import React, { PropTypes, Component } from 'react';
 import ReactMarkdown from 'react-markdown';
 
-import styles from './notes.sass';
+import styles from './print-notes.sass';
 import MarkdownLink from 'components/common/markdown-renderers/markdown-link';
 
 
-export default class Notes extends Component {
+export default class PrintNotes extends Component {
   render() {
     const { notes } = this.props;
     return (
-      <div className={ styles.notes }>
+      <div className={ styles.printNotes }>
         <div className='notes-title'>Notes</div>
         {
           notes.map((note, index) => (
@@ -26,10 +26,10 @@ export default class Notes extends Component {
   }
 }
 
-Notes.propTypes = {
+PrintNotes.propTypes = {
   notes: PropTypes.array,
 };
 
-Notes.defaultProps = {
+PrintNotes.defaultProps = {
   notes: [],
 };
