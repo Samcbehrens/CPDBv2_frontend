@@ -23,11 +23,11 @@ export default class PrintNotes extends Component {
                 {
                   chunkNote.map((note, index) => (
                     <ReactMarkdown
-              key={ index }
-              className='notes-content'
+                      key={ index }
+                      className='notes-content'
                       source={ `${note.title}: ${note.text}` }
-              renderers={ { link: MarkdownLink } }
-            />
+                      renderers={ { link: MarkdownLink } }
+                    />
                   ))
                 }
               </div>
