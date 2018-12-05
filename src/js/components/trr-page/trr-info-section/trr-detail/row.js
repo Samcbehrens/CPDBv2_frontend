@@ -13,7 +13,7 @@ export default class Row extends Component {
       <div className={ style.trrDetailRow }>
         <div className={ cx('trr-detail-row-title', { 'inline-print': twoRowsWhenPrint }) }>
           { title }
-          { !isEmpty(popup) ? <Popup { ...popup } position='relative' url={ pathName }/> : null }
+          { !isEmpty(popup) ? <Popup { ...popup } url={ pathName }/> : null }
         </div>
         <div className={ cx('trr-detail-row-value', { box: borderValue, 'inline-print': twoRowsWhenPrint }) }>
           { children }

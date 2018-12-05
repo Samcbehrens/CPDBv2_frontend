@@ -98,8 +98,8 @@ export class OfficerCard extends Component {
               <p className='extra-info'>{ extraInfo() }</p>
             </div>
           </div>
-          { footer }
         </div>
+        { footer }
       </Link>
     );
   }
