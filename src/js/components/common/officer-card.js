@@ -5,10 +5,9 @@ import { kebabCase } from 'lodash';
 import cx from 'classnames';
 
 import { getThisYear } from 'utils/date';
-import StaticRadarChart from 'components/common/radar-chart/index';
+import StaticRadarChart from 'components/common/radar-chart';
 import { roundedPercentile } from 'utils/calculations';
 import styles from './officer-card.sass';
-import printStyles from 'components/common/print.sass';
 
 
 export class OfficerCard extends Component {
@@ -58,7 +57,7 @@ export class OfficerCard extends Component {
       if (complaintPercentile) {
         const complaintFormat = roundedPercentile(complaintPercentile);
         return (
-          <p className={ cx(printStyles.hideForPrint, 'light-text', 'test--officer-card-percentile') }>
+          <p className='light-text no-print test--officer-card-percentile'>
             More than { complaintFormat }% of other officers
           </p>
         );
@@ -82,7 +81,7 @@ export class OfficerCard extends Component {
         target={ openCardInNewPage ? '_blank' : null }
         className={ cx(styles.officerCard, className, 'test--officer-card') }
       >
-        <div className='officer-card-static-radar-chart'>
+        <div className='no-print radar-chart-wrapper'>
           <StaticRadarChart data={ chartData } { ...radarConfig } />
         </div>
         <div>

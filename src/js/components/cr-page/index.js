@@ -19,22 +19,18 @@ import { POPUP_NAMES } from 'utils/constants';
 import styles from './cr-page.sass';
 import responsiveContainerStyles from 'components/common/responsive-container.sass';
 import Printable from 'components/common/higher-order/printable';
-import PrintNoteContainer from 'containers/cr-page/print-notes';
+import PrintNotes from 'components/common/print-notes';
 
 
 class CRPage extends Component {
-  getChildContext() {
-    return {
-      isPrinting: this.props.isPrinting,
-    };
-  }
-
   render() {
     const {
       crid, coaccused, complainants, alreadyRequested, category, subcategory,
       incidentDate, point, address, crLocation, beat, involvements, attachments,
-      openRequestDocumentModal, summary, victims, startDate, endDate, popup, pathname, isPrinting
+      openRequestDocumentModal, summary, victims, startDate, endDate, popup, pathname, notes
     } = this.props;
+
+    const { printMode } = this.context;
 
     const involvementItem = <Involvement involvements={ involvements } popup={ popup } pathName={ pathname }/>;
 
@@ -88,19 +84,16 @@ class CRPage extends Component {
               <div className='timeline-location-container'>
                 <div className='investigation-timeline'>
                   <Timeline startDate={ startDate } endDate={ endDate } incidentDate={ incidentDate }/>
-                  {
-                    isPrinting ?
-                    null : involvementItem
-
-                  }
+                  { printMode ? null : involvementItem }
                 </div>
                 <div className='cr-location'>
                   <Location point={ point } address={ address } location={ crLocation } beat={ beat }/>
                 </div>
                 <div className='clearfix'/>
               </div>
-              { isPrinting ? involvementItem : null }
-              { isPrinting ? <PrintNoteContainer /> : null }
+              { printMode ? involvementItem : null }
+              { printMode ? <div className='clearfix'/> : null }
+              { printMode ? <PrintNotes notes={ notes } /> : null }
             </div>
           </div>
           { !isEmpty(address) ? <RelatedComplaints crid={ crid } /> : null }
@@ -132,7 +125,7 @@ CRPage.propTypes = {
   alreadyRequested: PropTypes.bool,
   popup: PropTypes.object,
   pathname: PropTypes.string,
-  isPrinting: PropTypes.bool,
+  notes: PropTypes.array,
 };
 
 CRPage.defaultProps = {
@@ -141,8 +134,8 @@ CRPage.defaultProps = {
   coaccused: []
 };
 
-CRPage.childContextTypes = {
-  isPrinting: PropTypes.bool,
+CRPage.contextTypes = {
+  printMode: PropTypes.bool,
 };
 
 export default Printable(CRPage);

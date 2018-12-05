@@ -4,7 +4,6 @@ $investigator-timeline-width: 320px
 $print-investigator-timeline-width: 200px
 
 \:local(.cr-page)
-  position: relative
   background-color: $sugar-cane-color
 
   @media print
@@ -28,7 +27,11 @@ $print-investigator-timeline-width: 200px
       margin: 0
 
   .timeline-location-container
-    page-break-inside: avoid
+    @media print
+      page-break-inside: avoid
+      display: -webkit-inline-flex
+      display: inline-flex
+      width: 100%
 
     .investigation-timeline
       width: $investigator-timeline-width
@@ -51,9 +54,6 @@ $print-investigator-timeline-width: 200px
       @media print
         width: calc(100% - #{$print-investigator-timeline-width})
         page-break-inside: avoid
-
-  .clearfix
-    clear: both
 
   .cr-title
     font-family: $san-francisco-text-family
