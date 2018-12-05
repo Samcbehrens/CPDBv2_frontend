@@ -7,9 +7,9 @@ import MarkdownLink from 'components/common/markdown-renderers/markdown-link';
 
 export default class PrintNotes extends Component {
   render() {
-    const { notes, className } = this.props;
+    const { notes } = this.props;
     return (
-      <div className={ `${styles.printNotes} ${className}` }>
+      <div className={ styles.printNotes }>
         <div className='notes-title'>Notes</div>
         {
           notes.map((note, index) => (
@@ -28,7 +28,6 @@ export default class PrintNotes extends Component {
 
 PrintNotes.propTypes = {
   notes: PropTypes.array,
-  className: PropTypes.string,
 };
 
 PrintNotes.defaultProps = {
