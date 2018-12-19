@@ -20,6 +20,7 @@ import {
   SEARCH_PATH,
   SEARCH_TERMS_PATH,
   OFFICER_PATH,
+  OFFICER_BASE_PATH,
   CR_PATH_SUFFIX,
   TTR_PATH,
   UNIT_PROFILE_PATH,
@@ -36,6 +37,17 @@ import BreadcrumbItemContainer from 'containers/breadcrumb-item';
 
 
 const store = configureStore();
+
+function validateOfficerRoute(nextState, replace) {
+  const { officerId, fullName, tab } = nextState.params;
+
+  if (isNaN(officerId) && fullName) {
+    const newBasePath = `/${OFFICER_BASE_PATH}${fullName}/${officerId}`;
+    replace({
+      pathname: tab ? `${newBasePath}/${tab}` : newBasePath
+    });
+  }
+}
 
 export default class RouterRoot extends Component {
   render() {
@@ -56,7 +68,8 @@ export default class RouterRoot extends Component {
             <Route
               path={ OFFICER_PATH }
               component={ OfficerPageContainer }
-              breadcrumb={ BreadcrumbItemContainer } />
+              onEnter={ validateOfficerRoute }
+              breadcrumb={ BreadcrumbItemContainer }/>
             <Route
               path={ SEARCH_PATH }
               component={ SearchPageContainer }

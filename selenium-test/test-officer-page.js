@@ -405,7 +405,24 @@ describe('officer page', function () {
     });
   });
 
-  describe('Route tab', function () {
+  describe('Routing', function () {
+    it('should swap officer id and officer name in path if it was in wrong order', function () {
+      officerPage.open('bernadette-kelly', 1);
+      browser.getUrl().should.match(/\/officer\/1\/bernadette-kelly\/$/);
+
+      officerPage.open('wrong-officer-name', 1);
+      browser.getUrl().should.match(/\/officer\/1\/bernadette-kelly\/$/);
+
+      officerPage.open('wrong-officer-name', 1, 'wrong-tab-name');
+      browser.getUrl().should.match(/\/officer\/1\/bernadette-kelly\/$/);
+
+      officerPage.open('kevin-osborn', 1, 'documents');
+      browser.getUrl().should.match(/\/officer\/1\/bernadette-kelly\/documents\/$/);
+
+      officerPage.open('wrong-officer-name', 1, 'documents');
+      browser.getUrl().should.match(/\/officer\/1\/bernadette-kelly\/documents\/$/);
+    });
+
     it('should open tab corresponding to url suffix', function () {
       officerPage.open(1, 'bernadette-kelly', 'map');
       officerPage.tabbedPaneSection.mapSection.map.waitForVisible();
