@@ -57,7 +57,7 @@ export class TRRPage extends Component {
 }
 
 TRRPage.propTypes = {
-  trrId: PropTypes.string,
+  trrId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   officer: PropTypes.object,
   trrLocation: PropTypes.object,
   trrDetail: PropTypes.object,

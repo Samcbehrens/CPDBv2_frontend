@@ -39,7 +39,7 @@ SchoolGroundPane.propTypes = {
   name: PropTypes.string,
   allegationCount: PropTypes.number,
   officersMostComplaint: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string,
+    id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     name: PropTypes.string,
     count: PropTypes.number,
     url: PropTypes.string

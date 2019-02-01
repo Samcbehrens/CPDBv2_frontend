@@ -1,14 +1,14 @@
 import React from 'react';
 import {
   renderIntoDocument,
-  findRenderedDOMComponentWithClass,
   findRenderedComponentWithType,
-  scryRenderedDOMComponentsWithClass,
+  scryRenderedComponentsWithType
 } from 'react-addons-test-utils';
+import { findDOMNode } from 'react-dom';
+import { Link } from 'react-router';
 
 import { unmountComponentSuppressError } from 'utils/test';
 import ListWidget from 'components/search-page/preview-pane/widgets/list-widget';
-import HoverableLink from 'components/common/hoverable-link';
 
 
 describe('ListWidget', () => {
@@ -38,7 +38,7 @@ describe('ListWidget', () => {
         title='TITLE'
       />
     );
-    const instanceDOM = findRenderedDOMComponentWithClass(instance, 'test--list-widget');
+    const instanceDOM = findDOMNode(instance);
     const categories = instanceDOM.getElementsByTagName('li');
     categories[0].textContent.should.containEql('Category Name 1');
     categories[0].textContent.should.containEql('90 allegations');
@@ -67,7 +67,7 @@ describe('ListWidget', () => {
         title='TITLE'
       />
     );
-    const firstListItem = findRenderedComponentWithType(instance, HoverableLink);
+    const firstListItem = findRenderedComponentWithType(instance, Link);
     firstListItem.props.to.should.eql('url_1');
   });
 
@@ -75,6 +75,6 @@ describe('ListWidget', () => {
     instance = renderIntoDocument(
       <ListWidget items={ [] } typeName='allegation' />
     );
-    scryRenderedDOMComponentsWithClass(instance, 'test--list-widget').should.have.length(0);
+    scryRenderedComponentsWithType(instance, ListWidget).should.have.length(0);
   });
 });
