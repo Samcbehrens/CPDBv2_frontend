@@ -19,9 +19,10 @@ class DocumentCard extends React.Component {
   }
 
   handleClick() {
-    const { crid, pathname } = this.props;
+    const { crid, pathname, onTrackingAttachment, externalId } = this.props;
     const url = `/complaint/${crid}/`;
     GATracking.trackAttachmentClick(pathname, url);
+    onTrackingAttachment({ externalId, sourcePage: 'Landing Page', app: 'Frontend' });
   }
 
   render() {
@@ -54,6 +55,13 @@ DocumentCard.propTypes = {
   crid: PropTypes.string,
   hovering: PropTypes.bool,
   pathname: PropTypes.string,
+  onTrackingAttachment: PropTypes.func,
+  externalId: PropTypes.string,
 };
+
+DocumentCard.defaultProps = {
+  onTrackingAttachment: () => {},
+};
+
 
 export default Hoverable(DocumentCard);

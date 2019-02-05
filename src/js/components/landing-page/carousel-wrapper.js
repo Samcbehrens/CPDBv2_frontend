@@ -17,7 +17,7 @@ export default function withCarousel(
     }
 
     render() {
-      const { cards, editWrapperStateProps, pathname, openCardInNewPage } = this.props;
+      const { cards, editWrapperStateProps, pathname, openCardInNewPage, onTrackingAttachment } = this.props;
 
       const slideElements = cards.map((card, index) => {
         return (
@@ -30,6 +30,7 @@ export default function withCarousel(
               { ...extraCardAttr }
               openCardInNewPage={ openCardInNewPage }
               pathname={ pathname }
+              onTrackingAttachment={ onTrackingAttachment }
             />
           </div>
         );
@@ -59,6 +60,7 @@ export default function withCarousel(
     pathname: PropTypes.string,
     editWrapperStateProps: PropTypes.object,
     openCardInNewPage: PropTypes.bool,
+    onTrackingAttachment: PropTypes.func,
   };
 
   Wrapper.defaultProps = {

@@ -11,6 +11,9 @@ import {
   CR_REQUEST_DOC_FAILURE,
   CR_EDIT_MODE,
   CR_EDIT_TYPES,
+  TRACKING_CLICK_ATTACHMENT_START,
+  TRACKING_CLICK_ATTACHMENT_SUCCESS,
+  TRACKING_CLICK_ATTACHMENT_FAILURE,
 } from 'utils/constants';
 
 
@@ -39,3 +42,8 @@ export const turnOnDocumentRequestInstructionEditMode = createChangeEditModeActi
 export const turnOffDocumentRequestInstructionEditMode = createChangeEditModeAction(
   CR_EDIT_TYPES.DOCUMENT_REQUEST_INSTRUCTION, false
 );
+
+export const trackingClickAttachment = ({ externalId, sourcePage, app }) => post(
+  `${CR_URL}${externalId}/tracking-attachment/`,
+  [TRACKING_CLICK_ATTACHMENT_START, TRACKING_CLICK_ATTACHMENT_SUCCESS, TRACKING_CLICK_ATTACHMENT_FAILURE]
+)({ 'accessed_from_page': sourcePage, 'app': app });

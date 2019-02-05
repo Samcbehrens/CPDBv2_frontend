@@ -1,6 +1,7 @@
 import {
   fetchCR,
   requestDocument,
+  trackingClickAttachment,
   turnOnNoAttachmentTextEditMode,
   turnOffNoAttachmentTextEditMode,
   turnOnDocumentRequestInstructionEditMode,
@@ -15,7 +16,10 @@ import {
   CR_REQUEST_DOC_SUCCESS,
   CR_REQUEST_DOC_FAILURE,
   CR_EDIT_MODE,
-  CR_EDIT_TYPES
+  CR_EDIT_TYPES,
+  TRACKING_CLICK_ATTACHMENT_START,
+  TRACKING_CLICK_ATTACHMENT_SUCCESS,
+  TRACKING_CLICK_ATTACHMENT_FAILURE
 } from 'utils/constants';
 
 
@@ -36,7 +40,7 @@ describe('CRPage actions', function () {
   });
 
   describe('requestDocument', function () {
-    it('shoulr return right action', function () {
+    it('should return right action', function () {
       requestDocument({ id: 123, email: 'valid@email.com' }).should.eql({
         types: [CR_REQUEST_DOC_START, CR_REQUEST_DOC_SUCCESS, CR_REQUEST_DOC_FAILURE],
         payload: {
@@ -44,6 +48,25 @@ describe('CRPage actions', function () {
             url: `${CR_URL}123/request-document/`,
             data: {
               email: 'valid@email.com'
+            },
+            method: 'post',
+            adapter: null
+          }
+        }
+      });
+    });
+  });
+
+  describe('trackingClickAttachment', function () {
+    it('should return right action', function () {
+      trackingClickAttachment({ externalId: '123456', sourcePage: 'CR Page', app: 'Frontend' }).should.eql({
+        types: [TRACKING_CLICK_ATTACHMENT_START, TRACKING_CLICK_ATTACHMENT_SUCCESS, TRACKING_CLICK_ATTACHMENT_FAILURE],
+        payload: {
+          request: {
+            url: `${CR_URL}123456/tracking-attachment/`,
+            data: {
+              'accessed_from_page': 'CR Page',
+              'app': 'Frontend'
             },
             method: 'post',
             adapter: null

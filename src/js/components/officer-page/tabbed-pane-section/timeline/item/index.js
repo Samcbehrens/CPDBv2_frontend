@@ -120,4 +120,5 @@ Item.propTypes = {
   item: PropTypes.object,
   officerId: PropTypes.number,
   pathname: PropTypes.string,
+  onTrackingAttachment: PropTypes.func,
 };
