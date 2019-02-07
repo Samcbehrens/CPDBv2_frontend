@@ -28,8 +28,8 @@ class CRPage extends Component {
     const {
       crid, coaccused, complainants, alreadyRequested, category, subcategory,
       incidentDate, point, address, crLocation, beat, involvements, attachments,
-      openRequestDocumentModal, summary, victims, startDate, endDate, popup, pathname, notes,
-      noAttachmentTextEditWrapperStateProps
+      openRequestDocumentModal, openNewDocumentNotificationsModal, summary, victims, startDate, endDate, popup,
+      pathname, notes, noAttachmentTextEditWrapperStateProps,
     } = this.props;
 
     const { printMode } = this.context;
@@ -80,6 +80,7 @@ class CRPage extends Component {
               <Attachments
                 items={ attachments }
                 openRequestDocumentModal={ openRequestDocumentModal }
+                openNewDocumentNotificationsModal={ openNewDocumentNotificationsModal }
                 alreadyRequested={ alreadyRequested }
                 pathname={ pathname }
                 noAttachmentTextEditWrapperStateProps={ noAttachmentTextEditWrapperStateProps }
@@ -126,6 +127,7 @@ CRPage.propTypes = {
   involvements: PropTypes.object,
   attachments: PropTypes.array,
   openRequestDocumentModal: PropTypes.func,
+  openNewDocumentNotificationsModal: PropTypes.func,
   alreadyRequested: PropTypes.bool,
   popup: PropTypes.object,
   pathname: PropTypes.string,

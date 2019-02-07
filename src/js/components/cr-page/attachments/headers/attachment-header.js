@@ -6,7 +6,7 @@ import styles from './attachment-header.sass';
 
 export default class AttachmentHeader extends Component {
   render() {
-    const { openRequestDocumentModal, alreadyRequested } = this.props;
+    const { openNewDocumentNotificationsModal, alreadyRequested } = this.props;
 
     return (
       <div className={ styles.attachmentHeader }>
@@ -17,7 +17,7 @@ export default class AttachmentHeader extends Component {
         <div className='attachment-request-button no-print'>
           <RequestDocumentButton
             alreadyRequested={ alreadyRequested }
-            openRequestDocumentModal={ openRequestDocumentModal }
+            openRequestDocumentModal={ openNewDocumentNotificationsModal }
             hasData={ true }
           />
         </div>
@@ -27,6 +27,6 @@ export default class AttachmentHeader extends Component {
 }
 
 AttachmentHeader.propTypes = {
-  openRequestDocumentModal: PropTypes.func,
+  openNewDocumentNotificationsModal: PropTypes.func,
   alreadyRequested: PropTypes.bool,
 };

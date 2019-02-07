@@ -9,7 +9,7 @@ export default class DocumentRequestModalSection extends Section {
       content: '.generic-modal-content',
       emailInput: '//div[@class="generic-modal-content"]//input[@placeholder="Your email"]',
       submitButton: '//div[@class="generic-modal-content"]//input[@type="submit"]',
-      messageBox: '.request-document-message-box',
+      messageBox: '.new-document-notifications-message-box',
     });
   }
 }

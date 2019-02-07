@@ -3,12 +3,14 @@ import { Style } from 'radium';
 
 import style from './generic-modal.sass';
 import RequestDocumentModalContent from 'containers/cr-page/request-document-modal-container';
+import NewDocumentNotificationModalContent from 'containers/cr-page/new-document-notifications-modal-container';
 import RequestTRRDocumentModalContent from 'containers/trr-page/request-document-modal-container';
 import LegalDisclaimerModalContent from './legal-disclaimer-modal-content';
 import scrollbarWidth from 'utils/scrollbar-width';
 
 const contentMappings = {
   REQUEST_DOCUMENT: RequestDocumentModalContent,
+  NEW_DOCUMENT_NOTIFICATIONS: NewDocumentNotificationModalContent,
   REQUEST_TRR_DOCUMENT: RequestTRRDocumentModalContent,
   LEGAL_DISCLAIMER: LegalDisclaimerModalContent
 };

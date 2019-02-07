@@ -4,11 +4,11 @@ import { omit } from 'lodash';
 
 import { requestDocument } from 'actions/cr-page';
 import { getCRID } from 'utils/location';
-import RequestDocumentModalContent from 'components/generic-modal/request-document-modal-content';
+import NewDocumentNotificationsModalContent from 'components/generic-modal/new-document-notifications-modal-content';
 import { CR_EDIT_TYPES, CR_PAGE_ID } from 'utils/constants';
 import {
-  turnOffDocumentRequestInstructionEditMode,
-  turnOnDocumentRequestInstructionEditMode,
+  turnOnNewDocumentNotificationEditMode,
+  turnOffNewDocumentNotificationEditMode
 } from 'actions/cr-page';
 import { updatePage } from 'actions/cms';
 import { getCMSFields } from 'selectors/cms';
@@ -17,8 +17,8 @@ import { getEditModeOn } from 'selectors/cr-page';
 
 const mapDispatchToProps = {
   onRequestDocument: requestDocument,
-  turnOnDocumentRequestInstructionEditMode,
-  turnOffDocumentRequestInstructionEditMode,
+  turnOnNewDocumentNotificationEditMode,
+  turnOffNewDocumentNotificationEditMode,
   onSaveForm: updatePage(CR_PAGE_ID),
 };
 
@@ -38,17 +38,21 @@ const editWrapperStateProps = (stateProps, dispatchProps, ownProps) => {
     ...omit(stateProps, ['editableFields', 'editModeOn']),
     ...omit(dispatchProps, [
       'onSaveForm',
-      'turnOnDocumentRequestInstructionEditMode',
-      'turnOffDocumentRequestInstructionEditMode',
+      'turnOnNewDocumentNotificationEditMode',
+      'turnOffNewDocumentNotificationEditMode',
     ]),
     instructionEditWrapperStateProps: {
       fields: stateProps.editableFields,
-      sectionEditModeOn: stateProps.editModeOn[CR_EDIT_TYPES.DOCUMENT_REQUEST_INSTRUCTION],
+      sectionEditModeOn: stateProps.editModeOn[CR_EDIT_TYPES.NEW_DOCUMENT_NOTIFICATIONS],
       onSaveForm: dispatchProps.onSaveForm,
-      turnOnSectionEditMode: dispatchProps.turnOnDocumentRequestInstructionEditMode,
-      turnOffSectionEditMode: dispatchProps.turnOffDocumentRequestInstructionEditMode
+      turnOnSectionEditMode: dispatchProps.turnOnNewDocumentNotificationEditMode,
+      turnOffSectionEditMode: dispatchProps.turnOffNewDocumentNotificationEditMode
     }
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps, editWrapperStateProps)(RequestDocumentModalContent);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+  editWrapperStateProps
+)(NewDocumentNotificationsModalContent);

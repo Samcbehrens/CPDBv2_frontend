@@ -13,6 +13,7 @@ export default class Attachments extends Component {
     const {
       items,
       openRequestDocumentModal,
+      openNewDocumentNotificationsModal,
       alreadyRequested,
       pathname,
       noAttachmentTextEditWrapperStateProps,
@@ -33,7 +34,7 @@ export default class Attachments extends Component {
               hasData
               ? (
                 <AttachmentHeader
-                  openRequestDocumentModal={ openRequestDocumentModal }
+                  openNewDocumentNotificationsModal={ openNewDocumentNotificationsModal }
                   alreadyRequested={ alreadyRequested }
                 />
               ) : (
@@ -65,6 +66,7 @@ Attachments.defaultProps = {
 Attachments.propTypes = {
   items: PropTypes.array,
   openRequestDocumentModal: PropTypes.func,
+  openNewDocumentNotificationsModal: PropTypes.func,
   alreadyRequested: PropTypes.bool,
   pathname: PropTypes.string,
   noAttachmentTextEditWrapperStateProps: PropTypes.object,

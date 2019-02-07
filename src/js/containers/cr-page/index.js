@@ -4,7 +4,7 @@ import { omit } from 'lodash';
 
 import { contentSelector, getCRID, getOfficerId, getDocumentAlreadyRequested } from 'selectors/cr-page';
 import CRPage from 'components/cr-page';
-import { openRequestDocumentModal } from 'actions/generic-modal';
+import { openRequestDocumentModal, openNewDocumentNotificationsModal } from 'actions/generic-modal';
 import { popupSelector } from 'selectors/popup';
 import { CR_EDIT_TYPES, CR_PAGE_ID } from 'utils/constants';
 import {
@@ -33,6 +33,7 @@ function mapStateToProps(state, ownProps) {
 
 const mapDispatchToProps = {
   openRequestDocumentModal,
+  openNewDocumentNotificationsModal,
   onSaveForm: updatePage(CR_PAGE_ID),
   turnOnNoAttachmentTextEditMode,
   turnOffNoAttachmentTextEditMode,
